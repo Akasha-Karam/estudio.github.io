@@ -2,10 +2,153 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Mi página</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estudio · Apuntes de programación</title>
+  <link rel="icon" href="assets/logo.png" type="image/png">
+  <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
-  <h1>¡Hola mundo!</h1>
-  <p>Mi primera página en GitHub Pages.</p>
+
+  <!-- ================== HEADER ================== -->
+  <header class="header">
+    <div class="brand">
+      <img src="assets/logo.png" alt="Logo Estudio">
+      <h1>Estudio</h1>
+    </div>
+
+    <nav>
+      <ul>
+        <li class="dropdown">
+          <a href="#">DAM</a>
+          <ul class="dropdown-menu">
+            <li><a href="springboot.html">Spring Boot</a></li>
+            <li><a href="#"><span style="opacity:.5">Acceso a Datos · próximamente</span></a></li>
+            <li><a href="#"><span style="opacity:.5">Programación · próximamente</span></a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#">DAW</a>
+          <ul class="dropdown-menu">
+            <li><a href="#"><span style="opacity:.5">HTML · próximamente</span></a></li>
+            <li><a href="#"><span style="opacity:.5">CSS · próximamente</span></a></li>
+            <li><a href="#"><span style="opacity:.5">JavaScript · próximamente</span></a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#">ASIX</a>
+          <ul class="dropdown-menu">
+            <li><a href="#"><span style="opacity:.5">Linux · próximamente</span></a></li>
+            <li><a href="#"><span style="opacity:.5">Redes · próximamente</span></a></li>
+          </ul>
+        </li>
+        <li><a href="#contacte">Contacte</a></li>
+        <li><a href="#about">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ================== Search bar ================== -->
+  <div class="search-bar">
+    <input id="search-input" type="text" placeholder="Buscar apuntes…">
+  </div>
+
+  <!-- ================== Card grid (recyclerView) ================== -->
+  <main class="cards-container">
+    <div class="cards-grid">
+
+      <!-- SPRING BOOT (activo) -->
+      <a href="springboot.html" class="card card-springboot">
+        <div class="card-img">Spring</div>
+        <div class="card-body">
+          <div class="tags">
+            <span class="tag">Java,</span>
+            <span class="tag">API REST,</span>
+            <span class="tag">JWT</span>
+          </div>
+          <h3>Spring Boot</h3>
+          <p>Aprende a construir APIs REST con Spring Boot: controladores, JPA, seguridad
+             con JWT, ejemplos paso a paso y ejercicios resueltos para alumnos.</p>
+        </div>
+      </a>
+
+      <!-- Resto: próximamente -->
+      <a class="card card-java coming-soon">
+        <div class="card-img">Java</div>
+        <div class="card-body">
+          <div class="tags"><span class="tag">POO,</span><span class="tag">Java SE</span></div>
+          <h3>Java</h3>
+          <p>Fundamentos de Java: clases, objetos, herencia, colecciones y manejo de
+             excepciones con ejercicios prácticos.</p>
+        </div>
+      </a>
+
+      <a class="card card-html coming-soon">
+        <div class="card-img">HTML</div>
+        <div class="card-body">
+          <div class="tags"><span class="tag">HTML5,</span><span class="tag">Web</span></div>
+          <h3>HTML</h3>
+          <p>Estructura de páginas web, etiquetas semánticas, formularios y buenas
+             prácticas.</p>
+        </div>
+      </a>
+
+      <a class="card card-css coming-soon">
+        <div class="card-img">CSS</div>
+        <div class="card-body">
+          <div class="tags"><span class="tag">CSS3,</span><span class="tag">Diseño</span></div>
+          <h3>CSS</h3>
+          <p>Estilos, Flexbox, Grid, responsive design y animaciones para crear
+             interfaces atractivas.</p>
+        </div>
+      </a>
+
+      <a class="card card-js coming-soon">
+        <div class="card-img">JS</div>
+        <div class="card-body">
+          <div class="tags"><span class="tag">JavaScript,</span><span class="tag">Web</span></div>
+          <h3>JavaScript</h3>
+          <p>Variables, funciones, DOM, async/await y fetch para añadir
+             interactividad.</p>
+        </div>
+      </a>
+
+      <a class="card card-sql coming-soon">
+        <div class="card-img">SQL</div>
+        <div class="card-body">
+          <div class="tags"><span class="tag">MySQL,</span><span class="tag">BD</span></div>
+          <h3>Bases de datos</h3>
+          <p>SQL, modelado entidad-relación, consultas y joins con ejercicios resueltos.</p>
+        </div>
+      </a>
+
+      <a class="card card-react coming-soon">
+        <div class="card-img">React</div>
+        <div class="card-body">
+          <div class="tags"><span class="tag">React,</span><span class="tag">SPA</span></div>
+          <h3>React</h3>
+          <p>Componentes, hooks, estado y comunicación con APIs REST.</p>
+        </div>
+      </a>
+
+      <a class="card card-android coming-soon">
+        <div class="card-img">Android</div>
+        <div class="card-body">
+          <div class="tags"><span class="tag">Kotlin,</span><span class="tag">Móvil</span></div>
+          <h3>Android</h3>
+          <p>Activities, Fragments, RecyclerView, Retrofit y Room para construir apps
+             nativas.</p>
+        </div>
+      </a>
+
+    </div>
+  </main>
+
+  <!-- ================== Footer ================== -->
+  <footer class="footer" id="contacte">
+    <p id="about"><strong>Estudio</strong> · Innovation starts here</p>
+    <p>Apuntes hechos por y para alumnos · Curso 2025-2026</p>
+  </footer>
+
+  <script src="assets/main.js"></script>
 </body>
 </html>

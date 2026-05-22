@@ -85,7 +85,7 @@
         </ul>
 
         <div class="box info">
-          <strong>📚 Idea clave:</strong> Spring Boot = Spring + configuración automática
+          <strong>Idea clave:</strong> Spring Boot = Spring + configuración automática
           + servidor incrustado. Tu proyecto es un <code>.jar</code> ejecutable: con
           <code>java -jar mi-app.jar</code> ya lo tienes corriendo.
         </div>
@@ -138,7 +138,7 @@ spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true</code></pre>
 
         <div class="box warning">
-          <strong>⚠️ En producción</strong> nunca dejes la contraseña en el fichero;
+          <strong>En producción</strong> nunca dejes la contraseña en el fichero;
           usa <em>variables de entorno</em>.
         </div>
       </section>
@@ -248,7 +248,7 @@ Content-Type: application/json
         </div>
 
         <div class="box info">
-          <strong>💡 ¿Qué es JSON?</strong> Es un formato de texto para representar datos:
+          <strong>¿Qué es JSON?</strong> Es un formato de texto para representar datos:
           parejas <code>"clave": valor</code> entre llaves. Es lo que se manda y se recibe
           en una API REST.
         </div>
@@ -332,7 +332,7 @@ public interface LibroRepository extends JpaRepository&lt;Libro, Long&gt; {
         </div>
 
         <div class="box info">
-          <strong>📚 Query derivation:</strong> Spring Data <em>deriva</em> la SQL del nombre
+          <strong>Query derivation:</strong> Spring Data <em>deriva</em> la SQL del nombre
           del método. <code>findByX</code>, <code>findByXAndY</code>,
           <code>existsByX</code>, <code>countByX</code>… son automáticos.
         </div>
@@ -532,7 +532,7 @@ public ResponseEntity&lt;Libro&gt; crear(@Valid @RequestBody LibroDTO dto) {
         </table>
 
         <div class="box danger">
-          <strong>⚠️ ATENCIÓN:</strong> el <em>payload</em> está en Base64, <strong>NO
+          <strong>ATENCIÓN:</strong> el <em>payload</em> está en Base64, <strong>NO
           cifrado</strong>. Cualquiera puede leerlo. Por eso <strong>nunca</strong>
           metas contraseñas ni datos sensibles dentro. La firma solo garantiza que
           nadie lo ha modificado.
@@ -933,7 +933,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9...</code></pre>
         <h2>7. Ejercicios resueltos</h2>
 
         <p>Aquí tienes ejercicios para practicar. Intenta resolverlos antes de mirar la
-           solución 👀</p>
+           solución.</p>
 
         <!-- ===== Ejercicio 1 ===== -->
         <div class="exercise">
@@ -1198,7 +1198,7 @@ Sin token:
         </table>
 
         <div class="box success" style="margin-top: 30px;">
-          <strong>🎯 Ya has acabado.</strong> Con esto sabes construir una API REST completa
+          <strong>Ya has acabado.</strong> Con esto sabes construir una API REST completa
           con Spring Boot, persistencia en base de datos y seguridad con JWT. ¡Practica con
           los ejercicios y crea tu propio proyecto!
         </div>

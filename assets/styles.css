@@ -453,7 +453,7 @@ pre code {
 }
 
 .exercise h4::before {
-  content: '🏋️  ';
+  content: '';
 }
 
 .example {
@@ -470,7 +470,7 @@ pre code {
 }
 
 .example h4::before {
-  content: '💡  ';
+  content: '';
 }
 
 .result {
@@ -486,7 +486,7 @@ pre code {
 }
 
 .result::before {
-  content: '▶ Resultado:';
+  content: 'Resultado:';
   display: block;
   color: var(--verde);
   font-weight: bold;

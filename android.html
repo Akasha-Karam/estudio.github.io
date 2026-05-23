@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Android · Apuntes · Estudio</title>
+  <link rel="icon" href="assets/logo.png" type="image/png">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+  <!-- ================== HEADER ================== -->
+  <header class="header">
+    <a href="index.html" class="brand" style="text-decoration:none">
+      <img src="assets/logo.png" alt="Logo Estudio">
+      <h1>Estudio</h1>
+    </a>
+    <nav>
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="android.html">Android</a></li>
+        <li><a href="index.html#about">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ================== Página título ================== -->
+  <section class="page-title">
+    <div class="page-title-inner">
+      <h1>Android · Kotlin + MVVM</h1>
+      <p class="subtitle">Apuntes para alumnos: aprende a construir apps Android nativas
+        con Kotlin. Activities, Fragments, RecyclerView, ViewBinding, arquitectura
+        MVVM con ViewModel + LiveData, diálogos y librerías populares.
+        Con ejemplos prácticos y ejercicios resueltos.</p>
+      <div class="chips">
+        <span class="chip">Kotlin 1.9</span>
+        <span class="chip">Android Studio</span>
+        <span class="chip">Jetpack</span>
+        <span class="chip">ViewBinding</span>
+        <span class="chip">MVVM</span>
+        <span class="chip">LiveData</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================== Contenido ================== -->
+  <div class="notes-layout">
+
+    <!-- ============== Sidebar / TOC ============== -->
+    <aside class="toc">
+      <h4>Índice</h4>
+      <ul>
+        <li><a href="#android">1. Android</a></li>
+        <li class="sub"><a href="#que-es">1.1 ¿Qué es?</a></li>
+        <li class="sub"><a href="#android-studio">1.2 Android Studio</a></li>
+        <li class="sub"><a href="#estructura">1.3 Estructura del proyecto</a></li>
+        <li class="sub"><a href="#gradle">1.4 build.gradle</a></li>
+
+        <li><a href="#activities-fragments">2. Activities y Fragments</a></li>
+        <li class="sub"><a href="#activities">2.1 Activities</a></li>
+        <li class="sub"><a href="#fragments">2.2 Fragments</a></li>
+        <li class="sub"><a href="#navegacion">2.3 Comunicación</a></li>
+
+        <li><a href="#layouts-ui">3. Layouts y UI</a></li>
+        <li class="sub"><a href="#layouts">3.1 Tipos de Layouts</a></li>
+        <li class="sub"><a href="#constraint">3.2 ConstraintLayout</a></li>
+        <li class="sub"><a href="#viewbinding">3.3 ViewBinding</a></li>
+
+        <li><a href="#recyclerview">4. RecyclerView</a></li>
+        <li class="sub"><a href="#rv-modelo">4.1 Modelo de datos</a></li>
+        <li class="sub"><a href="#rv-adapter">4.2 Adapter + ViewHolder</a></li>
+        <li class="sub"><a href="#rv-uso">4.3 Uso en Activity/Fragment</a></li>
+
+        <li><a href="#dialogos">5. Diálogos</a></li>
+        <li class="sub"><a href="#alertdialog">5.1 AlertDialog</a></li>
+        <li class="sub"><a href="#dialogfragment">5.2 DialogFragment</a></li>
+
+        <li><a href="#mvvm">6. Arquitectura MVVM</a></li>
+        <li class="sub"><a href="#viewmodel">6.1 ViewModel</a></li>
+        <li class="sub"><a href="#livedata">6.2 LiveData</a></li>
+        <li class="sub"><a href="#observer">6.3 Patrón Observer</a></li>
+
+        <li><a href="#caso-completo">7. Caso completo</a></li>
+        <li class="sub"><a href="#caso-estructura">7.1 Estructura</a></li>
+        <li class="sub"><a href="#caso-modelo">7.2 Model</a></li>
+        <li class="sub"><a href="#caso-viewmodel">7.3 ViewModel</a></li>
+        <li class="sub"><a href="#caso-dialog">7.4 Dialog</a></li>
+        <li class="sub"><a href="#caso-fragment">7.5 Fragment</a></li>
+
+        <li><a href="#librerias">8. Librerías</a></li>
+        <li><a href="#ejercicios">9. Ejercicios</a></li>
+        <li><a href="#cheatsheet">10. Cheatsheet</a></li>
+      </ul>
+    </aside>
+
+    <!-- ============== Contenido principal ============== -->
+    <main class="content">
+
+      <!-- ================================================== -->
+      <!-- ============ 1. ANDROID ============ -->
+      <!-- ================================================== -->
+      <section id="android">
+        <h2>1. Android</h2>
+
+        <h3 id="que-es">1.1 ¿Qué es Android?</h3>
+        <p><strong>Android</strong> es el sistema operativo móvil más usado del mundo,
+          basado en Linux y propiedad de Google. Las apps Android se programan
+          principalmente en <strong>Kotlin</strong> (lenguaje moderno y conciso) o en
+          Java. Cada app se distribuye como un paquete <code>.apk</code> que se instala
+          en el dispositivo.</p>
+
+        <div class="note">
+          <div class="note-title">Idea clave</div>
+          <p>Una app Android es un conjunto de <strong>pantallas</strong> (Activities y
+            Fragments) conectadas entre sí, que reaccionan a eventos del usuario y
+            muestran datos guardados en memoria, en disco o en un servidor remoto.</p>
+        </div>
+
+        <h3 id="android-studio">1.2 Android Studio</h3>
+        <p><strong>Android Studio</strong> es el IDE oficial de Google para desarrollar
+          apps Android. Incluye:</p>
+        <ul>
+          <li>Editor de código con autocompletado Kotlin/Java.</li>
+          <li>Editor visual de layouts XML.</li>
+          <li><strong>Emulador</strong>: dispositivos virtuales para probar sin móvil
+            físico.</li>
+          <li><strong>Gradle</strong>: sistema de compilación y dependencias.</li>
+          <li>Logcat, profiler y herramientas de debug.</li>
+        </ul>
+
+        <h3 id="estructura">1.3 Estructura de un proyecto</h3>
+        <p>Un proyecto Android tiene siempre esta estructura básica:</p>
+
+        <div class="code-header">app/</div>
+<pre><code>app/
+├── src/main/
+│   ├── java/com/ejemplo/miapp/    ← código Kotlin
+│   ├── res/
+│   │   ├── layout/                 ← XML de pantallas (activity_main.xml…)
+│   │   ├── drawable/               ← imágenes, iconos
+│   │   ├── values/                 ← colores, strings, estilos
+│   │   └── mipmap/                 ← icono de la app
+│   └── AndroidManifest.xml         ← declaración de Activities/permisos
+├── build.gradle                    ← dependencias del módulo
+└── ...</code></pre>
+
+        <h3 id="gradle">1.4 build.gradle</h3>
+        <p>Es el fichero de configuración. Aquí se declaran las dependencias y se
+          activan funcionalidades como ViewBinding:</p>
+
+        <div class="code-header">app/build.gradle.kts</div>
+<pre><code>android {
+    namespace = "com.estudio.miapp"
+    compileSdk = 34
+
+    defaultConfig {
+        applicationId = "com.estudio.miapp"
+        minSdk = 24
+        targetSdk = 34
+    }
+
+    buildFeatures {
+        viewBinding = true            // ← activamos ViewBinding
+    }
+}
+
+dependencies {
+    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("com.google.android.material:material:1.10.0")
+    implementation("androidx.fragment:fragment-ktx:1.6.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
+}</code></pre>
+
+        <div class="note warning">
+          <div class="note-title">minSdk vs targetSdk</div>
+          <p><strong>minSdk</strong> = versión más antigua de Android soportada.
+            <strong>targetSdk</strong> = versión para la que la app está optimizada.
+            Cuanto menor sea <code>minSdk</code>, más usuarios pueden instalar la app,
+            pero menos APIs modernas puedes usar.</p>
+        </div>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ 2. ACTIVITIES Y FRAGMENTS ============ -->
+      <!-- ================================================== -->
+      <section id="activities-fragments">
+        <h2>2. Activities y Fragments</h2>
+
+        <p>Son las dos clases que representan las <em>pantallas</em> de una app Android.</p>
+
+        <h3 id="activities">2.1 Activities</h3>
+        <p>Una <strong>Activity</strong> es una pantalla completa de tu app. Cada
+          Activity tiene un <em>ciclo de vida</em> que Android gestiona:</p>
+
+        <table>
+          <thead>
+            <tr><th>Método</th><th>Cuándo se llama</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>onCreate()</code></td><td>Al crear la Activity (configura layout, vistas, listeners).</td></tr>
+            <tr><td><code>onStart()</code></td><td>La Activity pasa a ser visible.</td></tr>
+            <tr><td><code>onResume()</code></td><td>La Activity está en primer plano e interactúa con el usuario.</td></tr>
+            <tr><td><code>onPause()</code></td><td>Otra ventana queda encima (pausa lo que consume recursos).</td></tr>
+            <tr><td><code>onStop()</code></td><td>Ya no es visible.</td></tr>
+            <tr><td><code>onDestroy()</code></td><td>Se destruye (libera recursos).</td></tr>
+          </tbody>
+        </table>
+
+        <div class="example">
+          <h4>Ejemplo: MainActivity</h4>
+
+          <div class="code-header">MainActivity.kt</div>
+<pre><code>package com.estudio.miapp
+
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.estudio.miapp.databinding.ActivityMainBinding
+
+class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // Inflar layout con ViewBinding
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        // Acceder a las vistas
+        binding.btnLogin.setOnClickListener {
+            binding.txtSaludo.text = "¡Hola Android!"
+        }
+    }
+}</code></pre>
+        </div>
+
+        <h3 id="fragments">2.2 Fragments</h3>
+        <p>Un <strong>Fragment</strong> es un componente reutilizable de UI que
+          representa una <em>parte</em> de una pantalla dentro de una Activity. Tiene
+          su propio ciclo de vida.</p>
+
+        <h4>Ventajas frente a las Activities</h4>
+        <ul>
+          <li><strong>Reutilizable</strong>: el mismo Fragment en varias Activities.</li>
+          <li><strong>Adaptable</strong>: layouts distintos para móvil y tablet.</li>
+          <li><strong>Modular</strong>: dividir UI en piezas independientes.</li>
+          <li>Piénsalos como "sub-activities" con su propio ciclo de vida.</li>
+        </ul>
+
+        <h4>Ciclo de vida del Fragment</h4>
+        <table>
+          <thead><tr><th>Método</th><th>Para qué</th></tr></thead>
+          <tbody>
+            <tr><td><code>onCreate()</code></td><td>Setup inicial (sin tocar vistas).</td></tr>
+            <tr><td><code>onCreateView()</code></td><td>Inflar el layout y devolver la View.</td></tr>
+            <tr><td><code>onViewCreated()</code></td><td>Configurar vistas y listeners (la View ya existe).</td></tr>
+            <tr><td><code>onDestroyView()</code></td><td>Libera la View (¡pero el Fragment puede seguir vivo!).</td></tr>
+          </tbody>
+        </table>
+
+        <div class="example">
+          <h4>Ejemplo: HomeFragment</h4>
+
+          <div class="code-header">HomeFragment.kt</div>
+<pre><code>class HomeFragment : Fragment() {
+
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.txtTitle.text = "Inicio"
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null   // evitar memory leaks
+    }
+}</code></pre>
+        </div>
+
+        <div class="note warning">
+          <div class="note-title">¿Por qué <code>_binding</code> nullable?</div>
+          <p>La View del Fragment puede destruirse mientras el Fragment sigue vivo
+            (por ejemplo, al hacer <em>back stack</em>). Por eso usamos
+            <code>_binding</code> nullable y lo ponemos a <code>null</code> en
+            <code>onDestroyView()</code>. La propiedad <code>binding</code> (sin
+            guion bajo) lanza error si se accede después de destruir la vista.</p>
+        </div>
+
+        <h3 id="navegacion">2.3 Comunicación entre Fragments</h3>
+        <p>Hay tres formas principales:</p>
+        <ol>
+          <li><strong>Acceso directo</strong>: <code>requireActivity()</code> para
+            llegar a la Activity padre.</li>
+          <li><strong>Callbacks (interfaces)</strong>: el Fragment define una interfaz
+            que la Activity implementa.</li>
+          <li><strong>ViewModel compartido</strong>: la forma moderna y recomendada
+            (lo veremos en la sección 6).</li>
+        </ol>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ 3. LAYOUTS Y UI ============ -->
+      <!-- ================================================== -->
+      <section id="layouts-ui">
+        <h2>3. Layouts y UI</h2>
+
+        <h3 id="layouts">3.1 Tipos de Layouts</h3>
+        <p>Un <strong>Layout</strong> es un contenedor que organiza vistas en la
+          pantalla. Los más importantes son:</p>
+
+        <table>
+          <thead>
+            <tr><th>Layout</th><th>Para qué sirve</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>LinearLayout</strong></td><td>Coloca elementos en línea vertical u horizontal.</td></tr>
+            <tr><td><strong>ConstraintLayout</strong></td><td>El moderno y flexible. Posiciona por restricciones (recomendado).</td></tr>
+            <tr><td><strong>FrameLayout</strong></td><td>Apila vistas una encima de otra.</td></tr>
+            <tr><td><strong>RelativeLayout</strong></td><td>Antiguo. Cada vista se posiciona relativa a otra (en desuso).</td></tr>
+          </tbody>
+        </table>
+
+        <div class="code-header">res/layout/activity_main.xml (LinearLayout)</div>
+<pre><code>&lt;LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"&gt;
+
+    &lt;TextView
+        android:id="@+id/txtTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:textSize="24sp" /&gt;
+
+    &lt;EditText
+        android:id="@+id/edtUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Usuario" /&gt;
+
+    &lt;Button
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Entrar" /&gt;
+
+&lt;/LinearLayout&gt;</code></pre>
+
+        <h3 id="constraint">3.2 ConstraintLayout</h3>
+        <p>Es el layout <strong>recomendado</strong> hoy en día. Las vistas se posicionan
+          con <em>restricciones</em> (constraints) respecto al padre o a otras vistas:</p>
+
+        <div class="code-header">res/layout/activity_main.xml (ConstraintLayout)</div>
+<pre><code>&lt;androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"&gt;
+
+    &lt;Button
+        android:id="@+id/btnLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Entrar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" /&gt;
+
+&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;</code></pre>
+
+        <p>Las restricciones <code>top/bottom/start/end</code> aplicadas a la vez
+          <em>centran</em> el botón en pantalla.</p>
+
+        <h3 id="viewbinding">3.3 ViewBinding</h3>
+        <p><strong>ViewBinding</strong> permite acceder a los elementos del XML
+          directamente, <em>sin</em> <code>findViewById()</code>. Para cada layout,
+          Android genera automáticamente una clase con el nombre del layout +
+          "Binding" (ej: <code>activity_main.xml</code> → <code>ActivityMainBinding</code>).</p>
+
+        <h4>Activación</h4>
+        <div class="code-header">app/build.gradle.kts</div>
+<pre><code>android {
+    buildFeatures {
+        viewBinding = true
+    }
+}</code></pre>
+
+        <h4>Uso en Activity</h4>
+        <div class="code-header">MainActivity.kt</div>
+<pre><code>private lateinit var binding: ActivityMainBinding
+
+override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    binding = ActivityMainBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+
+    binding.txtTitle.text = "Login"
+    binding.btnLogin.setOnClickListener { doLogin() }
+}</code></pre>
+
+        <h4>Uso en Fragment</h4>
+        <div class="code-header">HomeFragment.kt</div>
+<pre><code>private var _binding: FragmentHomeBinding? = null
+private val binding get() = _binding!!
+
+override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+): View {
+    _binding = FragmentHomeBinding.inflate(inflater, container, false)
+    return binding.root
+}
+
+override fun onDestroyView() {
+    super.onDestroyView()
+    _binding = null
+}</code></pre>
+
+        <div class="note success">
+          <div class="note-title">Ventajas de ViewBinding</div>
+          <ul>
+            <li><strong>Null safety</strong>: el binding nunca da
+              <code>NullPointerException</code> por una vista que no exista.</li>
+            <li><strong>Type safety</strong>: cada vista tiene su tipo correcto
+              (TextView, Button…), sin casteos.</li>
+            <li><strong>Rápido</strong>: el código se genera en tiempo de compilación.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ 4. RECYCLERVIEW ============ -->
+      <!-- ================================================== -->
+      <section id="recyclerview">
+        <h2>4. RecyclerView</h2>
+
+        <p>El <strong>RecyclerView</strong> es el componente para mostrar listas o
+          grids de elementos. Recicla las vistas cuando se hace scroll, lo que lo hace
+          muy eficiente incluso con miles de elementos. Reemplaza al antiguo
+          <code>ListView</code>.</p>
+
+        <p>Un RecyclerView tiene <strong>cuatro piezas</strong>:</p>
+        <ol>
+          <li><strong>Modelo de datos</strong> (data class) — qué se va a mostrar.</li>
+          <li><strong>ViewHolder</strong> — referencia a las vistas de cada fila.</li>
+          <li><strong>Adapter</strong> — conecta los datos con las vistas.</li>
+          <li><strong>LayoutManager</strong> — cómo se disponen los elementos (vertical, grid…).</li>
+        </ol>
+
+        <h3 id="rv-modelo">4.1 Modelo de datos</h3>
+
+        <div class="code-header">model/Task.kt</div>
+<pre><code>data class Task(
+    val id: Int,
+    val title: String,
+    val points: Int
+)</code></pre>
+
+        <h3 id="rv-adapter">4.2 Adapter + ViewHolder</h3>
+
+        <p>El <strong>Adapter</strong> implementa tres métodos esenciales:</p>
+
+        <table>
+          <thead><tr><th>Método</th><th>Para qué</th></tr></thead>
+          <tbody>
+            <tr><td><code>onCreateViewHolder()</code></td><td>Crea una nueva fila (infla el XML).</td></tr>
+            <tr><td><code>getItemCount()</code></td><td>Cuántos elementos hay en total.</td></tr>
+            <tr><td><code>onBindViewHolder()</code></td><td>Pinta los datos de la posición <em>n</em> en el ViewHolder.</td></tr>
+          </tbody>
+        </table>
+
+        <div class="code-header">adapter/TasksAdapter.kt</div>
+<pre><code>class TasksAdapter(
+    private var tasks: List&lt;Task&gt;,
+    private val onClick: (Task) -&gt; Unit
+) : RecyclerView.Adapter&lt;TasksAdapter.TaskViewHolder&gt;() {
+
+    inner class TaskViewHolder(
+        private val binding: ItemTaskBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(task: Task) {
+            binding.txtTitle.text  = task.title
+            binding.txtPoints.text = task.points.toString()
+            binding.root.setOnClickListener { onClick(task) }
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
+        val binding = ItemTaskBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false)
+        return TaskViewHolder(binding)
+    }
+
+    override fun getItemCount() = tasks.size
+
+    override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
+        holder.bind(tasks[position])
+    }
+
+    fun updateTasks(newTasks: List&lt;Task&gt;) {
+        tasks = newTasks
+        notifyDataSetChanged()
+    }
+}</code></pre>
+
+        <h3 id="rv-uso">4.3 Uso en la Activity / Fragment</h3>
+
+        <div class="code-header">HomeFragment.kt</div>
+<pre><code>override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+
+    val adapter = TasksAdapter(
+        tasks = listOf(
+            Task(1, "Estudiar Android", 5),
+            Task(2, "Hacer ejercicios", 3)
+        ),
+        onClick = { t -&gt; Log.d("Tasks", "Clicked: ${t.title}") }
+    )
+
+    binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+    binding.recyclerView.adapter       = adapter
+}</code></pre>
+
+        <div class="note">
+          <div class="note-title">LayoutManager</div>
+          <ul>
+            <li><code>LinearLayoutManager</code> → lista vertical (más común) u horizontal.</li>
+            <li><code>GridLayoutManager(ctx, columnas)</code> → cuadrícula.</li>
+            <li><code>StaggeredGridLayoutManager</code> → cuadrícula tipo Pinterest.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ 5. DIÁLOGOS ============ -->
+      <!-- ================================================== -->
+      <section id="dialogos">
+        <h2>5. Diálogos</h2>
+
+        <p>Un <strong>diálogo</strong> es una ventana pequeña que aparece encima de la
+          pantalla para pedir información, confirmar una acción o mostrar un mensaje.</p>
+
+        <h3 id="alertdialog">5.1 AlertDialog</h3>
+        <p>La forma más rápida. Útil para mensajes simples de confirmación.</p>
+
+        <div class="code-header">borrarTarea()</div>
+<pre><code>AlertDialog.Builder(requireContext())
+    .setTitle("Borrar tarea")
+    .setMessage("¿Seguro que quieres borrar esta tarea?")
+    .setPositiveButton("Sí") { _, _ -&gt;
+        viewModel.borrarTarea(task)
+    }
+    .setNegativeButton("Cancelar", null)
+    .show()</code></pre>
+
+        <h3 id="dialogfragment">5.2 DialogFragment</h3>
+        <p>Para diálogos más complejos (con varios campos de entrada, validación,
+          etc.) se usa <strong>DialogFragment</strong>: una subclase de Fragment que
+          se muestra como diálogo y tiene su propio ciclo de vida.</p>
+
+        <p><strong>Ventajas frente a AlertDialog:</strong></p>
+        <ul>
+          <li>Sobrevive a rotaciones de pantalla.</li>
+          <li>Puedes tener layouts personalizados con XML.</li>
+          <li>Se integra de forma natural con <em>ViewModel</em> (ver sección 7).</li>
+        </ul>
+
+        <div class="code-header">ui/dialogs/AfegirTascaDialog.kt</div>
+<pre><code>class AfegirTascaDialog : DialogFragment() {
+
+    private var _binding: DialogAfegirTascaBinding? = null
+    private val binding get() = _binding!!
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = DialogAfegirTascaBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.btnGuardar.setOnClickListener {
+            val titulo = binding.edtTitulo.text.toString()
+            val puntos = binding.edtPuntos.text.toString().toIntOrNull() ?: 0
+            // Aquí guardamos los datos (ver sección 7)
+            dismiss()
+        }
+
+        binding.btnCancelar.setOnClickListener { dismiss() }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+}</code></pre>
+
+        <p>Y para <strong>mostrar</strong> el diálogo desde un Fragment:</p>
+<pre><code>AfegirTascaDialog().show(parentFragmentManager, "afegir_tasca")</code></pre>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ 6. MVVM ============ -->
+      <!-- ================================================== -->
+      <section id="mvvm">
+        <h2>6. Arquitectura MVVM</h2>
+
+        <p>La arquitectura <strong>MVVM</strong> (Model-View-ViewModel) separa la app
+          en tres capas para que cada una tenga una sola responsabilidad:</p>
+
+        <table>
+          <thead>
+            <tr><th>Capa</th><th>Responsabilidad</th><th>Quién es</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Model</strong></td><td>Los datos y la lógica de negocio.</td><td>Data classes, repositorios.</td></tr>
+            <tr><td><strong>View</strong></td><td>Mostrar datos y reaccionar a clicks.</td><td>Activity, Fragment, XML.</td></tr>
+            <tr><td><strong>ViewModel</strong></td><td>Puente entre Model y View. Guarda estado.</td><td>Una clase que extiende <code>ViewModel</code>.</td></tr>
+          </tbody>
+        </table>
+
+        <h3 id="viewmodel">6.1 ViewModel</h3>
+        <p>El <strong>ViewModel</strong> guarda y gestiona los datos relacionados con
+          la UI de forma <em>consciente del ciclo de vida</em>. La lógica y los datos
+          quedan separados de la UI (Activity/Fragment).</p>
+
+        <h4>Características clave</h4>
+        <ul>
+          <li><strong>Separación</strong>: lógica independiente de la UI.</li>
+          <li><strong>Testeable</strong>: sin dependencias de Android.</li>
+          <li><strong>Reutilización</strong>: varios Fragments comparten el mismo ViewModel.</li>
+          <li><strong>Persistencia</strong>: sobrevive a las rotaciones de pantalla.</li>
+        </ul>
+
+        <div class="code-header">viewmodel/TasksViewModel.kt</div>
+<pre><code>class TasksViewModel : ViewModel() {
+
+    private val _tasks = MutableLiveData&lt;List&lt;Task&gt;&gt;(emptyList())
+    val tasks: LiveData&lt;List&lt;Task&gt;&gt; = _tasks
+
+    fun addTask(title: String, points: Int) {
+        val newTask = Task(id = (_tasks.value?.size ?: 0) + 1, title, points)
+        _tasks.value = _tasks.value.orEmpty() + newTask
+    }
+
+    fun deleteTask(task: Task) {
+        _tasks.value = _tasks.value.orEmpty().filterNot { it.id == task.id }
+    }
+}</code></pre>
+
+        <h4>Acceso desde Activity/Fragment</h4>
+
+        <table>
+          <thead>
+            <tr><th>Sintaxis</th><th>Ámbito</th><th>Uso</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>by viewModels()</code></td>
+              <td>Local al Fragment/Activity</td>
+              <td>Cada pantalla tiene su propia instancia.</td>
+            </tr>
+            <tr>
+              <td><code>by activityViewModels()</code></td>
+              <td>Compartido en la Activity</td>
+              <td>Varios Fragments acceden a la <em>misma</em> instancia.</td>
+            </tr>
+          </tbody>
+        </table>
+
+<pre><code>// Fragment con su propio ViewModel
+private val viewModel: TasksViewModel by viewModels()
+
+// Fragment con ViewModel compartido (común con DialogFragment)
+private val viewModel: TasksViewModel by activityViewModels()</code></pre>
+
+        <h3 id="livedata">6.2 LiveData</h3>
+        <p><strong>LiveData</strong> es una clase contenedora de datos
+          <em>observable</em> que forma parte de Android Jetpack. La UI se "suscribe"
+          y se actualiza automáticamente cuando los datos cambian.</p>
+
+        <h4>Características</h4>
+        <ul>
+          <li><strong>Observable</strong>: notifica a sus observadores cuando cambia.</li>
+          <li><strong>Consciente del ciclo de vida</strong>: solo notifica si la UI
+            está activa (STARTED/RESUMED). Sin memory leaks.</li>
+          <li><strong>Limpieza automática</strong>: cuando la View se destruye, se
+            desuscribe sola.</li>
+        </ul>
+
+        <h4>LiveData vs MutableLiveData</h4>
+
+        <table>
+          <thead>
+            <tr><th>Tipo</th><th>Permite modificar</th><th>Dónde se usa</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>LiveData</code></td><td>No (solo lectura)</td><td>Expuesta al exterior</td></tr>
+            <tr><td><code>MutableLiveData</code></td><td>Sí (setValue, postValue)</td><td>Privada dentro del ViewModel</td></tr>
+          </tbody>
+        </table>
+
+        <div class="code-header">Patrón recomendado</div>
+<pre><code>private val _data = MutableLiveData&lt;String&gt;()   // privada, mutable
+val data: LiveData&lt;String&gt; = _data              // pública, de solo lectura</code></pre>
+
+        <h3 id="observer">6.3 Patrón Observer</h3>
+        <p>Desde el Fragment/Activity, observamos los cambios de LiveData con
+          <code>.observe()</code>:</p>
+
+<pre><code>viewModel.tasks.observe(viewLifecycleOwner) { tasks -&gt;
+    // Se ejecuta cada vez que la lista cambia
+    adapter.updateTasks(tasks)
+}</code></pre>
+
+        <div class="note">
+          <div class="note-title"><code>setValue</code> vs <code>postValue</code></div>
+          <ul>
+            <li><code>setValue(x)</code>: solo desde el <strong>hilo principal</strong>.</li>
+            <li><code>postValue(x)</code>: se puede llamar desde <strong>cualquier hilo</strong>
+              (lo encola para el hilo principal).</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ 7. CASO COMPLETO ============ -->
+      <!-- ================================================== -->
+      <section id="caso-completo">
+        <h2>7. Caso completo: DialogFragment + ViewModel</h2>
+
+        <p>Ahora juntamos todo: una app de tareas donde un <strong>DialogFragment</strong>
+          añade tareas y un <strong>Fragment principal</strong> las muestra en un
+          <strong>RecyclerView</strong>. Toda la comunicación pasa por un
+          <strong>ViewModel compartido</strong> con LiveData.</p>
+
+        <h3 id="caso-estructura">7.1 Estructura del proyecto</h3>
+
+        <div class="code-header">app/src/main/java/com/estudio/tasques/</div>
+<pre><code>app/
+├── data/             ← TasksList.kt (singleton con la lista)
+├── model/            ← Task.kt
+├── viewmodel/        ← TasksViewModel.kt
+├── ui/fragments/     ← HomeFragment.kt
+├── ui/dialogs/       ← AfegirTascaDialog.kt
+└── adapter/          ← TasksAdapter.kt</code></pre>
+
+        <h3 id="caso-modelo">7.2 Model</h3>
+
+        <div class="code-header">model/Task.kt</div>
+<pre><code>@Parcelize
+data class Task(
+    val id:     Int,
+    val title:  String,
+    val points: Int,
+    val data:   String
+) : Parcelable</code></pre>
+
+        <p><code>@Parcelize</code> permite pasar el objeto entre Activities/Fragments
+          (requiere el plugin <code>kotlin-parcelize</code> en <code>build.gradle</code>).</p>
+
+        <h3 id="caso-viewmodel">7.3 ViewModel con eventos</h3>
+
+        <div class="code-header">viewmodel/TasksViewModel.kt</div>
+<pre><code>enum class TaskAction { AFEGIDA, MODIFICADA, ELIMINADA, NONE }
+
+class TasksViewModel : ViewModel() {
+
+    // Evento: qué acaba de pasar
+    private val _action = MutableLiveData(TaskAction.NONE)
+    val action: LiveData&lt;TaskAction&gt; = _action
+
+    // Evento de error (null si no hay error)
+    private val _error = MutableLiveData&lt;String?&gt;(null)
+    val error: LiveData&lt;String?&gt; = _error
+
+    fun addTask(title: String, points: Int, data: String) {
+        if (title.isBlank()) {
+            _error.value = "El título no puede estar vacío"
+            return
+        }
+        if (points &lt;= 0) {
+            _error.value = "Los puntos deben ser positivos"
+            return
+        }
+
+        val nueva = Task(
+            id     = TasksList.tasks.size + 1,
+            title  = title,
+            points = points,
+            data   = data
+        )
+        TasksList.tasks.add(nueva)
+        _action.value = TaskAction.AFEGIDA
+    }
+
+    fun deleteTask(task: Task) {
+        TasksList.tasks.remove(task)
+        _action.value = TaskAction.ELIMINADA
+    }
+}</code></pre>
+
+        <h3 id="caso-dialog">7.4 DialogFragment</h3>
+
+        <div class="code-header">ui/dialogs/AfegirTascaDialog.kt</div>
+<pre><code>class AfegirTascaDialog : DialogFragment() {
+
+    // ViewModel COMPARTIDO con la Activity → con el HomeFragment
+    private val viewModel: TasksViewModel by activityViewModels()
+
+    private var _binding: DialogAfegirTascaBinding? = null
+    private val binding get() = _binding!!
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = DialogAfegirTascaBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Observa errores del ViewModel para mostrarlos en el diálogo
+        viewModel.error.observe(viewLifecycleOwner) { msg -&gt;
+            if (msg != null) {
+                Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        binding.btnGuardar.setOnClickListener {
+            val title  = binding.edtTitle.text.toString()
+            val points = binding.edtPoints.text.toString().toIntOrNull() ?: 0
+            val data   = binding.edtData.text.toString()
+
+            viewModel.addTask(title, points, data)
+            dismiss()
+        }
+
+        binding.btnCancelar.setOnClickListener { dismiss() }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+}</code></pre>
+
+        <h3 id="caso-fragment">7.5 Fragment principal</h3>
+
+        <div class="code-header">ui/fragments/HomeFragment.kt</div>
+<pre><code>class HomeFragment : Fragment() {
+
+    private val viewModel: TasksViewModel by activityViewModels()
+    private lateinit var adapter: TasksAdapter
+
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // 1. Configurar RecyclerView
+        adapter = TasksAdapter(TasksList.tasks) { task -&gt;
+            viewModel.deleteTask(task)
+        }
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerView.adapter       = adapter
+
+        // 2. Observar eventos del ViewModel
+        viewModel.action.observe(viewLifecycleOwner) { action -&gt;
+            when (action) {
+                TaskAction.AFEGIDA, TaskAction.ELIMINADA -&gt;
+                    adapter.updateTasks(TasksList.tasks)
+                else -&gt; { /* nada */ }
+            }
+        }
+
+        // 3. Botón para abrir el diálogo de añadir
+        binding.fabAdd.setOnClickListener {
+            AfegirTascaDialog().show(parentFragmentManager, "afegir")
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+}</code></pre>
+
+        <div class="note success">
+          <div class="note-title">¿Por qué <code>activityViewModels()</code>?</div>
+          <p>Porque queremos que el <em>mismo</em> ViewModel sea visible desde el
+            <code>HomeFragment</code> y desde el <code>AfegirTascaDialog</code>. Si
+            usáramos <code>viewModels()</code>, cada Fragment tendría una instancia
+            distinta y no se enterarían de los cambios del otro.</p>
+        </div>
+
+        <h4>Flujo completo</h4>
+        <ol>
+          <li>Usuario pulsa el FAB → <code>HomeFragment</code> abre <code>AfegirTascaDialog</code>.</li>
+          <li>El diálogo llena los campos y pulsa Guardar.</li>
+          <li>El diálogo llama a <code>viewModel.addTask(...)</code>.</li>
+          <li>El ViewModel valida, añade a <code>TasksList</code> y dispara
+            <code>_action.value = AFEGIDA</code>.</li>
+          <li><code>HomeFragment</code> tenía un <code>observe</code> sobre
+            <code>action</code> → refresca el RecyclerView.</li>
+          <li>El diálogo se cierra con <code>dismiss()</code>.</li>
+        </ol>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ 8. LIBRERÍAS ============ -->
+      <!-- ================================================== -->
+      <section id="librerias">
+        <h2>8. Librerías más usadas</h2>
+
+        <p>Estas son las librerías de terceros que casi todas las apps Android usan.</p>
+
+        <table>
+          <thead>
+            <tr><th>Librería</th><th>Para qué sirve</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Retrofit</strong></td><td>Consumir APIs REST con Kotlin.</td></tr>
+            <tr><td><strong>Glide</strong> / <strong>Coil</strong></td><td>Cargar imágenes desde URL.</td></tr>
+            <tr><td><strong>Room</strong></td><td>Base de datos SQLite con anotaciones.</td></tr>
+            <tr><td><strong>DataStore</strong></td><td>Reemplazo moderno de SharedPreferences.</td></tr>
+            <tr><td><strong>Firebase</strong></td><td>Backend en la nube (Auth, Firestore, Storage…).</td></tr>
+            <tr><td><strong>MPAndroidChart</strong></td><td>Gráficas (líneas, barras, pies…).</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Ejemplo rápido: Retrofit</h3>
+
+        <div class="code-header">api/ApiService.kt</div>
+<pre><code>interface ApiService {
+    @GET("users/{id}")
+    suspend fun getUser(@Path("id") id: Int): User
+}
+
+val retrofit = Retrofit.Builder()
+    .baseUrl("https://api.miweb.com/")
+    .addConverterFactory(GsonConverterFactory.create())
+    .build()
+
+val service = retrofit.create(ApiService::class.java)</code></pre>
+
+        <h3>Ejemplo rápido: Glide</h3>
+<pre><code>Glide.with(this)
+    .load("https://miweb.com/foto.jpg")
+    .placeholder(R.drawable.cargando)
+    .into(binding.imgFoto)</code></pre>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ 9. EJERCICIOS ============ -->
+      <!-- ================================================== -->
+      <section id="ejercicios">
+        <h2>9. Ejercicios resueltos</h2>
+
+        <p>Intenta resolverlos antes de mirar la solución.</p>
+
+        <div class="exercise">
+          <h4>Ejercicio 1 — ViewBinding en una Activity</h4>
+          <p>Crea una Activity con un <code>TextView</code> y un <code>Button</code>.
+            Al pulsar el botón, cambia el texto del TextView por "¡Has hecho clic!".
+            Usa <strong>ViewBinding</strong> (sin <code>findViewById</code>).</p>
+
+          <details class="solution">
+            <summary>Ver solución</summary>
+            <div class="code-header">activity_main.xml</div>
+<pre><code>&lt;LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"&gt;
+
+    &lt;TextView
+        android:id="@+id/txtMensaje"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pulsa el botón"
+        android:textSize="22sp" /&gt;
+
+    &lt;Button
+        android:id="@+id/btnClick"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Clic" /&gt;
+
+&lt;/LinearLayout&gt;</code></pre>
+            <div class="code-header">MainActivity.kt</div>
+<pre><code>class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.btnClick.setOnClickListener {
+            binding.txtMensaje.text = "¡Has hecho clic!"
+        }
+    }
+}</code></pre>
+          </details>
+        </div>
+
+        <div class="exercise">
+          <h4>Ejercicio 2 — Lista de la compra con RecyclerView</h4>
+          <p>Crea un Fragment con un <code>RecyclerView</code> que muestre una lista
+            de productos (data class con <code>nombre</code> y <code>precio</code>).
+            Al hacer clic en uno, muestra un Toast con su nombre.</p>
+
+          <details class="solution">
+            <summary>Ver solución</summary>
+            <div class="code-header">model/Producto.kt</div>
+<pre><code>data class Producto(val nombre: String, val precio: Double)</code></pre>
+            <div class="code-header">adapter/ProductoAdapter.kt</div>
+<pre><code>class ProductoAdapter(
+    private val productos: List&lt;Producto&gt;,
+    private val onClick: (Producto) -&gt; Unit
+) : RecyclerView.Adapter&lt;ProductoAdapter.VH&gt;() {
+
+    inner class VH(val binding: ItemProductoBinding)
+        : RecyclerView.ViewHolder(binding.root) {
+        fun bind(p: Producto) {
+            binding.txtNombre.text = p.nombre
+            binding.txtPrecio.text = "%.2f €".format(p.precio)
+            binding.root.setOnClickListener { onClick(p) }
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
+        val b = ItemProductoBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false)
+        return VH(b)
+    }
+
+    override fun onBindViewHolder(holder: VH, position: Int) =
+        holder.bind(productos[position])
+
+    override fun getItemCount() = productos.size
+}</code></pre>
+            <div class="code-header">ListaFragment.kt</div>
+<pre><code>val productos = listOf(
+    Producto("Manzanas", 1.20),
+    Producto("Pan",      0.95),
+    Producto("Leche",    1.40)
+)
+
+val adapter = ProductoAdapter(productos) { p -&gt;
+    Toast.makeText(requireContext(), p.nombre, Toast.LENGTH_SHORT).show()
+}
+
+binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+binding.recyclerView.adapter       = adapter</code></pre>
+          </details>
+        </div>
+
+        <div class="exercise">
+          <h4>Ejercicio 3 — Contador con ViewModel + LiveData</h4>
+          <p>Crea un ViewModel con un contador. La Activity debe tener dos botones
+            (<code>+</code> y <code>−</code>) y un TextView. Cada vez que se pulsa un
+            botón, el ViewModel actualiza el contador y el TextView se refresca
+            automáticamente via LiveData. El contador debe sobrevivir a las
+            <em>rotaciones</em> de pantalla.</p>
+
+          <details class="solution">
+            <summary>Ver solución</summary>
+            <div class="code-header">CounterViewModel.kt</div>
+<pre><code>class CounterViewModel : ViewModel() {
+    private val _count = MutableLiveData(0)
+    val count: LiveData&lt;Int&gt; = _count
+
+    fun increment() { _count.value = (_count.value ?: 0) + 1 }
+    fun decrement() { _count.value = (_count.value ?: 0) - 1 }
+}</code></pre>
+            <div class="code-header">MainActivity.kt</div>
+<pre><code>class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+    private val viewModel: CounterViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        // El TextView se actualiza solo cuando el contador cambia
+        viewModel.count.observe(this) { n -&gt;
+            binding.txtCount.text = n.toString()
+        }
+
+        binding.btnPlus.setOnClickListener  { viewModel.increment() }
+        binding.btnMinus.setOnClickListener { viewModel.decrement() }
+    }
+}</code></pre>
+          </details>
+        </div>
+
+        <div class="exercise">
+          <h4>Ejercicio 4 — Confirmar borrado con AlertDialog</h4>
+          <p>En el ejercicio 2, al hacer <em>long click</em> en un producto, muestra
+            un <code>AlertDialog</code> que pregunta "¿Borrar este producto?". Si el
+            usuario acepta, elimínalo de la lista.</p>
+
+          <details class="solution">
+            <summary>Ver solución</summary>
+            <div class="code-header">ListaFragment.kt</div>
+<pre><code>val productos = mutableListOf(
+    Producto("Manzanas", 1.20),
+    Producto("Pan",      0.95)
+)
+lateinit var adapter: ProductoAdapter
+
+adapter = ProductoAdapter(productos,
+    onClick = { /* … */ },
+    onLongClick = { p -&gt;
+        AlertDialog.Builder(requireContext())
+            .setTitle("Borrar producto")
+            .setMessage("¿Borrar ${p.nombre}?")
+            .setPositiveButton("Sí") { _, _ -&gt;
+                productos.remove(p)
+                adapter.notifyDataSetChanged()
+            }
+            .setNegativeButton("No", null)
+            .show()
+    })</code></pre>
+            <p>(Necesitas añadir el callback <code>onLongClick</code> en el adapter
+              y enlazarlo con <code>setOnLongClickListener</code>.)</p>
+          </details>
+        </div>
+
+        <div class="exercise">
+          <h4>Ejercicio 5 — Pedir datos con DialogFragment + ViewModel</h4>
+          <p>Crea un <code>DialogFragment</code> con un EditText que pide un nombre.
+            Al pulsar Guardar, el nombre se añade a una lista en un
+            <em>ViewModel compartido</em>. El Fragment principal observa la lista y
+            muestra los nombres en un TextView.</p>
+
+          <details class="solution">
+            <summary>Ver solución</summary>
+            <div class="code-header">NombresViewModel.kt</div>
+<pre><code>class NombresViewModel : ViewModel() {
+    private val _nombres = MutableLiveData&lt;List&lt;String&gt;&gt;(emptyList())
+    val nombres: LiveData&lt;List&lt;String&gt;&gt; = _nombres
+
+    fun add(nombre: String) {
+        if (nombre.isNotBlank()) {
+            _nombres.value = _nombres.value.orEmpty() + nombre
+        }
+    }
+}</code></pre>
+            <div class="code-header">NombreDialog.kt</div>
+<pre><code>class NombreDialog : DialogFragment() {
+    private val viewModel: NombresViewModel by activityViewModels()
+    private lateinit var binding: DialogNombreBinding
+
+    override fun onCreateView(...): View {
+        binding = DialogNombreBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, s: Bundle?) {
+        binding.btnGuardar.setOnClickListener {
+            viewModel.add(binding.edtNombre.text.toString())
+            dismiss()
+        }
+    }
+}</code></pre>
+            <div class="code-header">MainFragment.kt</div>
+<pre><code>private val viewModel: NombresViewModel by activityViewModels()
+
+override fun onViewCreated(view: View, s: Bundle?) {
+    viewModel.nombres.observe(viewLifecycleOwner) { lista -&gt;
+        binding.txtNombres.text = lista.joinToString(", ")
+    }
+
+    binding.btnAnadir.setOnClickListener {
+        NombreDialog().show(parentFragmentManager, "nombre")
+    }
+}</code></pre>
+          </details>
+        </div>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ 10. CHEATSHEET ============ -->
+      <!-- ================================================== -->
+      <section id="cheatsheet">
+        <h2>10. Cheatsheet</h2>
+
+        <h3>Imports más comunes</h3>
+
+        <div class="code-header">imports.kt</div>
+<pre><code>// Activity y Fragment
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.DialogFragment
+
+// ViewModel y LiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
+
+// RecyclerView
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
+
+// Diálogos
+import androidx.appcompat.app.AlertDialog
+
+// Material y Toast
+import com.google.android.material.snackbar.Snackbar
+import android.widget.Toast</code></pre>
+
+        <h3>Tabla de equivalencias rápidas</h3>
+
+        <table>
+          <thead>
+            <tr><th>Quiero…</th><th>Uso</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Crear una pantalla completa</td><td><code>class XActivity : AppCompatActivity()</code></td></tr>
+            <tr><td>Crear una sub-pantalla reutilizable</td><td><code>class XFragment : Fragment()</code></td></tr>
+            <tr><td>Acceder a vistas XML sin findViewById</td><td><code>ViewBinding</code> + <code>binding.idVista</code></td></tr>
+            <tr><td>Mostrar una lista</td><td><code>RecyclerView</code> + <code>Adapter</code> + <code>ViewHolder</code></td></tr>
+            <tr><td>Mostrar un mensaje corto</td><td><code>Toast.makeText(ctx, "…", Toast.LENGTH_SHORT).show()</code></td></tr>
+            <tr><td>Confirmar una acción</td><td><code>AlertDialog.Builder(ctx).setTitle(…).setMessage(…)</code></td></tr>
+            <tr><td>Diálogo con varios campos</td><td><code>DialogFragment</code></td></tr>
+            <tr><td>Guardar estado entre rotaciones</td><td><code>ViewModel</code></td></tr>
+            <tr><td>UI que reacciona a cambios de datos</td><td><code>LiveData</code> + <code>observe()</code></td></tr>
+            <tr><td>Compartir datos entre Fragments</td><td><code>by activityViewModels()</code></td></tr>
+            <tr><td>Llamar a una API REST</td><td><code>Retrofit</code></td></tr>
+            <tr><td>Cargar una imagen desde URL</td><td><code>Glide.with(…).load(url).into(view)</code></td></tr>
+          </tbody>
+        </table>
+
+        <h3>Ciclo de vida — chuleta visual</h3>
+
+        <table>
+          <thead>
+            <tr><th>Activity</th><th>Fragment</th><th>Para qué</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>onCreate</code></td><td><code>onCreate</code></td><td>Setup inicial (no toques vistas en Fragment aquí)</td></tr>
+            <tr><td>—</td><td><code>onCreateView</code></td><td>Inflar layout del Fragment</td></tr>
+            <tr><td>—</td><td><code>onViewCreated</code></td><td>Configurar vistas y listeners</td></tr>
+            <tr><td><code>onStart</code></td><td><code>onStart</code></td><td>Visible</td></tr>
+            <tr><td><code>onResume</code></td><td><code>onResume</code></td><td>Interactúa con el usuario</td></tr>
+            <tr><td><code>onPause</code></td><td><code>onPause</code></td><td>Pausa lo que consume recursos</td></tr>
+            <tr><td><code>onStop</code></td><td><code>onStop</code></td><td>Ya no visible</td></tr>
+            <tr><td>—</td><td><code>onDestroyView</code></td><td>Libera la View (binding = null)</td></tr>
+            <tr><td><code>onDestroy</code></td><td><code>onDestroy</code></td><td>Destruido del todo</td></tr>
+          </tbody>
+        </table>
+
+        <div class="note success">
+          <div class="note-title">Las 5 reglas de oro de Android</div>
+          <ol>
+            <li><strong>Usa ViewBinding</strong> en lugar de <code>findViewById</code>.</li>
+            <li><strong>En Fragments</strong>, pon <code>_binding = null</code> en
+              <code>onDestroyView()</code> para evitar memory leaks.</li>
+            <li><strong>La lógica va en el ViewModel</strong>, no en la Activity ni
+              en el Fragment. La UI solo pinta.</li>
+            <li><strong>Para compartir datos</strong> entre Fragments y diálogos,
+              usa <code>by activityViewModels()</code>.</li>
+            <li><strong>Observa LiveData con <code>viewLifecycleOwner</code></strong>
+              en Fragments (no con <code>this</code>) para evitar crashes tras rotar.</li>
+          </ol>
+        </div>
+
+        <div class="note">
+          <div class="note-title">¿Y ahora qué?</div>
+          <p>Cuando domines MVVM con ViewModel + LiveData, prueba:</p>
+          <ul>
+            <li><strong>Coroutines y Flow</strong> para operaciones asíncronas.</li>
+            <li><strong>Room</strong> para guardar datos localmente.</li>
+            <li><strong>Retrofit</strong> para consumir tu propio backend (¡los
+              apuntes de <a href="springboot.html">Spring Boot</a> te enseñan a crearlo!).</li>
+            <li><strong>Jetpack Compose</strong> para hacer UIs declarativas, sin XML.</li>
+          </ul>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ================== Footer ================== -->
+  <footer class="footer">
+    <p><strong>Estudio</strong> · Innovation starts here</p>
+    <p>Apuntes hechos por y para alumnos · Curso 2025-2026</p>
+  </footer>
+
+  <script src="assets/main.js"></script>
+</body>
+</html>

@@ -25,106 +25,125 @@
     </nav>
   </header>
 
-  <!-- ================== Título ================== -->
+  <!-- ================== Página título ================== -->
   <section class="page-title">
-    <h1>Spring Boot · API REST + JWT</h1>
-    <p>Aprende a construir tu primera API REST con Spring Boot, acceso a base de datos
-       con JPA y autenticación segura con JSON Web Tokens. Con ejemplos sencillos,
-       ejercicios y resultados.</p>
+    <div class="page-title-inner">
+      <h1>Spring Boot · API REST</h1>
+      <p class="subtitle">Apuntes para alumnos: construir una API REST con Spring Boot,
+        acceso a base de datos con JPA, conversión DTO/Mapper y autenticación con JWT.
+        Con ejemplos prácticos y ejercicios resueltos.</p>
+      <div class="chips">
+        <span class="chip">Spring Boot 3.2</span>
+        <span class="chip">Java 17</span>
+        <span class="chip">Spring Data JPA</span>
+        <span class="chip">Spring Security 6</span>
+        <span class="chip">JJWT 0.12</span>
+        <span class="chip">MySQL</span>
+      </div>
+    </div>
   </section>
 
   <!-- ================== Contenido ================== -->
   <div class="notes-layout">
 
-    <!-- ============== TOC ============== -->
+    <!-- ============== Sidebar / TOC ============== -->
     <aside class="toc">
       <h4>Índice</h4>
       <ul>
-        <li><a href="#intro">1. ¿Qué es Spring Boot?</a></li>
-        <li><a href="#proyecto">2. Crear el proyecto</a></li>
-        <li><a href="#api-rest">3. API REST</a></li>
-        <li class="sub"><a href="#verbos">3.1 Verbos HTTP</a></li>
-        <li class="sub"><a href="#status">3.2 Códigos de estado</a></li>
-        <li class="sub"><a href="#controller">3.3 Primer Controller</a></li>
-        <li><a href="#jpa">4. Spring Data JPA</a></li>
-        <li class="sub"><a href="#entity">4.1 Entidades</a></li>
-        <li class="sub"><a href="#repository">4.2 Repository</a></li>
-        <li class="sub"><a href="#service">4.3 Service</a></li>
-        <li><a href="#dto">5. DTOs y validación</a></li>
-        <li><a href="#jwt">6. Seguridad con JWT</a></li>
+        <li><a href="#spring-boot">1. Spring Boot</a></li>
+        <li class="sub"><a href="#que-es">1.1 ¿Qué es?</a></li>
+        <li class="sub"><a href="#crear-proyecto">1.2 Crear el proyecto</a></li>
+        <li class="sub"><a href="#properties">1.3 application.properties</a></li>
+
+        <li><a href="#spring-jdbc">2. Spring JDBC</a></li>
+
+        <li><a href="#spring-jpa">3. Spring Data JPA</a></li>
+        <li class="sub"><a href="#entity">3.1 Entidades</a></li>
+        <li class="sub"><a href="#repository">3.2 Repository</a></li>
+        <li class="sub"><a href="#service">3.3 Service</a></li>
+        <li class="sub"><a href="#relaciones">3.4 Relaciones</a></li>
+
+        <li><a href="#api-rest">4. API REST</a></li>
+        <li class="sub"><a href="#verbos">4.1 Verbos HTTP</a></li>
+        <li class="sub"><a href="#status">4.2 Códigos de estado</a></li>
+        <li class="sub"><a href="#controller">4.3 Controllers</a></li>
+
+        <li><a href="#dtos-mappers">5. DTOs y Mappers</a></li>
+        <li class="sub"><a href="#dtos">5.1 DTOs</a></li>
+        <li class="sub"><a href="#mappers">5.2 Mappers</a></li>
+        <li class="sub"><a href="#mapper-service">5.3 Uso en el Service</a></li>
+        <li class="sub"><a href="#mapper-controller">5.4 Uso en el Controller</a></li>
+
+        <li><a href="#security">6. Spring Security + JWT</a></li>
         <li class="sub"><a href="#que-es-jwt">6.1 ¿Qué es un JWT?</a></li>
-        <li class="sub"><a href="#flujo-jwt">6.2 Flujo de autenticación</a></li>
+        <li class="sub"><a href="#flujo-jwt">6.2 Flujo</a></li>
         <li class="sub"><a href="#bcrypt">6.3 BCrypt</a></li>
-        <li class="sub"><a href="#jwt-impl">6.4 Implementación paso a paso</a></li>
+        <li class="sub"><a href="#jwt-impl">6.4 Implementación</a></li>
+
         <li><a href="#ejercicios">7. Ejercicios</a></li>
-        <li><a href="#anotaciones">8. Anotaciones clave</a></li>
+        <li><a href="#anotaciones">8. Anotaciones</a></li>
       </ul>
     </aside>
 
     <!-- ============== Contenido principal ============== -->
     <main class="content">
 
-      <!-- ============ 1. INTRO ============ -->
-      <section id="intro">
-        <h2>1. ¿Qué es Spring Boot?</h2>
+      <!-- ================================================== -->
+      <!-- ============ 1. SPRING BOOT ============ -->
+      <!-- ================================================== -->
+      <section id="spring-boot">
+        <h2>1. Spring Boot</h2>
 
-        <p><strong>Spring Boot</strong> es un <em>framework</em> de Java pensado para construir
-           aplicaciones web (sobre todo APIs) de forma rápida y con muy poca configuración.
-           Imagina que Spring "normal" te pide montar tú mismo todas las piezas (servidor,
-           conexión a base de datos, seguridad…). Spring Boot ya viene con todas esas piezas
-           ensambladas: tú solo te preocupas de la lógica de tu aplicación.</p>
+        <h3 id="que-es">1.1 ¿Qué es Spring Boot?</h3>
+        <p><strong>Spring Boot</strong> es un framework de Java pensado para construir
+          aplicaciones web (especialmente APIs REST) de forma rápida y con muy poca
+          configuración. Imagina que Spring "normal" te pide montar tú mismo todas las
+          piezas (servidor, conexión a base de datos, seguridad…). Spring Boot ya viene
+          con todas esas piezas ensambladas: tú te dedicas solo a la lógica.</p>
 
-        <h3>¿Qué ventajas tiene?</h3>
+        <p>Sus principales características son:</p>
         <ul>
-          <li><strong>Servidor incrustado:</strong> incluye Tomcat dentro, no necesitas instalarlo.</li>
-          <li><strong>Auto-configuración:</strong> detecta las librerías que añades y las
-              configura solas.</li>
-          <li><strong>Starters:</strong> dependencias agrupadas (ej. <code>spring-boot-starter-web</code>)
-              que añaden todo lo necesario para una funcionalidad.</li>
-          <li><strong>Producción real:</strong> métricas, health-checks y logs integrados.</li>
+          <li><strong>Servidor incrustado</strong> (Tomcat / Jetty): no necesitas instalarlo aparte.</li>
+          <li><strong>Auto-configuración</strong>: detecta las librerías añadidas y las configura sola.</li>
+          <li><strong>Starters</strong>: dependencias agrupadas (<code>spring-boot-starter-web</code>,
+              <code>spring-boot-starter-data-jpa</code>…) que añaden todo lo necesario para una funcionalidad.</li>
+          <li><strong>Anotaciones en lugar de XML</strong>: <code>@RestController</code>,
+              <code>@Service</code>, <code>@Entity</code>…</li>
+          <li><strong>Listo para producción</strong>: métricas, health-checks y logs incluidos.</li>
         </ul>
 
-        <div class="box info">
-          <strong>Idea clave:</strong> Spring Boot = Spring + configuración automática
-          + servidor incrustado. Tu proyecto es un <code>.jar</code> ejecutable: con
-          <code>java -jar mi-app.jar</code> ya lo tienes corriendo.
+        <div class="note">
+          <div class="note-title">Idea clave</div>
+          <p>Spring Boot = Spring + configuración automática + servidor incrustado. Tu proyecto
+            se empaqueta como un <code>.jar</code> ejecutable: con <code>java -jar mi-app.jar</code>
+            ya está corriendo.</p>
         </div>
 
-        <h3>Lenguaje y versión</h3>
-        <p>En estos apuntes usaremos <strong>Java 17</strong> y <strong>Spring Boot 3.2</strong>.
-           Java 17 es la versión LTS (soporte largo) más usada hoy y Spring Boot 3 requiere mínimo
-           Java 17.</p>
-      </section>
-
-      <!-- ============ 2. PROYECTO ============ -->
-      <section id="proyecto">
-        <h2>2. Crear el proyecto</h2>
-
+        <h3 id="crear-proyecto">1.2 Crear el proyecto</h3>
         <p>La forma más fácil es usar <a href="https://start.spring.io" target="_blank">Spring Initializr</a>,
-           una web que te genera el esqueleto del proyecto.</p>
+          una web que genera el esqueleto del proyecto.</p>
 
-        <h3>Pasos</h3>
         <ol>
           <li>Entra en <code>start.spring.io</code>.</li>
-          <li>Elige: <strong>Maven</strong>, <strong>Java 17</strong>, <strong>Spring Boot 3.2.x</strong>.</li>
+          <li>Selecciona: <strong>Maven</strong>, <strong>Java 17</strong>, <strong>Spring Boot 3.2.x</strong>.</li>
           <li>Group: <code>com.estudio</code>, Artifact: <code>demo</code>.</li>
-          <li>Añade las dependencias:
+          <li>Añade dependencias:
             <ul>
               <li><code>Spring Web</code> — para crear APIs REST.</li>
-              <li><code>Spring Data JPA</code> — para acceder a la base de datos.</li>
+              <li><code>Spring Data JPA</code> — para acceso a base de datos.</li>
               <li><code>MySQL Driver</code> — para conectarse a MySQL.</li>
-              <li><code>Spring Security</code> — para la parte de JWT (más adelante).</li>
-              <li><code>Lombok</code> — para escribir menos código repetitivo.</li>
-              <li><code>Validation</code> — para validar los datos que llegan.</li>
+              <li><code>Spring Security</code> — para la parte de JWT.</li>
+              <li><code>Lombok</code> — para evitar código repetitivo.</li>
+              <li><code>Validation</code> — para validar datos de entrada.</li>
             </ul>
           </li>
-          <li>Pulsa <strong>Generate</strong>: descargas un <code>.zip</code>, lo descomprimes
-              y lo abres en IntelliJ o VS Code.</li>
+          <li>Pulsa <strong>Generate</strong>, descomprime el <code>.zip</code> y ábrelo en IntelliJ o VS Code.</li>
         </ol>
 
-        <h3>application.properties</h3>
+        <h3 id="properties">1.3 application.properties</h3>
         <p>Es el fichero de configuración. Aquí decimos a Spring Boot cómo conectarse a la BD:</p>
 
+        <div class="code-header">src/main/resources/application.properties</div>
 <pre><code># Puerto en el que arranca la aplicación
 server.port=8080
 
@@ -137,71 +156,300 @@ spring.datasource.password=root
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true</code></pre>
 
-        <div class="box warning">
-          <strong>En producción</strong> nunca dejes la contraseña en el fichero;
-          usa <em>variables de entorno</em>.
+        <div class="note warning">
+          <div class="note-title">En producción</div>
+          <p>Nunca dejes la contraseña en el fichero de configuración; usa
+            <em>variables de entorno</em>.</p>
         </div>
       </section>
 
-      <!-- ============ 3. API REST ============ -->
-      <section id="api-rest">
-        <h2>3. API REST: conceptos básicos</h2>
+      <!-- ================================================== -->
+      <!-- ============ 2. SPRING JDBC ============ -->
+      <!-- ================================================== -->
+      <section id="spring-jdbc">
+        <h2>2. Spring JDBC</h2>
 
-        <p>Una <strong>API REST</strong> es una manera estándar de comunicar dos programas a
-           través de HTTP. Tú haces una petición a una URL, y el servidor te responde con
-           datos (normalmente en formato JSON).</p>
+        <p><strong>Spring JDBC</strong> es la primera capa de acceso a datos del ecosistema
+          Spring. Te ofrece la clase <code>JdbcTemplate</code>, que simplifica enormemente
+          el uso de JDBC puro de Java, pero <em>aún escribes tú mismo el SQL</em>.</p>
 
-        <p><strong>REST</strong> = <em>Representational State Transfer</em>. Es un estilo
-           de arquitectura: cada recurso (un usuario, un libro, un pedido…) tiene su URL,
-           y los <em>verbos HTTP</em> indican qué quieres hacer.</p>
-
-        <!-- ====== 3.1 Verbos HTTP ====== -->
-        <h3 id="verbos">3.1 Verbos HTTP</h3>
-
+        <h3>Ventajas e inconvenientes</h3>
         <table>
           <thead>
-            <tr><th>Verbo</th><th>Significado</th><th>Ejemplo</th></tr>
+            <tr><th>Ventajas</th><th>Inconvenientes</th></tr>
           </thead>
           <tbody>
-            <tr><td><code>GET</code></td><td>Pedir datos (leer)</td><td><code>GET /api/libros</code> → lista libros</td></tr>
+            <tr>
+              <td>
+                <ul>
+                  <li>Control total sobre el SQL.</li>
+                  <li>Más rápido para consultas complejas.</li>
+                  <li>Sin abstracciones "mágicas".</li>
+                </ul>
+              </td>
+              <td>
+                <ul>
+                  <li>Escribes mucho código repetitivo (boilerplate).</li>
+                  <li>No portable entre BDs (cada SGBD tiene su dialecto).</li>
+                  <li>Tienes que mapear filas a objetos a mano.</li>
+                </ul>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="example">
+          <h4>Ejemplo</h4>
+          <p>Una consulta con <code>JdbcTemplate</code> para listar libros:</p>
+
+          <div class="code-header">repository/LibroJdbcRepository.java</div>
+<pre><code>@Repository
+public class LibroJdbcRepository {
+
+    private final JdbcTemplate jdbc;
+
+    public LibroJdbcRepository(JdbcTemplate jdbc) {
+        this.jdbc = jdbc;
+    }
+
+    public List&lt;Libro&gt; findAll() {
+        String sql = "SELECT id, titulo, autor, anyo FROM libros";
+
+        return jdbc.query(sql, (rs, row) -&gt; new Libro(
+                rs.getLong("id"),
+                rs.getString("titulo"),
+                rs.getString("autor"),
+                rs.getInt("anyo")
+        ));
+    }
+
+    public int insertar(Libro l) {
+        return jdbc.update(
+            "INSERT INTO libros (titulo, autor, anyo) VALUES (?, ?, ?)",
+            l.getTitulo(), l.getAutor(), l.getAnyo()
+        );
+    }
+}</code></pre>
+        </div>
+
+        <div class="note">
+          <div class="note-title">En estos apuntes</div>
+          <p>A partir de ahora usaremos siempre <strong>Spring Data JPA</strong> en lugar
+            de JDBC, porque es lo que se usa en proyectos modernos. Spring JDBC se queda
+            como referencia para entender de dónde venimos.</p>
+        </div>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ 3. SPRING JPA ============ -->
+      <!-- ================================================== -->
+      <section id="spring-jpa">
+        <h2>3. Spring Data JPA</h2>
+
+        <p><strong>Spring Data JPA</strong> es una capa sobre Hibernate que permite hacer
+          CRUD (Crear, Leer, Actualizar, Borrar) <em>sin escribir SQL</em>. Tú defines
+          clases Java (entidades) y JPA se encarga de crear las tablas y traducir los
+          métodos a SQL.</p>
+
+        <h3 id="entity">3.1 Entidades</h3>
+        <p>Una <strong>entidad</strong> es una clase Java que representa una tabla.
+          Cada atributo es una columna.</p>
+
+        <div class="code-header">entity/Libro.java</div>
+<pre><code>package com.estudio.demo.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+@Entity                              // ← es una entidad JPA
+@Table(name = "libros")              // ← tabla "libros"
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Libro {
+
+    @Id                                                       // clave primaria
+    @GeneratedValue(strategy = GenerationType.IDENTITY)       // auto-incremental
+    private Long id;
+
+    @Column(nullable = false, length = 100)
+    private String titulo;
+
+    @Column(nullable = false)
+    private String autor;
+
+    private Integer anyo;
+}</code></pre>
+
+        <p>Al arrancar la aplicación, Hibernate ejecuta automáticamente:</p>
+<pre><code>CREATE TABLE libros (
+    id     BIGINT       AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(100) NOT NULL,
+    autor  VARCHAR(255) NOT NULL,
+    anyo   INT
+);</code></pre>
+
+        <h3 id="repository">3.2 Repository</h3>
+        <p>El <strong>repository</strong> es la interfaz que te permite acceder a la BD.
+          Lo asombroso es que tú solo declaras la interfaz: ¡Spring escribe la implementación!</p>
+
+        <div class="code-header">repository/LibroRepository.java</div>
+<pre><code>package com.estudio.demo.repository;
+
+import com.estudio.demo.entity.Libro;
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
+
+public interface LibroRepository extends JpaRepository&lt;Libro, Long&gt; {
+
+    // Spring lee el nombre del método y genera la SQL automáticamente:
+    List&lt;Libro&gt; findByAutor(String autor);
+    // → SELECT * FROM libros WHERE autor = ?
+
+    List&lt;Libro&gt; findByAnyoGreaterThan(int anyo);
+    // → SELECT * FROM libros WHERE anyo &gt; ?
+}</code></pre>
+
+        <div class="note">
+          <div class="note-title">Query derivation</div>
+          <p>Spring Data <em>deriva</em> la SQL del nombre del método: <code>findByX</code>,
+            <code>findByXAndY</code>, <code>existsByX</code>, <code>countByX</code>… son
+            automáticos.</p>
+        </div>
+
+        <p>Heredando de <code>JpaRepository</code> consigues gratis estos métodos:</p>
+        <table>
+          <thead><tr><th>Método</th><th>Qué hace</th></tr></thead>
+          <tbody>
+            <tr><td><code>save(libro)</code></td><td>INSERT o UPDATE</td></tr>
+            <tr><td><code>findById(id)</code></td><td>SELECT por id</td></tr>
+            <tr><td><code>findAll()</code></td><td>Devuelve todos</td></tr>
+            <tr><td><code>deleteById(id)</code></td><td>DELETE por id</td></tr>
+            <tr><td><code>count()</code></td><td>Cuenta filas</td></tr>
+            <tr><td><code>existsById(id)</code></td><td>Comprueba si existe</td></tr>
+          </tbody>
+        </table>
+
+        <h3 id="service">3.3 Service</h3>
+        <p>Para tener el código ordenado, separamos en capas:</p>
+        <ul>
+          <li><strong>Controller</strong> — recibe las peticiones HTTP.</li>
+          <li><strong>Service</strong> — lógica de negocio (validaciones, reglas).</li>
+          <li><strong>Repository</strong> — habla con la BD.</li>
+        </ul>
+
+        <div class="code-header">service/LibroService.java</div>
+<pre><code>@Service
+@RequiredArgsConstructor
+public class LibroService {
+
+    private final LibroRepository repo;   // Spring lo inyecta solo
+
+    public List&lt;Libro&gt; listar()              { return repo.findAll(); }
+    public Libro      crear(Libro l)         { return repo.save(l); }
+    public Libro      buscar(Long id)        { return repo.findById(id).orElseThrow(); }
+    public void       borrar(Long id)        { repo.deleteById(id); }
+}</code></pre>
+
+        <h3 id="relaciones">3.4 Relaciones entre entidades</h3>
+        <p>JPA permite expresar relaciones entre tablas con anotaciones:</p>
+
+        <table>
+          <thead><tr><th>Anotación</th><th>Significado</th><th>Ejemplo</th></tr></thead>
+          <tbody>
+            <tr><td><code>@OneToOne</code></td><td>Uno a uno</td><td>Estudiante ↔ expediente</td></tr>
+            <tr><td><code>@OneToMany</code></td><td>Uno a muchos</td><td>Autor → libros</td></tr>
+            <tr><td><code>@ManyToOne</code></td><td>Muchos a uno</td><td>Libro → autor</td></tr>
+            <tr><td><code>@ManyToMany</code></td><td>Muchos a muchos</td><td>Libros ↔ géneros</td></tr>
+          </tbody>
+        </table>
+
+        <div class="example">
+          <h4>Ejemplo de relación @OneToMany / @ManyToOne</h4>
+
+          <div class="code-header">entity/Autor.java</div>
+<pre><code>@Entity
+@Data
+public class Autor {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String nombre;
+
+    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL)
+    private List&lt;Libro&gt; libros;
+}</code></pre>
+
+          <div class="code-header">entity/Libro.java</div>
+<pre><code>@Entity
+@Data
+public class Libro {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String titulo;
+
+    @ManyToOne
+    @JoinColumn(name = "autor_id")     // crea la columna FK en la tabla libros
+    private Autor autor;
+}</code></pre>
+        </div>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ 4. API REST ============ -->
+      <!-- ================================================== -->
+      <section id="api-rest">
+        <h2>4. API REST</h2>
+
+        <p>Una <strong>API REST</strong> es una manera estándar de comunicar dos programas
+          a través de HTTP. El cliente hace una petición a una URL y el servidor responde
+          con datos en formato JSON.</p>
+
+        <p><strong>REST</strong> significa <em>Representational State Transfer</em>: es un
+          estilo de arquitectura donde cada recurso (libro, usuario, pedido…) tiene su URL,
+          y los <em>verbos HTTP</em> indican qué quieres hacer.</p>
+
+        <h3 id="verbos">4.1 Verbos HTTP</h3>
+        <table>
+          <thead><tr><th>Verbo</th><th>Significado</th><th>Ejemplo</th></tr></thead>
+          <tbody>
+            <tr><td><code>GET</code></td><td>Leer datos</td><td><code>GET /api/libros</code> → lista libros</td></tr>
             <tr><td><code>POST</code></td><td>Crear un recurso nuevo</td><td><code>POST /api/libros</code> → añade un libro</td></tr>
             <tr><td><code>PUT</code></td><td>Modificar uno existente</td><td><code>PUT /api/libros/5</code> → actualiza el libro 5</td></tr>
             <tr><td><code>DELETE</code></td><td>Borrar</td><td><code>DELETE /api/libros/5</code> → borra el libro 5</td></tr>
           </tbody>
         </table>
 
-        <!-- ====== 3.2 Status codes ====== -->
-        <h3 id="status">3.2 Códigos de estado</h3>
-        <p>Cuando el servidor te responde, además de los datos manda un número que indica
-           si todo ha ido bien o ha fallado algo:</p>
+        <h3 id="status">4.2 Códigos de estado</h3>
+        <p>El servidor responde con un código numérico que indica si todo ha ido bien o no:</p>
         <table>
           <thead><tr><th>Código</th><th>Significado</th></tr></thead>
           <tbody>
             <tr><td>200 OK</td><td>Todo correcto</td></tr>
-            <tr><td>201 Created</td><td>Has creado un recurso nuevo</td></tr>
+            <tr><td>201 Created</td><td>Recurso creado</td></tr>
             <tr><td>204 No Content</td><td>OK pero sin datos en la respuesta</td></tr>
-            <tr><td>400 Bad Request</td><td>El cliente ha enviado datos mal</td></tr>
+            <tr><td>400 Bad Request</td><td>Datos enviados incorrectos</td></tr>
             <tr><td>401 Unauthorized</td><td>Falta autenticarse</td></tr>
-            <tr><td>403 Forbidden</td><td>Estás autenticado pero no tienes permisos</td></tr>
+            <tr><td>403 Forbidden</td><td>Autenticado pero sin permisos</td></tr>
             <tr><td>404 Not Found</td><td>El recurso no existe</td></tr>
-            <tr><td>500 Internal Server Error</td><td>Ha petado el servidor</td></tr>
+            <tr><td>500 Internal Server Error</td><td>Error en el servidor</td></tr>
           </tbody>
         </table>
 
-        <!-- ====== 3.3 Controller ====== -->
-        <h3 id="controller">3.3 Tu primer Controller</h3>
-
-        <p>En Spring Boot, los <strong>controllers</strong> son las clases que reciben las
-           peticiones HTTP. Para crearlas usamos anotaciones (cosas que empiezan por <code>@</code>):</p>
+        <h3 id="controller">4.3 Controllers</h3>
+        <p>Los <strong>controllers</strong> son las clases que reciben las peticiones HTTP.
+          Usan anotaciones que empiezan por <code>@</code>:</p>
 
         <div class="example">
           <h4>Ejemplo: Hola Mundo</h4>
+
+          <div class="code-header">controller/HolaController.java</div>
 <pre><code>package com.estudio.demo.controller;
 
 import org.springframework.web.bind.annotation.*;
 
-@RestController                      // ← esta clase responde con JSON
-@RequestMapping("/api")              // ← todas las URLs empiezan por /api
+@RestController                      // ← clase que responde con JSON
+@RequestMapping("/api")              // ← prefijo común para las URLs
 public class HolaController {
 
     @GetMapping("/hola")             // ← GET /api/hola
@@ -215,183 +463,24 @@ public class HolaController {
     }
 }</code></pre>
 
-          <p>Al arrancar la aplicación (<code>./mvnw spring-boot:run</code>) y entrar en
-             el navegador a <code>http://localhost:8080/api/hola/Marta</code>, verás:</p>
+          <p>Arrancando la app (<code>./mvnw spring-boot:run</code>) y abriendo
+            <code>http://localhost:8080/api/hola/Marta</code>:</p>
           <div class="result">¡Hola, Marta!</div>
         </div>
 
-        <h4>Anotaciones que aparecen aquí</h4>
+        <h4>Anotaciones del ejemplo</h4>
         <ul>
-          <li><code>@RestController</code>: marca la clase como un controller que devuelve
-              datos (no páginas HTML).</li>
-          <li><code>@RequestMapping("/api")</code>: prefijo común para todas las URLs.</li>
-          <li><code>@GetMapping("/hola")</code>: este método responde al verbo <code>GET</code>
-              en esa ruta.</li>
-          <li><code>@PathVariable</code>: coge una parte de la URL y la mete en una variable.</li>
+          <li><code>@RestController</code> — marca la clase como controller que devuelve datos (no HTML).</li>
+          <li><code>@RequestMapping("/api")</code> — prefijo común para todas las URLs de la clase.</li>
+          <li><code>@GetMapping("/hola")</code> — este método responde al verbo <code>GET</code> en esa ruta.</li>
+          <li><code>@PathVariable</code> — coge una parte de la URL y la mete en una variable.</li>
         </ul>
 
         <div class="example">
-          <h4>Ejemplo: recibir datos con POST</h4>
-<pre><code>@PostMapping("/saludo")
-public String saludar(@RequestBody Map&lt;String, String&gt; body) {
-    String nombre = body.get("nombre");
-    return "Encantado, " + nombre + "!";
-}</code></pre>
+          <h4>Ejemplo: CRUD completo de libros</h4>
 
-          <p>Petición desde Postman:</p>
-<pre><code>POST http://localhost:8080/api/saludo
-Content-Type: application/json
-
-{ "nombre": "Aitor" }</code></pre>
-
-          <div class="result">Encantado, Aitor!</div>
-        </div>
-
-        <div class="box info">
-          <strong>¿Qué es JSON?</strong> Es un formato de texto para representar datos:
-          parejas <code>"clave": valor</code> entre llaves. Es lo que se manda y se recibe
-          en una API REST.
-        </div>
-      </section>
-
-      <!-- ============ 4. JPA ============ -->
-      <section id="jpa">
-        <h2>4. Spring Data JPA: hablar con la base de datos</h2>
-
-        <p>Para guardar datos necesitamos una base de datos. <strong>Spring Data JPA</strong>
-           es una capa por encima de Hibernate que te permite hacer CRUD (Crear, Leer,
-           Actualizar, Borrar) <em>sin escribir SQL</em>. Tú defines clases Java, y JPA
-           crea las tablas y traduce los métodos a SQL.</p>
-
-        <!-- ====== 4.1 Entidad ====== -->
-        <h3 id="entity">4.1 Entidad</h3>
-
-        <p>Una <strong>entidad</strong> es una clase Java que representa una tabla de la
-           base de datos. Cada atributo = una columna.</p>
-
-        <div class="example">
-          <h4>Ejemplo: entidad Libro</h4>
-<pre><code>package com.estudio.demo.entity;
-
-import jakarta.persistence.*;
-import lombok.*;
-
-@Entity                              // ← es una entidad JPA
-@Table(name = "libros")              // ← tabla "libros"
-@Data                                // ← Lombok: getters/setters/toString
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class Libro {
-
-    @Id                              // ← clave primaria
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // auto-incremental
-    private Long id;
-
-    @Column(nullable = false, length = 100)
-    private String titulo;
-
-    @Column(nullable = false)
-    private String autor;
-
-    private Integer anyo;
-}</code></pre>
-        </div>
-
-        <p>Al arrancar la app, Hibernate ejecutará algo como:</p>
-<pre><code>CREATE TABLE libros (
-    id     BIGINT       AUTO_INCREMENT PRIMARY KEY,
-    titulo VARCHAR(100) NOT NULL,
-    autor  VARCHAR(255) NOT NULL,
-    anyo   INT
-);</code></pre>
-
-        <!-- ====== 4.2 Repository ====== -->
-        <h3 id="repository">4.2 Repository</h3>
-
-        <p>El <strong>repository</strong> es la interfaz que te permite acceder a la BD.
-           Lo más asombroso: tú solo declaras la interfaz, ¡Spring escribe la implementación!</p>
-
-        <div class="example">
-          <h4>Ejemplo</h4>
-<pre><code>package com.estudio.demo.repository;
-
-import com.estudio.demo.entity.Libro;
-import org.springframework.data.jpa.repository.JpaRepository;
-import java.util.List;
-
-public interface LibroRepository extends JpaRepository&lt;Libro, Long&gt; {
-
-    // Spring lee el nombre del método y genera la SQL solo:
-    List&lt;Libro&gt; findByAutor(String autor);
-    // → SELECT * FROM libros WHERE autor = ?
-
-    List&lt;Libro&gt; findByAnyoGreaterThan(int anyo);
-    // → SELECT * FROM libros WHERE anyo &gt; ?
-}</code></pre>
-        </div>
-
-        <div class="box info">
-          <strong>Query derivation:</strong> Spring Data <em>deriva</em> la SQL del nombre
-          del método. <code>findByX</code>, <code>findByXAndY</code>,
-          <code>existsByX</code>, <code>countByX</code>… son automáticos.
-        </div>
-
-        <p><code>JpaRepository</code> ya te trae gratis estos métodos:</p>
-        <table>
-          <thead><tr><th>Método</th><th>Qué hace</th></tr></thead>
-          <tbody>
-            <tr><td><code>save(libro)</code></td><td>INSERT o UPDATE</td></tr>
-            <tr><td><code>findById(id)</code></td><td>SELECT por id</td></tr>
-            <tr><td><code>findAll()</code></td><td>Devuelve todos</td></tr>
-            <tr><td><code>deleteById(id)</code></td><td>DELETE por id</td></tr>
-            <tr><td><code>count()</code></td><td>Cuenta filas</td></tr>
-          </tbody>
-        </table>
-
-        <!-- ====== 4.3 Service ====== -->
-        <h3 id="service">4.3 Service y Controller juntos</h3>
-
-        <p>Para mantener el código ordenado, separamos en capas:</p>
-        <ul>
-          <li><strong>Controller</strong> — recibe peticiones HTTP.</li>
-          <li><strong>Service</strong> — lógica de negocio.</li>
-          <li><strong>Repository</strong> — habla con la BD.</li>
-        </ul>
-
-        <div class="example">
-          <h4>LibroService.java</h4>
-<pre><code>package com.estudio.demo.service;
-
-import com.estudio.demo.entity.Libro;
-import com.estudio.demo.repository.LibroRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import java.util.List;
-
-@Service
-@RequiredArgsConstructor
-public class LibroService {
-
-    private final LibroRepository repo;   // Spring lo inyecta solo
-
-    public List&lt;Libro&gt; listar()              { return repo.findAll(); }
-    public Libro      crear(Libro l)         { return repo.save(l); }
-    public Libro      buscar(Long id)        { return repo.findById(id).orElseThrow(); }
-    public void       borrar(Long id)        { repo.deleteById(id); }
-}</code></pre>
-
-          <h4>LibroController.java</h4>
-<pre><code>package com.estudio.demo.controller;
-
-import com.estudio.demo.entity.Libro;
-import com.estudio.demo.service.LibroService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.*;
-import org.springframework.web.bind.annotation.*;
-import java.util.List;
-
-@RestController
+          <div class="code-header">controller/LibroController.java</div>
+<pre><code>@RestController
 @RequestMapping("/api/libros")
 @RequiredArgsConstructor
 public class LibroController {
@@ -420,105 +509,338 @@ public class LibroController {
     }
 }</code></pre>
 
-          <h4>Prueba con Postman</h4>
+          <p>Petición desde Postman:</p>
 <pre><code>POST http://localhost:8080/api/libros
 Content-Type: application/json
 
 { "titulo": "El Hobbit", "autor": "Tolkien", "anyo": 1937 }</code></pre>
-          <div class="result">{ "id": 1, "titulo": "El Hobbit", "autor": "Tolkien", "anyo": 1937 }</div>
-
-<pre><code>GET http://localhost:8080/api/libros</code></pre>
-          <div class="result">[
-  { "id": 1, "titulo": "El Hobbit", "autor": "Tolkien", "anyo": 1937 }
-]</div>
+          <div class="result">HTTP 201 Created
+{ "id": 1, "titulo": "El Hobbit", "autor": "Tolkien", "anyo": 1937 }</div>
         </div>
 
+        <div class="note">
+          <div class="note-title">¿Qué es JSON?</div>
+          <p>JSON es un formato de texto para representar datos: parejas
+            <code>"clave": valor</code> entre llaves. Es lo que se manda y se recibe en
+            una API REST.</p>
+        </div>
       </section>
 
-      <!-- ============ 5. DTOs ============ -->
-      <section id="dto">
-        <h2>5. DTOs y validación</h2>
+      <!-- ================================================== -->
+      <!-- ============ 5. DTOs y MAPPERS ============ -->
+      <!-- ================================================== -->
+      <section id="dtos-mappers">
+        <h2>5. DTOs y Mappers</h2>
 
-        <p>Un <strong>DTO</strong> (Data Transfer Object) es una clase que sirve <em>solo</em>
-           para transportar datos entre el cliente y el servidor. ¿Por qué no usar
-           directamente la entidad?</p>
+        <p>Cómo convertimos entidades JPA en respuestas de API — y peticiones HTTP en
+          objetos persistibles — sin mezclar capas ni exponer el esquema de la base
+          de datos.</p>
 
-        <ul>
-          <li>La entidad puede tener campos que <em>no</em> queremos exponer (ej. contraseña).</li>
-          <li>Los datos que el cliente envía no siempre son iguales a los que guardamos.</li>
-          <li>Permite validar los datos antes de tocarlos.</li>
-        </ul>
-
-        <div class="example">
-          <h4>DTO con validación</h4>
-<pre><code>import jakarta.validation.constraints.*;
-import lombok.Data;
-
-@Data
-public class LibroDTO {
-
-    @NotBlank(message = "El título es obligatorio")
-    @Size(min = 2, max = 100)
-    private String titulo;
-
-    @NotBlank
-    private String autor;
-
-    @Min(value = 1000, message = "Año demasiado antiguo")
-    @Max(value = 2100)
-    private Integer anyo;
-}</code></pre>
-
-          <h4>Uso en el Controller</h4>
-<pre><code>@PostMapping
-public ResponseEntity&lt;Libro&gt; crear(@Valid @RequestBody LibroDTO dto) {
-    Libro l = Libro.builder()
-                   .titulo(dto.getTitulo())
-                   .autor(dto.getAutor())
-                   .anyo(dto.getAnyo())
-                   .build();
-    return ResponseEntity.status(HttpStatus.CREATED).body(service.crear(l));
-}</code></pre>
-
-          <p>Si mandas datos incorrectos:</p>
-<pre><code>POST /api/libros
-{ "titulo": "", "autor": "x", "anyo": 800 }</code></pre>
-          <div class="result">HTTP 400 Bad Request
-{
-  "titulo": "El título es obligatorio",
-  "anyo": "Año demasiado antiguo"
-}</div>
-        </div>
+        <h3 id="dtos">5.1 ¿Qué son los DTOs?</h3>
+        <p>Un <strong>DTO</strong> (Data Transfer Object) es una clase Java sencilla —sin
+          lógica de negocio— cuyo propósito es transportar datos entre capas. En una
+          API REST distinguimos dos tipos:</p>
 
         <table>
-          <thead><tr><th>Anotación</th><th>Validación</th></tr></thead>
+          <thead>
+            <tr><th>Tipo</th><th>Descripción</th><th>Ejemplos</th></tr>
+          </thead>
           <tbody>
-            <tr><td><code>@NotBlank</code></td><td>No null, no vacío, no solo espacios</td></tr>
-            <tr><td><code>@NotNull</code></td><td>No null</td></tr>
-            <tr><td><code>@Size(min, max)</code></td><td>Tamaño de String o lista</td></tr>
-            <tr><td><code>@Email</code></td><td>Formato de email válido</td></tr>
-            <tr><td><code>@Min / @Max</code></td><td>Valor numérico mínimo/máximo</td></tr>
-            <tr><td><code>@Pattern(regex)</code></td><td>Expresión regular</td></tr>
+            <tr>
+              <td><strong>Request DTO</strong></td>
+              <td>Representa el cuerpo de la petición HTTP entrante. Contiene los campos
+                que el cliente puede enviar.</td>
+              <td><code>StudentCreateRequest</code></td>
+            </tr>
+            <tr>
+              <td><strong>Response DTO</strong></td>
+              <td>Representa la respuesta que la API devuelve al cliente. Se usa para
+                controlar qué información se expone.</td>
+              <td><code>StudentDTO</code></td>
+            </tr>
           </tbody>
         </table>
+
+        <div class="note">
+          <div class="note-title">¿Por qué no devolver la entidad JPA directamente?</div>
+          <p>Las entidades JPA (<code>@Entity</code>) están acopladas a la base de datos:
+            contienen anotaciones de persistencia, relaciones bidireccionales y, a menudo,
+            campos que no queremos exponer (contraseñas, claves foráneas internas, etc.).
+            Los DTOs permiten desacoplar lo que se guarda de lo que se envía o se recibe.</p>
+        </div>
+
+        <h4>StudentDTO — Response</h4>
+        <p>Se usa para devolver información de un estudiante al cliente. Incluye un campo
+          <code>academicRecord</code> de tipo <code>AcademicRecordDTO</code>, que devuelve
+          el expediente académico anidado en la misma respuesta.</p>
+
+        <div class="code-header">dto/StudentDTO.java (Response DTO)</div>
+<pre><code>public class StudentDTO {
+    private Long id;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private AcademicRecordDTO academicRecord;   // DTO anidado, NO entidad JPA
+
+    // Constructor sin academicRecord (para evitar recursividad)
+    public StudentDTO(Long id, String firstName, String lastName, String email) { ... }
+
+    // Getters y Setters
+    public AcademicRecordDTO getAcademicRecord() { return academicRecord; }
+    public void setAcademicRecord(AcademicRecordDTO ar) { this.academicRecord = ar; }
+}</code></pre>
+
+        <h4>StudentCreateRequest — Request</h4>
+        <p>Representa el JSON que envía el cliente para crear un estudiante. Permite crear
+          estudiante y expediente en una sola llamada gracias a los campos opcionales
+          <code>recordNumber</code> y <code>recordStatus</code>.</p>
+
+        <div class="code-header">dto/StudentCreateRequest.java (Request DTO)</div>
+<pre><code>public class StudentCreateRequest {
+    private String firstName;      // Obligatorio
+    private String lastName;       // Obligatorio
+    private String email;          // Obligatorio - debe ser único
+    private String recordNumber;   // Opcional - si se envía, se crea el expediente
+    private String recordStatus;   // Opcional - por defecto "ACTIVE"
+    // Getters y Setters...
+}</code></pre>
+
+        <p>Ejemplo de JSON que envía el cliente:</p>
+<pre><code>POST /api/students
+{
+  "firstName":    "Anna",
+  "lastName":     "Garcia",
+  "email":        "anna.garcia@escola.cat",
+  "recordNumber": "EXP-2024-001",
+  "recordStatus": "ACTIVE"
+}</code></pre>
+
+        <h3 id="mappers">5.2 ¿Qué son los Mappers?</h3>
+        <p>Un <strong>Mapper</strong> es una clase de Spring (<code>@Component</code>) que
+          se encarga de la <em>conversión</em> entre entidades y DTOs. Centraliza toda la
+          lógica de transformación en un solo sitio, de manera que ni el service ni el
+          controller tienen que saber cómo se construye un DTO.</p>
+
+        <table>
+          <thead>
+            <tr><th>Método</th><th>Entrada</th><th>Salida</th><th>Quién lo usa</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>toDto()</code></td><td>Entidad JPA</td><td>Response DTO</td><td>Service (lectura y creación)</td></tr>
+            <tr><td><code>toEntity()</code></td><td>Request DTO</td><td>Entidad JPA</td><td>Service (creación y actualización)</td></tr>
+          </tbody>
+        </table>
+
+        <div class="code-header">mapper/StudentMapper.java</div>
+<pre><code>@Component   // Spring lo registra como bean inyectable
+public class StudentMapper {
+
+    // ── Entidad JPA → Response DTO ─────────────────────────────────
+    public StudentDTO toDto(Student student) {
+        if (student == null) return null;   // null-safe
+
+        StudentDTO dto = new StudentDTO(
+            student.getId(),
+            student.getFirstName(),
+            student.getLastName(),
+            student.getEmail()
+        );
+
+        // Si el estudiante tiene expediente, lo convertimos a DTO anidado
+        if (student.getAcademicRecord() != null) {
+            AcademicRecordDTO record = new AcademicRecordDTO(
+                student.getAcademicRecord().getId(),
+                student.getAcademicRecord().getRecordNumber(),
+                student.getAcademicRecord().getStatus()
+                // NOTA: no añadimos student → evitamos referencia circular
+            );
+            dto.setAcademicRecord(record);
+        }
+
+        return dto;
+    }
+
+    // ── Request DTO → Entidad JPA ──────────────────────────────────
+    public Student toEntity(StudentCreateRequest request) {
+        if (request == null) return null;
+
+        Student student = new Student(
+            request.getFirstName(),
+            request.getLastName(),
+            request.getEmail()
+        );
+
+        // Creamos el expediente si el cliente envió el número
+        if (request.getRecordNumber() != null) {
+            AcademicRecord record = new AcademicRecord(
+                request.getRecordNumber(),
+                request.getRecordStatus() != null
+                    ? request.getRecordStatus()
+                    : "ACTIVE"   // valor por defecto
+            );
+            student.setAcademicRecord(record);
+        }
+
+        return student;
+    }
+}</code></pre>
+
+        <h4>Puntos clave del Mapper</h4>
+        <ul>
+          <li><strong>Null-safety:</strong> ambos métodos comprueban <code>null</code> al inicio.</li>
+          <li><strong>Creación en cascada:</strong> <code>toEntity()</code> puede crear un
+            <code>AcademicRecord</code> asociado si el request lo incluye.</li>
+          <li><strong>Evitar recursividad:</strong> cuando <code>toDto()</code> crea el
+            <code>AcademicRecordDTO</code> anidado, no incluye de vuelta el estudiante,
+            cortando el ciclo.</li>
+        </ul>
+
+        <div class="note danger">
+          <div class="note-title">Referencia circular</div>
+          <p><code>Student</code> tiene un <code>AcademicRecord</code>, y <code>AcademicRecord</code>
+            tiene un <code>Student</code>. Si los dos DTOs se incluyeran mutuamente sin
+            restricciones, el serializador JSON entraría en un bucle infinito. Los
+            mappers lo resuelven construyendo el objeto anidado manualmente sin volver a
+            incluir la referencia de vuelta.</p>
+        </div>
+
+        <h3 id="mapper-service">5.3 Cómo afecta el Mapper al Service</h3>
+
+        <div class="note success">
+          <div class="note-title">Regla general del service</div>
+          <p>El service <strong>nunca</strong> construye DTOs ni entidades manualmente.
+            Delega completamente al Mapper. Solo se ocupa de la lógica de negocio
+            (validaciones, llamadas al repository, orquestación).</p>
+        </div>
+
+        <div class="code-header">service/StudentService.java</div>
+<pre><code>@Service
+public class StudentService {
+
+    private final StudentRepository studentRepository;
+    private final StudentMapper studentMapper;     // inyectado por constructor
+
+    public StudentService(StudentRepository repo, StudentMapper mapper) {
+        this.studentRepository = repo;
+        this.studentMapper = mapper;
+    }
+
+    // ── Lectura por ID: mapper a la salida ────────────────────────
+    public StudentDTO getStudentById(Long id) {
+        Optional&lt;Student&gt; student = studentRepository.findById(id);
+        if (student.isPresent()) {
+            return studentMapper.toDto(student.get());   // Entidad → DTO
+        }
+        return null;
+    }
+
+    // ── Listar todos: mapper en bucle ─────────────────────────────
+    public List&lt;StudentDTO&gt; getAllStudents() {
+        List&lt;Student&gt; students = studentRepository.findAll();
+        List&lt;StudentDTO&gt; dtos = new ArrayList&lt;&gt;();
+        for (Student item : students) {
+            dtos.add(studentMapper.toDto(item));
+        }
+        return dtos;
+    }
+
+    // ── Crear: mapper a la entrada Y a la salida ──────────────────
+    public StudentDTO createStudent(StudentCreateRequest request) {
+        if (studentRepository.existsByEmail(request.getEmail())) {
+            throw new RuntimeException("El email ya existe: " + request.getEmail());
+        }
+
+        Student student = studentMapper.toEntity(request);          // Request → Entidad
+        Student saved   = studentRepository.save(student);          // Guarda en BD
+        return studentMapper.toDto(saved);                          // Entidad → DTO
+    }
+}</code></pre>
+
+        <div class="note">
+          <div class="note-title">Dos usos del Mapper en createStudent</div>
+          <p>En <code>createStudent</code> el mapper se usa <strong>dos veces</strong>:
+            primero para convertir el request en entidad (entrada), y después para
+            convertir la entidad guardada en DTO (salida). Siempre se devuelve el DTO
+            obtenido de la BD —no el request original— porque la BD puede añadir valores
+            como el ID autogenerado.</p>
+        </div>
+
+        <h3 id="mapper-controller">5.4 Cómo afecta el Mapper al Controller</h3>
+
+        <div class="note success">
+          <div class="note-title">El controller no usa nunca el mapper directamente</div>
+          <p>El controller <strong>nunca</strong> llama al mapper. Trabaja exclusivamente
+            con DTOs: recibe Request DTOs del cuerpo HTTP y devuelve Response DTOs al
+            cliente. El impacto del mapper en el controller es <em>indirecto</em>: el
+            controller debe declarar los tipos DTO correctos en sus métodos.</p>
+        </div>
+
+        <div class="code-header">controller/StudentController.java</div>
+<pre><code>@RestController
+@RequestMapping("/api/students")
+public class StudentController {
+
+    private final StudentService studentService;
+
+    public StudentController(StudentService service) {
+        this.studentService = service;
+    }
+
+    @PostMapping
+    public ResponseEntity&lt;StudentDTO&gt; createStudent(
+            @RequestBody StudentCreateRequest request) {       // ← Request DTO
+        StudentDTO created = studentService.createStudent(request);
+        return new ResponseEntity&lt;&gt;(created, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity&lt;StudentDTO&gt; getStudentById(@PathVariable Long id) {
+        return ResponseEntity.ok(studentService.getStudentById(id));
+    }
+
+    @GetMapping
+    public ResponseEntity&lt;List&lt;StudentDTO&gt;&gt; getAllStudents() {
+        return ResponseEntity.ok(studentService.getAllStudents());
+    }
+}</code></pre>
+
+        <div class="note">
+          <div class="note-title">El repository nunca ve un DTO</div>
+          <p>El <code>StudentRepository</code> nunca recibe ni devuelve un DTO. Siempre
+            trabaja exclusivamente con la entidad JPA <code>Student</code>. La conversión
+            la hace el Mapper dentro del Service, no en el controller ni en el repository.</p>
+        </div>
+
+        <h4>Flujo completo de datos (POST /api/students)</h4>
+        <ol>
+          <li>Cliente envía JSON → <code>StudentController</code> lo recibe como
+            <code>StudentCreateRequest</code>.</li>
+          <li>Controller llama <code>service.createStudent(request)</code>.</li>
+          <li>Service llama <code>mapper.toEntity(request)</code> → obtiene una entidad
+            <code>Student</code>.</li>
+          <li>Service llama <code>repository.save(student)</code> → la BD guarda y devuelve
+            la entidad con ID generado.</li>
+          <li>Service llama <code>mapper.toDto(saved)</code> → obtiene un <code>StudentDTO</code>.</li>
+          <li>Controller devuelve <code>201 Created</code> + el DTO en formato JSON.</li>
+        </ol>
       </section>
 
-      <!-- ============ 6. JWT ============ -->
-      <section id="jwt">
+      <!-- ================================================== -->
+      <!-- ============ 6. SPRING SECURITY + JWT ============ -->
+      <!-- ================================================== -->
+      <section id="security">
         <h2>6. Spring Security con JWT</h2>
 
-        <p>Hasta ahora cualquiera podía llamar a nuestra API. Vamos a protegerla. Para
-           ello usaremos <strong>Spring Security</strong> + <strong>JWT</strong>.</p>
+        <p>Hasta ahora cualquiera podía llamar a nuestra API. Vamos a protegerla usando
+          <strong>Spring Security</strong> con <strong>JWT</strong>.</p>
 
-        <!-- ====== 6.1 ====== -->
         <h3 id="que-es-jwt">6.1 ¿Qué es un JWT?</h3>
+        <p>Un <strong>JWT</strong> (JSON Web Token) es una cadena de texto firmada
+          digitalmente que el servidor entrega al cliente tras un login correcto. A
+          partir de ese momento, el cliente lo envía en cada petición y el servidor sabe
+          quién es sin guardar ningún estado (es <em>stateless</em>).</p>
 
-        <p>Un <strong>JWT</strong> (JSON Web Token) es una "cadenita" de texto firmada
-           digitalmente que el servidor te da cuando te logueas correctamente. A partir
-           de ese momento, en cada petición tú le mandas ese token y el servidor sabe
-           quién eres sin necesidad de guardar nada (es <em>stateless</em>).</p>
-
-        <p>Tiene <strong>3 partes</strong> separadas por puntos, en Base64:</p>
+        <p>Un JWT tiene <strong>3 partes</strong> separadas por puntos, codificadas en Base64:</p>
 
 <pre><code>eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyb2dlciIsImV4cCI6MTcwMDB9.SflKxwRJSMeKKF2QT4fwpM</code></pre>
 
@@ -531,54 +853,50 @@ public ResponseEntity&lt;Libro&gt; crear(@Valid @RequestBody LibroDTO dto) {
           </tbody>
         </table>
 
-        <div class="box danger">
-          <strong>ATENCIÓN:</strong> el <em>payload</em> está en Base64, <strong>NO
-          cifrado</strong>. Cualquiera puede leerlo. Por eso <strong>nunca</strong>
-          metas contraseñas ni datos sensibles dentro. La firma solo garantiza que
-          nadie lo ha modificado.
+        <div class="note danger">
+          <div class="note-title">Atención</div>
+          <p>El <em>payload</em> está en Base64, <strong>NO cifrado</strong>. Cualquiera
+            puede leerlo. Por eso <strong>nunca</strong> metas contraseñas ni datos
+            sensibles dentro. La firma solo garantiza que nadie lo ha modificado.</p>
         </div>
 
-        <!-- ====== 6.2 ====== -->
         <h3 id="flujo-jwt">6.2 Flujo de autenticación</h3>
-
         <ol>
-          <li>El usuario manda <code>POST /api/auth/login</code> con su usuario y contraseña.</li>
+          <li>El usuario envía <code>POST /api/auth/login</code> con su usuario y contraseña.</li>
           <li>El servidor comprueba en la BD que la contraseña es correcta.</li>
           <li>Si lo es, genera un JWT con sus datos (usuario, rol, caducidad) y lo devuelve.</li>
-          <li>El cliente guarda el token y lo manda en cada petición en la cabecera
-              <code>Authorization: Bearer &lt;token&gt;</code>.</li>
-          <li>En cada petición, un <em>filtro</em> en el servidor lee el token, comprueba la
-              firma y, si es válido, deja pasar la petición.</li>
+          <li>El cliente guarda el token y lo envía en cada petición en la cabecera
+            <code>Authorization: Bearer &lt;token&gt;</code>.</li>
+          <li>En cada petición, un <em>filtro</em> en el servidor lee el token, comprueba
+            la firma y, si es válido, permite el acceso.</li>
         </ol>
 
-        <div class="box info">
-          <strong>Sesiones vs JWT (stateless):</strong> con sesiones el servidor guarda un
-          registro en memoria por cada usuario logueado. Con JWT no guarda nada: toda la
-          información va dentro del token, firmada. Eso permite escalar horizontalmente
-          (cualquier servidor puede validar cualquier token).
+        <div class="note">
+          <div class="note-title">Sesiones vs JWT (stateless)</div>
+          <p>Con sesiones, el servidor guarda en memoria un registro por cada usuario
+            logueado. Con JWT no guarda nada: toda la información va dentro del token,
+            firmada. Esto permite escalar horizontalmente (cualquier instancia del
+            servidor puede validar cualquier token).</p>
         </div>
 
-        <!-- ====== 6.3 ====== -->
         <h3 id="bcrypt">6.3 BCrypt: hash de contraseñas</h3>
-
         <p>Las contraseñas <strong>nunca</strong> se guardan en texto plano. Usamos
-           <strong>BCrypt</strong>, un algoritmo que las convierte en un <em>hash</em>
-           imposible de revertir:</p>
+          <strong>BCrypt</strong>, un algoritmo que las convierte en un <em>hash</em>
+          imposible de revertir:</p>
 
 <pre><code>passwordEncoder.encode("secret")
 // → "$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy"</code></pre>
 
         <ul>
           <li><strong>Unidireccional:</strong> no se puede recuperar la contraseña original.</li>
-          <li><strong>Con salt aleatorio:</strong> dos contraseñas iguales dan hashes distintos.</li>
+          <li><strong>Con salt aleatorio:</strong> dos contraseñas iguales dan hashes diferentes.</li>
           <li><strong>Lento a propósito:</strong> dificulta ataques de fuerza bruta.</li>
         </ul>
 
-        <p>Para comparar la contraseña que envía el usuario en el login:</p>
+        <p>Para comparar la contraseña al hacer login:</p>
 <pre><code>passwordEncoder.matches("secret", hashGuardadoEnBD)
 // → true o false</code></pre>
 
-        <!-- ====== 6.4 Implementación ====== -->
         <h3 id="jwt-impl">6.4 Implementación paso a paso</h3>
 
         <h4>Paso 1 — Dependencias (pom.xml)</h4>
@@ -587,7 +905,7 @@ public ResponseEntity&lt;Libro&gt; crear(@Valid @RequestBody LibroDTO dto) {
     &lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;
 &lt;/dependency&gt;
 
-&lt;!-- Librería JJWT para generar/validar tokens --&gt;
+&lt;!-- JJWT para generar/validar tokens --&gt;
 &lt;dependency&gt;
     &lt;groupId&gt;io.jsonwebtoken&lt;/groupId&gt;
     &lt;artifactId&gt;jjwt-api&lt;/artifactId&gt;
@@ -611,9 +929,10 @@ public ResponseEntity&lt;Libro&gt; crear(@Valid @RequestBody LibroDTO dto) {
 jwt.secret=404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
 jwt.expiration=86400000</code></pre>
 
-        <h4>Paso 3 — Entidad User y rol</h4>
+        <h4>Paso 3 — Entidad User + Role</h4>
 <pre><code>public enum Role { USER, ADMIN }</code></pre>
 
+        <div class="code-header">entity/User.java</div>
 <pre><code>@Entity
 @Table(name = "users")
 @Data @Builder @NoArgsConstructor @AllArgsConstructor
@@ -622,14 +941,9 @@ public class User implements UserDetails {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
-    private String username;
-
-    @Column(unique = true, nullable = false)
-    private String email;
-
-    @Column(nullable = false)
-    private String password;     // hash BCrypt
+    @Column(unique = true, nullable = false) private String username;
+    @Column(unique = true, nullable = false) private String email;
+    @Column(nullable = false)                private String password;   // hash BCrypt
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -644,9 +958,8 @@ public class User implements UserDetails {
     @Override public boolean isEnabled()               { return true; }
 }</code></pre>
 
-        <p>Esta clase tiene dos papeles a la vez: es una <em>entidad JPA</em> (se guarda en BD)
-           y un <em>UserDetails</em> (lo que Spring Security necesita para identificar a un
-           usuario).</p>
+        <p>Esta clase tiene dos roles a la vez: es una <em>entidad JPA</em> (se guarda en
+          BD) y un <em>UserDetails</em> (lo que Spring Security necesita).</p>
 
         <h4>Paso 4 — Repository</h4>
 <pre><code>public interface UserRepository extends JpaRepository&lt;User, Long&gt; {
@@ -658,9 +971,9 @@ public class User implements UserDetails {
         <h4>Paso 5 — DTOs</h4>
 <pre><code>@Data
 public class RegisterRequest {
-    @NotBlank @Size(min = 3)  private String username;
-    @NotBlank @Email          private String email;
-    @NotBlank @Size(min = 6)  private String password;
+    @NotBlank @Size(min = 3) private String username;
+    @NotBlank @Email         private String email;
+    @NotBlank @Size(min = 6) private String password;
 }
 
 @Data
@@ -674,7 +987,7 @@ public class AuthResponse {
     private String token;
 }</code></pre>
 
-        <h4>Paso 6 — JwtService (genera/valida tokens)</h4>
+        <h4>Paso 6 — JwtService</h4>
 <pre><code>@Service
 public class JwtService {
 
@@ -716,7 +1029,7 @@ public class JwtService {
     }
 }</code></pre>
 
-        <h4>Paso 7 — JwtFilter (intercepta cada petición)</h4>
+        <h4>Paso 7 — JwtFilter</h4>
 <pre><code>@Component
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
@@ -731,7 +1044,6 @@ public class JwtFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         String authHeader = req.getHeader("Authorization");
-
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             chain.doFilter(req, res); return;
         }
@@ -743,7 +1055,6 @@ public class JwtFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().getAuthentication() == null) {
 
             UserDetails user = userDetailsService.loadUserByUsername(username);
-
             if (jwtService.isTokenValid(jwt, user)) {
                 var authToken = new UsernamePasswordAuthenticationToken(
                         user, null, user.getAuthorities());
@@ -754,7 +1065,7 @@ public class JwtFilter extends OncePerRequestFilter {
     }
 }</code></pre>
 
-        <h4>Paso 8 — ApplicationConfig (beans)</h4>
+        <h4>Paso 8 — ApplicationConfig</h4>
 <pre><code>@Configuration
 @RequiredArgsConstructor
 public class ApplicationConfig {
@@ -781,7 +1092,7 @@ public class ApplicationConfig {
     }
 }</code></pre>
 
-        <h4>Paso 9 — SecurityConfig (reglas)</h4>
+        <h4>Paso 9 — SecurityConfig</h4>
 <pre><code>@Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -794,16 +1105,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(AbstractHttpConfigurer::disable)
-            .authorizeHttpRequests(auth -&gt; auth
-                .requestMatchers("/api/auth/**").permitAll()
-                .anyRequest().authenticated()
-            )
-            .sessionManagement(s -&gt;
-                s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authenticationProvider(authProvider)
-            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-
+          .csrf(AbstractHttpConfigurer::disable)
+          .authorizeHttpRequests(auth -&gt; auth
+              .requestMatchers("/api/auth/**").permitAll()
+              .anyRequest().authenticated()
+          )
+          .sessionManagement(s -&gt;
+              s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+          .authenticationProvider(authProvider)
+          .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
@@ -814,7 +1124,7 @@ public class SecurityConfig {
     }
 }</code></pre>
 
-        <h4>Paso 10 — AuthService (lógica de registro/login)</h4>
+        <h4>Paso 10 — AuthService</h4>
 <pre><code>@Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -874,35 +1184,30 @@ public class AuthController {
 public class UserController {
 
     @GetMapping("/me")
-    public ResponseEntity&lt;Map&lt;String, Object&gt;&gt; me(
-            @AuthenticationPrincipal User current) {
+    public ResponseEntity&lt;Map&lt;String, Object&gt;&gt; me(@AuthenticationPrincipal User u) {
         return ResponseEntity.ok(Map.of(
-            "username", current.getUsername(),
-            "email",    current.getEmail(),
-            "role",     current.getRole()));
+            "username", u.getUsername(),
+            "email",    u.getEmail(),
+            "role",     u.getRole()));
     }
 
     @GetMapping("/admin")
     @PreAuthorize("hasRole('ADMIN')")
     public String soloAdmin() {
-        return "¡Solo administradores!";
+        return "Solo administradores";
     }
 }</code></pre>
 
         <h4>Paso 12 — Probarlo con Postman</h4>
 
         <div class="example">
-          <h4>Registrar un usuario</h4>
+          <h4>Registro</h4>
 <pre><code>POST http://localhost:8080/api/auth/register
 Content-Type: application/json
 
-{
-  "username": "roger",
-  "email":    "roger@example.com",
-  "password": "secret123"
-}</code></pre>
+{ "username": "roger", "email": "roger@example.com", "password": "secret123" }</code></pre>
           <div class="result">HTTP 201 Created
-{ "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyb2dlciIsImV4cCI6..." }</div>
+{ "token": "eyJhbGciOiJIUzI1NiJ9..." }</div>
         </div>
 
         <div class="example">
@@ -925,22 +1230,21 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9...</code></pre>
           <p>Sin token o con uno inválido:</p>
           <div class="result">HTTP 403 Forbidden</div>
         </div>
-
       </section>
 
+      <!-- ================================================== -->
       <!-- ============ 7. EJERCICIOS ============ -->
+      <!-- ================================================== -->
       <section id="ejercicios">
         <h2>7. Ejercicios resueltos</h2>
 
-        <p>Aquí tienes ejercicios para practicar. Intenta resolverlos antes de mirar la
-           solución.</p>
+        <p>Intenta resolverlos antes de mirar la solución.</p>
 
-        <!-- ===== Ejercicio 1 ===== -->
         <div class="exercise">
           <h4>Ejercicio 1 — Endpoint de saludo</h4>
-          <p>Crea un endpoint <code>GET /api/saludo?nombre=Marta</code> que reciba el nombre
-             por <em>query param</em> y devuelva <code>"Hola Marta!"</code>. Si no se pasa
-             el nombre, debe devolver <code>"Hola desconocido!"</code>.</p>
+          <p>Crea un endpoint <code>GET /api/saludo?nombre=Marta</code> que reciba el
+            nombre por query param y devuelva <code>"Hola Marta!"</code>. Si no se pasa
+            el nombre, debe devolver <code>"Hola desconocido!"</code>.</p>
 
           <details class="solution">
             <summary>Ver solución</summary>
@@ -955,24 +1259,20 @@ public class SaludoController {
         return "Hola " + nombre + "!";
     }
 }</code></pre>
-            <p>Pruebas:</p>
             <div class="result">GET /api/saludo?nombre=Marta  →  "Hola Marta!"
 GET /api/saludo               →  "Hola desconocido!"</div>
           </details>
         </div>
 
-        <!-- ===== Ejercicio 2 ===== -->
         <div class="exercise">
           <h4>Ejercicio 2 — CRUD de Películas</h4>
-          <p>Crea un CRUD completo para una entidad <code>Pelicula</code> con los campos:
-             <code>id</code>, <code>titulo</code>, <code>director</code>, <code>anyo</code>,
-             <code>nota</code> (de 0 a 10). Endpoints: listar, ver por id, crear,
-             actualizar, borrar.</p>
+          <p>Crea un CRUD completo para una entidad <code>Pelicula</code> con los campos
+            <code>id</code>, <code>titulo</code>, <code>director</code>, <code>anyo</code>
+            y <code>nota</code>. Endpoints: listar, ver por id, crear, actualizar y borrar.</p>
 
           <details class="solution">
             <summary>Ver solución</summary>
-
-            <h4>Pelicula.java</h4>
+            <div class="code-header">entity/Pelicula.java</div>
 <pre><code>@Entity @Table(name = "peliculas")
 @Data @Builder @NoArgsConstructor @AllArgsConstructor
 public class Pelicula {
@@ -983,12 +1283,7 @@ public class Pelicula {
     private Integer anyo;
     private Double  nota;
 }</code></pre>
-
-            <h4>PeliculaRepository.java</h4>
-<pre><code>public interface PeliculaRepository
-        extends JpaRepository&lt;Pelicula, Long&gt; { }</code></pre>
-
-            <h4>PeliculaController.java</h4>
+            <div class="code-header">controller/PeliculaController.java</div>
 <pre><code>@RestController
 @RequestMapping("/api/peliculas")
 @RequiredArgsConstructor
@@ -1023,97 +1318,105 @@ public class PeliculaController {
         return ResponseEntity.noContent().build();
     }
 }</code></pre>
-
-            <p>Prueba:</p>
-            <div class="result">POST /api/peliculas  { "titulo": "Matrix", "anyo": 1999, "nota": 9.0 }
-→ 201 Created  { "id": 1, "titulo": "Matrix", ... }
-
-GET /api/peliculas
-→ 200 OK [ { "id": 1, "titulo": "Matrix", ... } ]
-
-DELETE /api/peliculas/1
-→ 204 No Content</div>
           </details>
         </div>
 
-        <!-- ===== Ejercicio 3 ===== -->
         <div class="exercise">
-          <h4>Ejercicio 3 — Buscar por autor</h4>
-          <p>En el ejemplo de <code>Libro</code>, añade un endpoint
-             <code>GET /api/libros/autor/{autor}</code> que devuelva los libros de ese
-             autor.</p>
+          <h4>Ejercicio 3 — DTO + Mapper</h4>
+          <p>En el CRUD de películas, crea un <code>PeliculaDTO</code> y un
+            <code>PeliculaMapper</code>. El controller debe devolver
+            <code>PeliculaDTO</code>, no la entidad.</p>
 
           <details class="solution">
             <summary>Ver solución</summary>
-<pre><code>// En el repository
-List&lt;Libro&gt; findByAutor(String autor);
-
-// En el controller
-@GetMapping("/autor/{autor}")
-public List&lt;Libro&gt; porAutor(@PathVariable String autor) {
-    return repo.findByAutor(autor);
+            <div class="code-header">dto/PeliculaDTO.java</div>
+<pre><code>@Data @AllArgsConstructor @NoArgsConstructor
+public class PeliculaDTO {
+    private Long id;
+    private String titulo;
+    private String director;
+    private Integer anyo;
+    private Double nota;
 }</code></pre>
-            <div class="result">GET /api/libros/autor/Tolkien
-→ [ { "id": 1, "titulo": "El Hobbit", "autor": "Tolkien", ... } ]</div>
+            <div class="code-header">mapper/PeliculaMapper.java</div>
+<pre><code>@Component
+public class PeliculaMapper {
+
+    public PeliculaDTO toDto(Pelicula p) {
+        if (p == null) return null;
+        return new PeliculaDTO(
+            p.getId(), p.getTitulo(), p.getDirector(),
+            p.getAnyo(), p.getNota()
+        );
+    }
+
+    public Pelicula toEntity(PeliculaDTO dto) {
+        if (dto == null) return null;
+        return Pelicula.builder()
+            .id(dto.getId())
+            .titulo(dto.getTitulo())
+            .director(dto.getDirector())
+            .anyo(dto.getAnyo())
+            .nota(dto.getNota())
+            .build();
+    }
+}</code></pre>
           </details>
         </div>
 
-        <!-- ===== Ejercicio 4 ===== -->
         <div class="exercise">
           <h4>Ejercicio 4 — Validación</h4>
-          <p>Convierte el endpoint <code>POST /api/libros</code> para que use un DTO con
-             validación: el título debe tener entre 2 y 100 caracteres y el año debe estar
-             entre 1000 y 2100.</p>
+          <p>Añade validaciones al <code>PeliculaDTO</code>: el título debe tener entre
+            2 y 100 caracteres y el año entre 1900 y 2100.</p>
 
           <details class="solution">
             <summary>Ver solución</summary>
-<pre><code>@Data
-public class LibroDTO {
+<pre><code>@Data @AllArgsConstructor @NoArgsConstructor
+public class PeliculaDTO {
+    private Long id;
     @NotBlank @Size(min = 2, max = 100) private String titulo;
-    @NotBlank                           private String autor;
-    @Min(1000) @Max(2100)               private Integer anyo;
+    private String director;
+    @Min(1900) @Max(2100)               private Integer anyo;
+    private Double nota;
 }
 
+// En el controller:
 @PostMapping
-public ResponseEntity&lt;Libro&gt; crear(@Valid @RequestBody LibroDTO dto) {
-    Libro l = Libro.builder()
-                  .titulo(dto.getTitulo())
-                  .autor(dto.getAutor())
-                  .anyo(dto.getAnyo())
-                  .build();
-    return ResponseEntity.status(HttpStatus.CREATED).body(repo.save(l));
+public ResponseEntity&lt;PeliculaDTO&gt; crear(@Valid @RequestBody PeliculaDTO dto) {
+    Pelicula saved = repo.save(mapper.toEntity(dto));
+    return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toDto(saved));
 }</code></pre>
-            <div class="result">POST /api/libros  { "titulo": "x", "autor": "", "anyo": 500 }
-→ 400 Bad Request
+            <div class="result">POST /api/peliculas { "titulo": "x", "anyo": 500 }
+→ HTTP 400 Bad Request
 {
   "titulo": "size must be between 2 and 100",
-  "autor":  "must not be blank",
-  "anyo":   "must be greater than or equal to 1000"
+  "anyo":   "must be greater than or equal to 1900"
 }</div>
           </details>
         </div>
 
-        <!-- ===== Ejercicio 5 ===== -->
         <div class="exercise">
           <h4>Ejercicio 5 — Endpoint protegido con JWT</h4>
-          <p>Con la configuración de seguridad ya hecha, crea un endpoint
-             <code>GET /api/peliculas/mias</code> que devuelva las películas del usuario
-             autenticado (solo accesible con token válido).</p>
+          <p>Crea un endpoint <code>GET /api/peliculas/mias</code> que devuelva solo las
+            películas del usuario autenticado (campo <code>propietario</code> en
+            <code>Pelicula</code>).</p>
 
           <details class="solution">
             <summary>Ver solución</summary>
-<pre><code>@GetMapping("/mias")
-public List&lt;Pelicula&gt; mias(@AuthenticationPrincipal User user) {
-    return repo.findByPropietario(user.getUsername());
-}
+<pre><code>// En el repository
+List&lt;Pelicula&gt; findByPropietario(String propietario);
 
-// En el repository:
-List&lt;Pelicula&gt; findByPropietario(String propietario);</code></pre>
-            <p>(Hay que añadir el campo <code>propietario</code> a la entidad
-               <code>Pelicula</code> y rellenarlo al crear.)</p>
+// En el controller
+@GetMapping("/mias")
+public List&lt;PeliculaDTO&gt; mias(@AuthenticationPrincipal User user) {
+    return repo.findByPropietario(user.getUsername())
+               .stream()
+               .map(mapper::toDto)
+               .toList();
+}</code></pre>
             <div class="result">GET /api/peliculas/mias
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9...
-→ 200 OK [ ... películas del usuario ... ]
+Authorization: Bearer eyJ...
+→ 200 OK [ ... ]
 
 Sin token:
 → 403 Forbidden</div>
@@ -1122,20 +1425,24 @@ Sin token:
 
       </section>
 
+      <!-- ================================================== -->
       <!-- ============ 8. ANOTACIONES ============ -->
+      <!-- ================================================== -->
       <section id="anotaciones">
-        <h2>8. Anotaciones clave (chuleta)</h2>
+        <h2>8. Anotaciones (chuleta)</h2>
 
         <h3>Spring core</h3>
         <table>
           <thead><tr><th>Anotación</th><th>Función</th></tr></thead>
           <tbody>
-            <tr><td><code>@RestController</code></td><td>Marca la clase como controller REST (devuelve JSON)</td></tr>
+            <tr><td><code>@RestController</code></td><td>Marca la clase como controller REST</td></tr>
             <tr><td><code>@Service</code></td><td>Marca una clase de lógica de negocio</td></tr>
-            <tr><td><code>@Repository</code></td><td>Marca una clase de acceso a datos</td></tr>
-            <tr><td><code>@Configuration</code></td><td>Clase con configuración / beans</td></tr>
-            <tr><td><code>@Bean</code></td><td>Método que produce un bean gestionado por Spring</td></tr>
-            <tr><td><code>@Value("${prop}")</code></td><td>Inyecta una propiedad de application.properties</td></tr>
+            <tr><td><code>@Component</code></td><td>Bean genérico (Mappers, helpers…)</td></tr>
+            <tr><td><code>@Repository</code></td><td>Clase de acceso a datos</td></tr>
+            <tr><td><code>@Configuration</code></td><td>Clase con configuración</td></tr>
+            <tr><td><code>@Bean</code></td><td>Método productor de bean</td></tr>
+            <tr><td><code>@Value("${prop}")</code></td><td>Inyecta una propiedad</td></tr>
+            <tr><td><code>@Autowired</code></td><td>Inyección por campo (alternativa a constructor)</td></tr>
           </tbody>
         </table>
 
@@ -1158,9 +1465,10 @@ Sin token:
             <tr><td><code>@Table(name = "x")</code></td><td>Nombre de la tabla</td></tr>
             <tr><td><code>@Id</code></td><td>Clave primaria</td></tr>
             <tr><td><code>@GeneratedValue</code></td><td>Auto-incremental</td></tr>
-            <tr><td><code>@Column</code></td><td>Configura una columna (nullable, unique…)</td></tr>
+            <tr><td><code>@Column</code></td><td>Configura una columna</td></tr>
             <tr><td><code>@Enumerated(EnumType.STRING)</code></td><td>Guarda un enum como texto</td></tr>
-            <tr><td><code>@OneToMany / @ManyToOne</code></td><td>Relaciones entre entidades</td></tr>
+            <tr><td><code>@OneToOne / @OneToMany / @ManyToOne / @ManyToMany</code></td><td>Relaciones</td></tr>
+            <tr><td><code>@JoinColumn</code></td><td>Define la columna FK</td></tr>
           </tbody>
         </table>
 
@@ -1168,20 +1476,20 @@ Sin token:
         <table>
           <tbody>
             <tr><td><code>@EnableWebSecurity</code></td><td>Activa Spring Security</td></tr>
-            <tr><td><code>@EnableMethodSecurity</code></td><td>Permite usar @PreAuthorize en métodos</td></tr>
+            <tr><td><code>@EnableMethodSecurity</code></td><td>Permite usar @PreAuthorize</td></tr>
             <tr><td><code>@PreAuthorize("hasRole('X')")</code></td><td>Restringe por rol</td></tr>
             <tr><td><code>@AuthenticationPrincipal</code></td><td>Inyecta el usuario autenticado</td></tr>
           </tbody>
         </table>
 
-        <h3>Lombok (genera código)</h3>
+        <h3>Lombok</h3>
         <table>
           <tbody>
             <tr><td><code>@Data</code></td><td>Getters, setters, equals, hashCode, toString</td></tr>
             <tr><td><code>@Builder</code></td><td>Patrón Builder fluido</td></tr>
             <tr><td><code>@NoArgsConstructor</code></td><td>Constructor vacío (lo necesita JPA)</td></tr>
             <tr><td><code>@AllArgsConstructor</code></td><td>Constructor con todos los campos</td></tr>
-            <tr><td><code>@RequiredArgsConstructor</code></td><td>Constructor con los campos <code>final</code> (inyección)</td></tr>
+            <tr><td><code>@RequiredArgsConstructor</code></td><td>Constructor con los campos <code>final</code></td></tr>
           </tbody>
         </table>
 
@@ -1190,20 +1498,19 @@ Sin token:
           <tbody>
             <tr><td><code>@NotBlank</code></td><td>No null, no vacío, no espacios</td></tr>
             <tr><td><code>@NotNull</code></td><td>No null</td></tr>
-            <tr><td><code>@Size(min, max)</code></td><td>Longitud de String / colecciones</td></tr>
+            <tr><td><code>@Size(min, max)</code></td><td>Longitud de String</td></tr>
             <tr><td><code>@Email</code></td><td>Formato email válido</td></tr>
             <tr><td><code>@Min</code> / <code>@Max</code></td><td>Valor numérico</td></tr>
             <tr><td><code>@Pattern</code></td><td>Expresión regular</td></tr>
           </tbody>
         </table>
-
-        <div class="box success" style="margin-top: 30px;">
-          <strong>Ya has acabado.</strong> Con esto sabes construir una API REST completa
-          con Spring Boot, persistencia en base de datos y seguridad con JWT. ¡Practica con
-          los ejercicios y crea tu propio proyecto!
-        </div>
-
       </section>
+
+      <!-- Navegación final -->
+      <nav class="page-nav">
+        <a href="index.html">&larr; Volver al inicio</a>
+        <a href="#spring-boot">Subir &uarr;</a>
+      </nav>
 
     </main>
   </div>
@@ -1211,7 +1518,7 @@ Sin token:
   <!-- ================== Footer ================== -->
   <footer class="footer">
     <p><strong>Estudio</strong> · Innovation starts here</p>
-    <p>Apuntes hechos por y para alumnos · <a href="index.html">Volver al inicio</a></p>
+    <p>Apuntes hechos por y para alumnos</p>
   </footer>
 
   <script src="assets/main.js"></script>

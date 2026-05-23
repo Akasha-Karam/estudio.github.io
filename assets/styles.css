@@ -162,6 +162,7 @@ img {
 }
 
 .card.card-springboot .card-img { background: linear-gradient(135deg, #6db33f, #4a8226); }
+.card.card-ml .card-img         { background: linear-gradient(135deg, #8e44ad, #4a2363); }
 .card.card-java .card-img       { background: linear-gradient(135deg, #f89820, #d35400); }
 .card.card-html .card-img       { background: linear-gradient(135deg, #e34c26, #b73e1f); }
 .card.card-css .card-img        { background: linear-gradient(135deg, #2965f1, #1d4ec2); }

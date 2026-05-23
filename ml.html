@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Machine Learning · Apuntes · Estudio</title>
+  <link rel="icon" href="assets/logo.png" type="image/png">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+  <!-- ================== HEADER ================== -->
+  <header class="header">
+    <a href="index.html" class="brand" style="text-decoration:none">
+      <img src="assets/logo.png" alt="Logo Estudio">
+      <h1>Estudio</h1>
+    </a>
+    <nav>
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="ml.html">Machine Learning</a></li>
+        <li><a href="index.html#about">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ================== Página título ================== -->
+  <section class="page-title">
+    <div class="page-title-inner">
+      <h1>Machine Learning · Conceptos básicos</h1>
+      <p class="subtitle">Apuntes para alumnos: aprende qué es el Machine Learning, cómo
+        se entrena un modelo y los algoritmos más usados (regresión, clasificación y
+        clustering). Explicado fácil, con vocabulario claro y ejemplos sencillos.</p>
+      <div class="chips">
+        <span class="chip">Python</span>
+        <span class="chip">Scikit-learn</span>
+        <span class="chip">Pandas</span>
+        <span class="chip">NumPy</span>
+        <span class="chip">Matplotlib</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================== Contenido ================== -->
+  <div class="notes-layout">
+
+    <!-- ============== Sidebar / TOC ============== -->
+    <aside class="toc">
+      <h4>Índice</h4>
+      <ul>
+        <li><a href="#intro">1. Introducción</a></li>
+        <li class="sub"><a href="#que-es">1.1 ¿Qué es ML?</a></li>
+        <li class="sub"><a href="#tipos">1.2 Tipos de aprendizaje</a></li>
+        <li class="sub"><a href="#sklearn">1.3 Scikit-learn</a></li>
+
+        <li><a href="#vocabulario">2. Vocabulario</a></li>
+
+        <li><a href="#pasos">3. Pasos para entrenar</a></li>
+
+        <li><a href="#overfitting">4. Overfitting</a></li>
+        <li class="sub"><a href="#train-test">4.1 Train / Test</a></li>
+        <li class="sub"><a href="#brecha">4.2 La brecha (Gap)</a></li>
+        <li class="sub"><a href="#regularizacion">4.3 Regularización</a></li>
+
+        <li><a href="#metricas">5. Métricas</a></li>
+        <li class="sub"><a href="#metricas-clas">5.1 Clasificación</a></li>
+        <li class="sub"><a href="#matriz-confusion">5.2 Matriz de Confusión</a></li>
+
+        <li><a href="#regresion">6. Regresión</a></li>
+        <li class="sub"><a href="#reg-lineal">6.1 Lineal</a></li>
+        <li class="sub"><a href="#reg-multiple">6.2 Múltiple</a></li>
+        <li class="sub"><a href="#reg-polinomica">6.3 Polinómica</a></li>
+        <li class="sub"><a href="#correlacion">6.4 Matriz de correlación</a></li>
+
+        <li><a href="#clasificacion">7. Clasificación</a></li>
+        <li class="sub"><a href="#logistica">7.1 R. Logística</a></li>
+        <li class="sub"><a href="#knn">7.2 KNN</a></li>
+        <li class="sub"><a href="#arboles">7.3 Árboles + Random Forest</a></li>
+
+        <li><a href="#no-supervisado">8. No supervisado</a></li>
+        <li class="sub"><a href="#kmeans">8.1 Clustering K-Means</a></li>
+
+        <li><a href="#resumen">9. Resumen final</a></li>
+      </ul>
+    </aside>
+
+    <!-- ============== Contenido principal ============== -->
+    <main class="content">
+
+      <!-- ================================================== -->
+      <!-- ============ 1. INTRODUCCIÓN ============ -->
+      <!-- ================================================== -->
+      <section id="intro">
+        <h2>1. Introducción al Machine Learning</h2>
+
+        <h3 id="que-es">1.1 ¿Qué es Machine Learning?</h3>
+        <p>El <strong>Machine Learning</strong> (aprendizaje automático) cambió la forma
+          de trabajar en Inteligencia Artificial. La idea es que el ordenador
+          <em>aprenda solo</em> mirando datos, sin que le digamos las reglas exactas.</p>
+
+        <table>
+          <thead>
+            <tr><th>Antes</th><th>Ahora</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Programación clásica</strong>: el humano escribe reglas rígidas
+                (si pasa "esto", haz "aquello"). Fallaba si los datos eran raros.</td>
+              <td><strong>Machine Learning</strong>: el sistema aprende patrones solo
+                mirando datos. Mejora con la experiencia.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="note">
+          <div class="note-title">Idea clave</div>
+          <p>En vez de programar las reglas tú mismo, le das ejemplos al ordenador y él
+            descubre las reglas que mejor explican esos datos.</p>
+        </div>
+
+        <h3 id="tipos">1.2 Tipos de aprendizaje</h3>
+        <p>Existen dos ramas principales, según si le damos las "respuestas" al
+          ordenador o no.</p>
+
+        <h4>Supervised Learning (Aprendizaje Supervisado)</h4>
+        <p>Entrenamos al modelo con datos que tienen la <strong>pregunta</strong>
+          (entradas) y la <strong>respuesta correcta</strong> (etiquetas).</p>
+        <ul>
+          <li><strong>Regresión:</strong> predice un <em>número</em> (temperatura, precio,
+            nivel de diabetes). Modelos: regresión lineal, polinómica.</li>
+          <li><strong>Clasificación:</strong> asigna una <em>categoría</em> (sí/no,
+            gato/perro, maligno/benigno). Modelos: regresión logística, KNN, árboles de
+            decisión, Random Forest.</li>
+        </ul>
+
+        <h4>Unsupervised Learning (Aprendizaje No Supervisado)</h4>
+        <p>Usamos datos <strong>sin etiquetas</strong> (sin respuestas). El modelo busca
+          estructuras o grupos por su cuenta.</p>
+        <ul>
+          <li><strong>Clustering (Agrupación):</strong> hace grupos por similitud (tipos
+            de clientes, especies de pingüinos). Modelos: K-Means.</li>
+        </ul>
+
+        <h3 id="sklearn">1.3 Librería Scikit-learn</h3>
+        <p><strong>Scikit-learn</strong> (o <code>sklearn</code>) es la librería más
+          popular de Python para Machine Learning. Ofrece herramientas sencillas y
+          potentes para hacer clasificación, regresión, clustering y transformación de
+          datos sin complicaciones.</p>
+
+        <div class="code-header">Instalación</div>
+<pre><code>pip install scikit-learn pandas numpy matplotlib seaborn</code></pre>
+
+        <p>Pero antes de entrenar ningún modelo, debemos hacer un
+          <strong>Análisis Exploratorio de los Datos (EDA)</strong>:</p>
+        <ul>
+          <li>Entender la estructura (tipos de datos, valores faltantes).</li>
+          <li>Detectar anomalías (outliers, duplicados).</li>
+          <li>Encontrar patrones (correlaciones, distribuciones).</li>
+          <li>Visualizar relaciones (variables vs target).</li>
+        </ul>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ 2. VOCABULARIO ============ -->
+      <!-- ================================================== -->
+      <section id="vocabulario">
+        <h2>2. Vocabulario de Machine Learning</h2>
+
+        <p>Antes de programar, conviene entender bien las palabras que usaremos todo
+          el rato:</p>
+
+        <table>
+          <thead>
+            <tr><th>Palabra</th><th>Significado fácil</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Target (Objetivo)</strong></td>
+              <td>La <em>respuesta</em>. Lo que el modelo intenta adivinar (ej: el nivel
+                de diabetes de un paciente).</td>
+            </tr>
+            <tr>
+              <td><strong>Features (Características)</strong></td>
+              <td>Las <em>pistas</em>. Lo que sabemos (edad, peso, análisis de sangre)
+                para intentar adivinar el target.</td>
+            </tr>
+            <tr>
+              <td><strong>Dataset</strong></td>
+              <td>Tu <em>tabla de datos</em> (como un Excel). El montón de información
+                que le das al ordenador.</td>
+            </tr>
+            <tr>
+              <td><strong>Fit (Ajustar / Entrenar)</strong></td>
+              <td>El momento en el que el modelo se pone a <em>estudiar</em>. Mira los
+                datos y busca la lógica.</td>
+            </tr>
+            <tr>
+              <td><strong>Predict (Predecir)</strong></td>
+              <td>Cuando le das una pista nueva y él te da su <em>apuesta</em> del
+                resultado.</td>
+            </tr>
+            <tr>
+              <td><strong>Train Set</strong></td>
+              <td>El <strong>80%</strong> de tus datos. El "libro de texto" que el
+                modelo puede usar para estudiar.</td>
+            </tr>
+            <tr>
+              <td><strong>Test Set</strong></td>
+              <td>El <strong>20%</strong> restante. El "examen final": le escondemos las
+                respuestas para ver si de verdad ha aprendido.</td>
+            </tr>
+            <tr>
+              <td><strong>Overfitting</strong></td>
+              <td>"Hacer trampa": el modelo memoriza los datos en vez de aprender la
+                lógica. En el entrenamiento saca un 10, en el examen un 2.</td>
+            </tr>
+            <tr>
+              <td><strong>R² (R-cuadrado)</strong></td>
+              <td>La <em>nota del examen</em> en regresión. Va de 0 a 1. 0.9 =
+                sobresaliente; 0.2 = suspenso.</td>
+            </tr>
+            <tr>
+              <td><strong>RMSE / MAE</strong></td>
+              <td><em>Cuánto se equivoca de media</em>. Cuanto más pequeño, mejor.</td>
+            </tr>
+            <tr>
+              <td><strong>Correlación</strong></td>
+              <td>Mide si dos cosas tienen relación. Si cuando sube X también sube Y,
+                tienen correlación alta. Si no, está cerca de 0.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="note">
+          <div class="note-title">Ejemplo (dataset Diabetes)</div>
+          <p>Imagina una tabla donde cada fila es un paciente. Las columnas
+            <em>edad</em>, <em>peso (BMI)</em>, <em>presión</em>… son las <strong>features</strong>.
+            La columna <em>progresión de la diabetes</em> es el <strong>target</strong>.
+            El modelo debe aprender a predecir esa última columna a partir de las demás.</p>
+        </div>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ 3. PASOS ENTRENAR ============ -->
+      <!-- ================================================== -->
+      <section id="pasos">
+        <h2>3. Pasos para entrenar un modelo</h2>
+
+        <p>Cuando vayas a entrenar cualquier modelo, sigue siempre este orden. Es la
+          receta universal en Machine Learning:</p>
+
+        <ol>
+          <li><strong>Cargar los datos</strong> (con Pandas, desde un CSV, Excel o API).</li>
+          <li><strong>Análisis Exploratorio (EDA)</strong>: mirar la tabla, valores
+            nulos, distribuciones, correlaciones.</li>
+          <li><strong>Preparar las variables</strong> de entrada (X = features) y
+            salida (y = target).</li>
+          <li><strong>Dividir entre Train (80%) y Test (20%)</strong>.</li>
+          <li><strong>Instanciar el modelo</strong> (crear el modelo del tipo
+            necesario: <code>LinearRegression()</code>, <code>KNeighborsClassifier()</code>…).</li>
+          <li><strong>Entrenar el modelo</strong> con <code>.fit(X_train, y_train)</code>.</li>
+          <li><strong>Hacer una predicción</strong> con <code>.predict(X_test)</code>.</li>
+          <li><strong>Evaluar el resultado</strong> con métricas (R², Accuracy, F1…).</li>
+        </ol>
+
+        <div class="example">
+          <h4>Ejemplo: regresión lineal en 8 líneas</h4>
+
+          <div class="code-header">entrenamiento_basico.py</div>
+<pre><code>from sklearn.datasets import load_diabetes
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score
+
+# 1-2. Cargar datos
+data = load_diabetes(as_frame=True)
+X, y = data.data, data.target
+
+# 3-4. Dividir
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42)
+
+# 5-6. Instanciar y entrenar
+modelo = LinearRegression()
+modelo.fit(X_train, y_train)
+
+# 7-8. Predecir y evaluar
+y_pred = modelo.predict(X_test)
+print("R²:", r2_score(y_test, y_pred))</code></pre>
+          <div class="result">R²: 0.45</div>
+        </div>
+
+        <div class="note success">
+          <div class="note-title">Patrón que se repite</div>
+          <p>Cambies el modelo que cambies (lineal, logística, KNN, árbol, K-Means…), el
+            esquema es siempre el mismo: <code>fit</code> para entrenar y
+            <code>predict</code> para predecir. Esto es lo bonito de Scikit-learn.</p>
+        </div>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ 4. OVERFITTING ============ -->
+      <!-- ================================================== -->
+      <section id="overfitting">
+        <h2>4. Overfitting (Sobreajuste)</h2>
+
+        <p>Al entrenar un modelo existe un riesgo importante: que en lugar de
+          <em>aprender los patrones generales</em>, simplemente <strong>memorice</strong>
+          los datos de entrenamiento. Cuando le pidamos predecir en datos nuevos,
+          fallará.</p>
+
+        <h3 id="train-test">4.1 Train / Test: la clave para detectarlo</h3>
+        <p>Para detectar el overfitting, dividimos los datos en dos grupos:</p>
+        <ul>
+          <li><strong>Conjunto de Entrenamiento (Train Set):</strong> normalmente el
+            <strong>80%</strong> de los datos. El modelo aprende con estos.</li>
+          <li><strong>Conjunto de Prueba (Test Set):</strong> el <strong>20%</strong>
+            restante. El modelo <em>nunca</em> los ve durante el entrenamiento. Sirven
+            para evaluar si el modelo generaliza bien o solo ha memorizado.</li>
+        </ul>
+
+<pre><code>from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y,
+    test_size=0.2,      # 20% para test
+    random_state=42)    # para que sea reproducible</code></pre>
+
+        <h3 id="brecha">4.2 La brecha (Gap): cómo detectar overfitting</h3>
+        <p>Comparamos la <strong>precisión</strong> del modelo en el train y en el
+          test:</p>
+
+        <div class="code-header">Fórmula de la brecha</div>
+<pre><code>Brecha (%) = (accuracy_train - accuracy_test) × 100</code></pre>
+
+        <table>
+          <thead>
+            <tr><th>Brecha (Train − Test)</th><th>Interpretación</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>0 % – 2 %</td><td>Comportamiento ideal</td></tr>
+            <tr><td>2 % – 5 %</td><td>Comportamiento aceptable</td></tr>
+            <tr><td><strong>&gt; 5 %</strong></td><td><strong>Indica overfitting</strong></td></tr>
+          </tbody>
+        </table>
+
+        <ul>
+          <li><strong>Brecha pequeña</strong> → el modelo generaliza bien.</li>
+          <li><strong>Brecha grande</strong> → el modelo memorizó (overfitting).</li>
+        </ul>
+
+        <div class="note warning">
+          <div class="note-title">Caso típico</div>
+          <p>Un árbol de decisión sin límites suele dar <strong>Accuracy = 1.0</strong>
+            en train (¡ha memorizado todo!) pero solo 0.85 en test. Esa brecha del 15 %
+            es overfitting puro y duro.</p>
+        </div>
+
+        <h3 id="regularizacion">4.3 Regularización (la solución al overfitting)</h3>
+        <p>Cuando le pasamos muchas <em>features</em> al modelo, suele aparecer
+          overfitting. En vez de eliminar variables a mano, usamos la
+          <strong>Regularización</strong>, que penaliza los coeficientes grandes.</p>
+
+        <table>
+          <thead>
+            <tr><th>Método</th><th>Nombre</th><th>Característica</th><th>Efecto en los coeficientes</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Ridge</strong></td>
+              <td>L2</td>
+              <td>Elimina la multicolinealidad</td>
+              <td>Reduce los coeficientes acercándolos a 0, pero <strong>nunca</strong>
+                los hace exactamente 0. Mantiene todas las variables.</td>
+            </tr>
+            <tr>
+              <td><strong>Lasso</strong></td>
+              <td>L1</td>
+              <td>Selección de características</td>
+              <td>Fuerza a que los coeficientes no importantes sean
+                <strong>exactamente 0</strong>. Elimina variables del modelo.</td>
+            </tr>
+            <tr>
+              <td><strong>ElasticNet</strong></td>
+              <td>L1 + L2</td>
+              <td>Híbrido</td>
+              <td>Combina propiedades de ambos.</td>
+            </tr>
+          </tbody>
+        </table>
+
+<pre><code>from sklearn.linear_model import Ridge, Lasso, ElasticNet
+
+ridge = Ridge(alpha=1.0)
+lasso = Lasso(alpha=0.1)
+elastic = ElasticNet(alpha=0.1, l1_ratio=0.5)</code></pre>
+
+        <div class="note">
+          <div class="note-title">Cuándo usar cada uno</div>
+          <p><strong>Ridge</strong> cuando todas las variables aportan algo.
+             <strong>Lasso</strong> cuando sospechas que muchas son irrelevantes y
+             quieres que el modelo te diga cuáles eliminar.
+             <strong>ElasticNet</strong> si dudas entre los dos.</p>
+        </div>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ 5. MÉTRICAS ============ -->
+      <!-- ================================================== -->
+      <section id="metricas">
+        <h2>5. Métricas de evaluación</h2>
+
+        <p>Las métricas son <em>la nota del examen</em>: sirven para saber lo bueno
+          que es tu modelo. Hay diferentes según el tipo de problema.</p>
+
+        <h3>Para regresión</h3>
+        <table>
+          <thead>
+            <tr><th>Métrica</th><th>Qué mide</th><th>Cuánto mejor</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>R²</strong></td><td>Qué porcentaje de la variación explica el modelo</td><td>Más cerca de 1</td></tr>
+            <tr><td><strong>MAE</strong></td><td>Error absoluto medio (cuánto se equivoca de media)</td><td>Más pequeño</td></tr>
+            <tr><td><strong>RMSE</strong></td><td>Raíz del error cuadrático medio (penaliza errores grandes)</td><td>Más pequeño</td></tr>
+          </tbody>
+        </table>
+
+        <h3 id="metricas-clas">5.1 Para clasificación</h3>
+        <p>En clasificación binaria (sí/no, maligno/benigno) usamos estas cuatro
+          métricas, todas calculadas a partir de la Matriz de Confusión:</p>
+
+        <table>
+          <thead>
+            <tr><th>Métrica</th><th>Fórmula</th><th>Qué mide</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Accuracy</strong></td>
+              <td><code>(TP + TN) / total</code></td>
+              <td>Proporción <em>total</em> de aciertos.</td>
+            </tr>
+            <tr>
+              <td><strong>Precision</strong></td>
+              <td><code>TP / (TP + FP)</code></td>
+              <td>De los que predije positivos, cuántos lo son realmente.</td>
+            </tr>
+            <tr>
+              <td><strong>Recall</strong> (Sensibilidad)</td>
+              <td><code>TP / (TP + FN)</code></td>
+              <td>De los positivos reales, cuántos detecté.</td>
+            </tr>
+            <tr>
+              <td><strong>F1-Score</strong></td>
+              <td><code>2 · (P · R) / (P + R)</code></td>
+              <td>Media armónica entre Precision y Recall. Útil con clases desbalanceadas.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="note success">
+          <div class="note-title">Un buen modelo de clasificación</div>
+          <ul>
+            <li><strong>Accuracy &gt; 0.90</strong>: rendimiento general bueno.</li>
+            <li><strong>Recall alto</strong>: detecta todos los positivos reales
+              (crítico en medicina: no perder ningún cáncer).</li>
+            <li><strong>Precision alta</strong>: confianza en los positivos predichos.</li>
+            <li><strong>F1-Score &gt; 0.90</strong>: clases equilibradas.</li>
+          </ul>
+        </div>
+
+        <h3 id="matriz-confusion">5.2 Matriz de Confusión</h3>
+        <p>Herramienta visual para ver los aciertos y errores del modelo comparando
+          valores reales vs. predichos. Una matriz 2×2 con estos componentes:</p>
+
+        <table>
+          <thead>
+            <tr><th></th><th>Predicho Positivo</th><th>Predicho Negativo</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Real Positivo</strong></td>
+              <td><strong>TP</strong> — True Positive (acierto)</td>
+              <td><strong>FN</strong> — False Negative (error grave: no detecté el caso)</td>
+            </tr>
+            <tr>
+              <td><strong>Real Negativo</strong></td>
+              <td><strong>FP</strong> — False Positive (falsa alarma)</td>
+              <td><strong>TN</strong> — True Negative (acierto)</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="note danger">
+          <div class="note-title">En medicina los FN son lo peor</div>
+          <p>Un <strong>Falso Negativo</strong> significa decirle "estás sano" a alguien
+            que en realidad está enfermo. Por eso buscamos un <em>Recall alto</em>
+            aunque pierda un poco de Precision.</p>
+        </div>
+
+<pre><code>from sklearn.metrics import confusion_matrix, classification_report
+
+cm = confusion_matrix(y_test, y_pred)
+print(cm)
+print(classification_report(y_test, y_pred))</code></pre>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ 6. REGRESIÓN ============ -->
+      <!-- ================================================== -->
+      <section id="regresion">
+        <h2>6. Regresión</h2>
+
+        <p>La <strong>regresión</strong> es el tipo de aprendizaje supervisado que
+          predice <em>números</em> (precio, temperatura, peso…). El modelo busca la
+          línea (o curva) que pase lo más cerca posible de todos tus puntos.</p>
+
+        <h3 id="reg-lineal">6.1 Regresión Lineal Simple</h3>
+        <p>Predices el resultado usando <strong>solo una feature</strong>.</p>
+        <p><strong>Ejemplo:</strong> adivinar el precio de una casa mirando solo los
+          metros cuadrados.</p>
+
+        <div class="code-header">Fórmula</div>
+<pre><code>ŷ = β₀ + β₁·x₁</code></pre>
+
+        <ul>
+          <li><strong>ŷ</strong> = valor predicho del target.</li>
+          <li><strong>β₀</strong> = intercepto (valor de ŷ cuando x₁ = 0).</li>
+          <li><strong>β₁</strong> = coeficiente (cuánto sube ŷ por cada unidad de x₁).</li>
+          <li><strong>x₁</strong> = valor de la variable independiente.</li>
+        </ul>
+
+        <div class="example">
+          <h4>Ejemplo en Python</h4>
+<pre><code>from sklearn.linear_model import LinearRegression
+
+modelo = LinearRegression()
+modelo.fit(X_train[["bmi"]], y_train)
+
+print("Intercepto β₀:", modelo.intercept_)
+print("Coeficiente β₁:", modelo.coef_[0])</code></pre>
+          <div class="result">Intercepto β₀: 152.13
+Coeficiente β₁: 949.43</div>
+        </div>
+
+        <h3 id="reg-multiple">6.2 Regresión Lineal Múltiple</h3>
+        <p>Predices el resultado usando <strong>varias features</strong> a la vez.</p>
+        <p><strong>Ejemplo:</strong> adivinar el precio de una casa mirando los metros,
+          el número de habitaciones, si tiene piscina y el barrio.</p>
+
+        <div class="code-header">Fórmula</div>
+<pre><code>ŷ = β₀ + β₁·x₁ + β₂·x₂ + … + βₙ·xₙ</code></pre>
+
+<pre><code>features = ["bmi", "bp", "s5"]
+modelo = LinearRegression()
+modelo.fit(X_train[features], y_train)
+
+for f, c in zip(features, modelo.coef_):
+    print(f"{f}: {c:.2f}")</code></pre>
+
+        <div class="note">
+          <div class="note-title">Best features</div>
+          <p>Más features <em>no siempre</em> es mejor. Si añades variables que no
+            aportan, el modelo aprende ruido. Por eso seleccionamos las
+            <em>best features</em> antes de entrenar (con la matriz de correlación,
+            por ejemplo).</p>
+        </div>
+
+        <h3 id="reg-polinomica">6.3 Regresión Polinómica</h3>
+        <p>Es una <strong>extensión</strong> del modelo lineal diseñada para capturar
+          relaciones que <em>no son una línea recta</em>, sino curvas.</p>
+
+        <p>A diferencia del modelo lineal simple, el polinómico añade
+          <strong>potencias</strong> y <strong>combinaciones</strong> (interacciones)
+          de las variables.</p>
+
+        <div class="code-header">Modelo lineal (Grado 1)</div>
+<pre><code>y = β₀ + β₁·x₁ + β₂·x₂ + β₃·x₃</code></pre>
+
+        <div class="code-header">Modelo polinómico (Grado 2)</div>
+<pre><code>y = β₀ + β₁·x₁ + β₂·x₂ + β₃·x₃
+    + β₄·x₁² + β₅·x₂² + β₆·x₃²
+    + β₇·x₁·x₂ + β₈·x₁·x₃ + β₉·x₂·x₃</code></pre>
+
+        <h4>Elección del grado del polinomio</h4>
+        <table>
+          <thead>
+            <tr><th>Grado</th><th>Descripción</th><th>Riesgo</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Grado 1</td><td>Modelo lineal simple</td><td>Demasiado simple (underfitting)</td></tr>
+            <tr><td>Grado 2</td><td><strong>Recomendado</strong></td><td>Captura curvaturas simples</td></tr>
+            <tr><td>Grado 3</td><td>Relaciones complejas</td><td>Peligro de overfitting</td></tr>
+            <tr><td>Grado ≥ 4</td><td>Muy complejo</td><td>Casi siempre provoca overfitting</td></tr>
+          </tbody>
+        </table>
+
+<pre><code>from sklearn.preprocessing import PolynomialFeatures
+from sklearn.pipeline import make_pipeline
+
+modelo = make_pipeline(
+    PolynomialFeatures(degree=2),
+    LinearRegression()
+)
+modelo.fit(X_train, y_train)</code></pre>
+
+        <h3 id="correlacion">6.4 Matriz de Correlación</h3>
+        <p>Una <strong>matriz de correlación</strong> es una tabla que muestra los
+          coeficientes de correlación entre múltiples variables. Es la herramienta
+          principal para elegir las <em>best features</em>.</p>
+
+        <h4>1. Identificar relaciones con el target</h4>
+        <ul>
+          <li>Encontramos qué features están relacionadas con la variable que queremos
+            predecir.</li>
+          <li>Seleccionamos las que tengan correlación alta (positiva o negativa) con
+            el target.</li>
+        </ul>
+
+        <h4>2. Evitar redundancia entre features</h4>
+        <ul>
+          <li>Detectamos features muy correlacionadas <em>entre sí</em>.</li>
+          <li>Eliminamos las redundantes para evitar <strong>multicolinealidad</strong>.</li>
+        </ul>
+
+        <h4>Interpretación de los números (escala −1 a +1)</h4>
+        <table>
+          <thead><tr><th>Valor</th><th>Significado</th></tr></thead>
+          <tbody>
+            <tr><td>+0.7 a +1</td><td>Correlación positiva fuerte</td></tr>
+            <tr><td>+0.3 a +0.7</td><td>Correlación positiva moderada</td></tr>
+            <tr><td>−0.3 a +0.3</td><td>Correlación débil o nula</td></tr>
+            <tr><td>−0.7 a −0.3</td><td>Correlación negativa moderada</td></tr>
+            <tr><td>−1 a −0.7</td><td>Correlación negativa fuerte</td></tr>
+          </tbody>
+        </table>
+
+        <div class="note warning">
+          <div class="note-title">Valores especiales</div>
+          <ul>
+            <li><strong>1.0 (la diagonal):</strong> son comparaciones de una variable
+              consigo misma. Ignóralas.</li>
+            <li><strong>≥ 0.90 entre dos features:</strong> son casi idénticas
+              (multicolinealidad). Quédate solo con una de ellas.</li>
+          </ul>
+        </div>
+
+<pre><code>import seaborn as sns
+
+corr = df.corr()
+sns.heatmap(corr, annot=True, cmap="coolwarm")</code></pre>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ 7. CLASIFICACIÓN ============ -->
+      <!-- ================================================== -->
+      <section id="clasificacion">
+        <h2>7. Clasificación</h2>
+
+        <p>La <strong>clasificación</strong> es el tipo de aprendizaje supervisado que
+          predice <em>categorías</em> (sí/no, gato/perro, maligno/benigno). Veremos
+          los tres modelos más usados.</p>
+
+        <h3 id="logistica">7.1 Regresión Logística</h3>
+        <p>A pesar del nombre, la <strong>Regresión Logística</strong> es un algoritmo
+          de <em>clasificación</em>. Su objetivo no es predecir un número, sino la
+          <strong>probabilidad</strong> de que algo pertenezca a una categoría.</p>
+
+        <h4>La función Sigmoide</h4>
+        <p>Para clasificar, el modelo pasa el resultado de una ecuación lineal por la
+          <strong>función sigmoide</strong>, que convierte cualquier número en un
+          valor entre 0 y 1:</p>
+
+<pre><code>σ(x) = 1 / (1 + e^(-x))</code></pre>
+
+        <p>Ese valor entre 0 y 1 se interpreta como la <strong>probabilidad</strong>
+          de pertenecer a la clase positiva.</p>
+
+        <h4>La frontera de decisión</h4>
+        <p>El modelo no decide al azar; usa un <strong>umbral</strong> (normalmente 0.5):</p>
+        <ul>
+          <li>Si <code>P(x) ≥ 0.5</code> → <strong>Clase 1</strong> (ej: benigno).</li>
+          <li>Si <code>P(x) &lt; 0.5</code> → <strong>Clase 0</strong> (ej: maligno).</li>
+        </ul>
+
+        <h4>StandardScaler: imprescindible</h4>
+        <p>El modelo cree que los números grandes son más importantes solo por su
+          magnitud. Para evitar que una variable con valores altos (salario) domine
+          sobre una con valores bajos (edad), <strong>escalamos</strong> los datos:</p>
+
+<pre><code>from sklearn.preprocessing import StandardScaler
+
+scaler = StandardScaler()
+X_train_s = scaler.fit_transform(X_train)
+X_test_s  = scaler.transform(X_test)</code></pre>
+
+        <h4>Regularización: el parámetro C</h4>
+        <p>Para evitar overfitting, la Regresión Logística también acepta
+          regularización. El parámetro clave es <code>C</code>:</p>
+
+        <table>
+          <thead>
+            <tr><th>Valor de C</th><th>Penalización</th><th>Resultado</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Bajo</strong> (ej. 0.01)</td><td>Alta</td><td>Modelo más simple (generalista)</td></tr>
+            <tr><td><strong>Alto</strong> (ej. 100)</td><td>Baja</td><td>Modelo más complejo (ajustado al detalle)</td></tr>
+          </tbody>
+        </table>
+
+        <ul>
+          <li><strong>L1 (Lasso):</strong> <code>penalty='l1'</code> → puede reducir
+            coeficientes a 0 exactamente. Selección de características.</li>
+          <li><strong>L2 (Ridge):</strong> <code>penalty='l2'</code> → estándar por
+            defecto. Reduce los coeficientes pero no los elimina.</li>
+        </ul>
+
+        <div class="example">
+          <h4>Ejemplo: Breast Cancer</h4>
+
+<pre><code>from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score
+
+modelo = LogisticRegression(C=1.0, penalty='l2', max_iter=1000)
+modelo.fit(X_train_s, y_train)
+
+y_pred = modelo.predict(X_test_s)
+print("Accuracy:", accuracy_score(y_test, y_pred))</code></pre>
+          <div class="result">Accuracy: 0.97</div>
+        </div>
+
+        <h4>Estrategias multiclase</h4>
+        <p>Cuando hay <strong>más de dos categorías</strong> (clasificar dígitos 0–9,
+          flores Iris…), usamos:</p>
+        <table>
+          <thead>
+            <tr><th>Estrategia</th><th>Funcionamiento</th><th>Cuándo usar</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Multinomial (Softmax)</strong></td>
+              <td>Calcula la probabilidad de todas las clases a la vez.</td>
+              <td>3–5 clases bien equilibradas (Iris).</td>
+            </tr>
+            <tr>
+              <td><strong>One-vs-Rest (OvR)</strong></td>
+              <td>Crea un modelo binario por cada clase ("esta clase" vs "el resto").</td>
+              <td>10+ clases o datos desequilibrados (dígitos MNIST).</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 id="knn">7.2 K-Nearest Neighbors (KNN)</h3>
+        <p>El <strong>KNN</strong> es un algoritmo intuitivo: clasifica una nueva
+          muestra mirando las <strong>K muestras más cercanas</strong> (sus vecinos)
+          en el conjunto de entrenamiento y votando.</p>
+
+        <p>Sirve tanto para clasificación como para regresión.</p>
+
+        <h4>Cómo mide la "cercanía": las distancias</h4>
+        <ul>
+          <li><strong>Distancia Euclídea (L2):</strong> la línea recta entre dos puntos.
+            <code>d = √Σ(qᵢ − pᵢ)²</code></li>
+          <li><strong>Distancia Manhattan (L1):</strong> distancia en "bloques" o
+            "taxi". <code>d = Σ|qᵢ − pᵢ|</code></li>
+          <li><strong>Distancia de Minkowski:</strong> generalización de las dos
+            anteriores. Si <code>p=1</code> es Manhattan, si <code>p=2</code> es
+            Euclídea.</li>
+        </ul>
+
+        <div class="note danger">
+          <div class="note-title">KNN es muy sensible a la escala</div>
+          <p>Si una feature va de 0 a 1000 y otra de 0 a 1, la primera dominará el
+            cálculo de distancia. <strong>Siempre</strong> usa <code>StandardScaler</code>
+            antes de aplicar KNN.</p>
+        </div>
+
+        <h4>Hiperparámetros clave</h4>
+        <ul>
+          <li><strong>n_neighbors (K):</strong> número de vecinos a consultar. K
+            pequeño → overfitting; K muy grande → underfitting.</li>
+          <li><strong>weights:</strong>
+            <ul>
+              <li><code>'uniform'</code> → todos los vecinos votan igual.</li>
+              <li><code>'distance'</code> → los más cercanos pesan más.</li>
+            </ul>
+          </li>
+          <li><strong>metric:</strong> <code>'euclidean'</code>, <code>'manhattan'</code>,
+            <code>'minkowski'</code>.</li>
+        </ul>
+
+<pre><code>from sklearn.neighbors import KNeighborsClassifier
+
+knn = KNeighborsClassifier(n_neighbors=5, weights='distance', metric='euclidean')
+knn.fit(X_train_s, y_train)
+print("Accuracy:", knn.score(X_test_s, y_test))</code></pre>
+
+        <h4>Encontrar el mejor K: GridSearchCV</h4>
+        <p>En lugar de probar K a mano, usamos <strong>GridSearchCV</strong>, que
+          combina <em>Cross-Validation</em> con <em>Fine-tuning</em>: prueba todas las
+          combinaciones de parámetros y se queda con la mejor.</p>
+
+<pre><code>from sklearn.model_selection import GridSearchCV
+
+params = {
+    'n_neighbors': [3, 5, 7, 9, 11],
+    'weights':     ['uniform', 'distance'],
+    'metric':      ['euclidean', 'manhattan']
+}
+
+grid = GridSearchCV(KNeighborsClassifier(), params, cv=5)
+grid.fit(X_train_s, y_train)
+print("Mejor combinación:", grid.best_params_)</code></pre>
+
+        <h3 id="arboles">7.3 Árboles de Decisión y Random Forest</h3>
+
+        <h4>Decision Tree (Árbol de decisión)</h4>
+        <p>Es un modelo que toma decisiones de forma jerárquica, como un
+          <em>diagrama de flujo</em>:</p>
+        <ul>
+          <li>Empieza con todos los datos y hace una pregunta (ej: "¿El tumor mide
+            más de 2 cm?").</li>
+          <li><strong>Ramas:</strong> "Sí" se va por un camino, "No" por otro.</li>
+          <li><strong>Hojas (Leaf nodes):</strong> el final del camino, donde el árbol
+            da la respuesta final (ej: "Es benigno").</li>
+        </ul>
+
+        <div class="note warning">
+          <div class="note-title">El problema del árbol solitario</div>
+          <p>Los árboles son <strong>muy propensos al overfitting</strong>. Si no les
+            ponemos límites, crecen hasta crear una regla para cada dato individual:
+            <em>memorizan</em> en vez de aprender patrones generales.</p>
+        </div>
+
+        <h4>Hiperparámetros (poner límites al árbol)</h4>
+        <ul>
+          <li><strong>max_depth:</strong> profundidad máxima. Si lo dejas en
+            <code>None</code> crece hasta el infinito. Con <code>3</code> solo hace 3
+            niveles de preguntas.</li>
+          <li><strong>min_samples_split:</strong> mínimo de datos en un grupo para que
+            el árbol se atreva a hacer otra pregunta.</li>
+          <li><strong>min_samples_leaf:</strong> mínimo de datos que debe haber en
+            cada hoja final.</li>
+        </ul>
+
+<pre><code>from sklearn.tree import DecisionTreeClassifier
+
+tree = DecisionTreeClassifier(max_depth=4, min_samples_leaf=5, random_state=42)
+tree.fit(X_train, y_train)</code></pre>
+
+        <h4>Random Forest (El bosque aleatorio)</h4>
+        <p>Como un solo árbol falla a menudo, usamos un <strong>Random Forest</strong>:
+          una colección (un bosque) de muchos árboles trabajando juntos.</p>
+        <ul>
+          <li><strong>La sabiduría de la multitud:</strong> cada árbol ve solo una
+            parte de los datos y una parte de las features. Al final, <em>todos
+            votan</em>. La respuesta con más votos gana.</li>
+          <li><strong>Ventaja:</strong> es mucho más difícil que un bosque entero
+            haga trampa (overfitting) que un solo árbol.</li>
+        </ul>
+
+<pre><code>from sklearn.ensemble import RandomForestClassifier
+
+rf = RandomForestClassifier(
+    n_estimators=100,   # número de árboles
+    max_depth=5,
+    random_state=42)
+
+rf.fit(X_train, y_train)
+print("Accuracy:", rf.score(X_test, y_test))</code></pre>
+
+        <h4>Diccionario rápido</h4>
+        <table>
+          <thead><tr><th>Palabra</th><th>Significado sencillo</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Node (Nodo)</strong></td><td>Cada vez que el árbol hace una pregunta.</td></tr>
+            <tr><td><strong>Leaf (Hoja)</strong></td><td>El resultado final (la predicción).</td></tr>
+            <tr><td><strong>n_estimators</strong></td><td>Número de árboles del bosque. Más = mejor pero más lento.</td></tr>
+            <tr><td><strong>Feature Importance</strong></td><td>Qué pistas (features) han sido las más importantes para decidir.</td></tr>
+          </tbody>
+        </table>
+
+        <div class="note success">
+          <div class="note-title">Resumen para no liarte</div>
+          <ul>
+            <li><strong>Un árbol:</strong> rápido y fácil de entender, pero hace
+              trampa fácilmente (overfitting).</li>
+            <li><strong>Random Forest:</strong> equipo de árboles. Más robusto, falla
+              menos. Es el "rey" de los algoritmos de clasificación actuales.</li>
+            <li><strong>Poner límites:</strong> siempre limita <code>max_depth</code>
+              para que el modelo aprenda y no memorice.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ 8. NO SUPERVISADO ============ -->
+      <!-- ================================================== -->
+      <section id="no-supervisado">
+        <h2>8. Aprendizaje No Supervisado</h2>
+
+        <p>Hasta ahora, en supervisado, le dábamos al modelo la pregunta <em>y</em> la
+          respuesta. En <strong>aprendizaje no supervisado</strong>, el modelo trabaja
+          con datos <strong>sin etiquetar</strong>: solo ve las features y no conoce
+          la respuesta correcta de antemano.</p>
+
+        <p><strong>Objetivo:</strong> descubrir estructuras internas, grupos naturales,
+          patrones, anomalías o relaciones desconocidas.</p>
+
+        <p><strong>Casos de uso principales:</strong></p>
+        <ul>
+          <li><strong>Segmentación de clientes</strong>: identificar tipos de clientes
+            sin saber cuántos hay.</li>
+          <li><strong>Detección de anomalías</strong>: localizar casos extraños (outliers).</li>
+          <li><strong>Sistemas de recomendación</strong>: agrupar productos similares.</li>
+        </ul>
+
+        <h3 id="kmeans">8.1 Clustering con K-Means</h3>
+        <p>El <strong>clustering</strong> agrupa datos similares en conjuntos llamados
+          <strong>clusters</strong>. La meta es maximizar la similitud dentro de cada
+          grupo y la diferencia con otros grupos.</p>
+
+        <h4>Cómo funciona K-Means</h4>
+        <ol>
+          <li><strong>Inicialización:</strong> defines el número de grupos K. El
+            modelo coloca K puntos aleatorios como centros iniciales.</li>
+          <li><strong>Asignación:</strong> cada dato se asigna al centro más cercano.</li>
+          <li><strong>Actualización:</strong> se recalculan los centros como la
+            media de los puntos asignados.</li>
+          <li><strong>Convergencia:</strong> se repite hasta que los centros se
+            mantienen estables (normalmente entre 5 y 10 iteraciones).</li>
+        </ol>
+
+        <div class="note warning">
+          <div class="note-title">Normaliza los datos</div>
+          <p>K-Means se basa en distancias matemáticas. Si una feature tiene una
+            escala mucho mayor, dominará. <strong>Siempre</strong> aplica
+            <code>StandardScaler</code> antes.</p>
+        </div>
+
+<pre><code>from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+
+scaler = StandardScaler()
+X_s = scaler.fit_transform(X)
+
+kmeans = KMeans(n_clusters=4, random_state=42, n_init=10)
+kmeans.fit(X_s)
+
+labels  = kmeans.labels_           # a qué grupo va cada punto
+centros = kmeans.cluster_centers_  # coordenadas de los centros</code></pre>
+
+        <h4>Cómo elegir K (el número de grupos)</h4>
+        <p>Como no tenemos etiquetas, usamos <em>métricas internas</em>:</p>
+
+        <table>
+          <thead>
+            <tr><th>Métrica</th><th>Qué mide</th><th>Cuánto mejor</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Inertia (Inercia)</strong></td>
+              <td>Suma de las distancias de cada punto a su centro.</td>
+              <td>Más pequeña (pero siempre baja al subir K).</td>
+            </tr>
+            <tr>
+              <td><strong>Silhouette Score</strong></td>
+              <td>Cohesión y separación, de 0 a 1.</td>
+              <td>&gt; 0.5: buenos clusters · 0.2-0.5: aceptables · &lt; 0.2: revisar.</td>
+            </tr>
+            <tr>
+              <td><strong>Elbow Method</strong> (Método del Codo)</td>
+              <td>Gráfica de <em>Inertia vs K</em>.</td>
+              <td>Buscar el "codo" donde la mejora deja de ser significativa.</td>
+            </tr>
+          </tbody>
+        </table>
+
+<pre><code>from sklearn.metrics import silhouette_score
+
+inertias, scores = [], []
+for k in range(2, 10):
+    km = KMeans(n_clusters=k, random_state=42, n_init=10).fit(X_s)
+    inertias.append(km.inertia_)
+    scores.append(silhouette_score(X_s, km.labels_))</code></pre>
+
+        <h4>Clustering vs Segmentación</h4>
+        <p>Cuidado: aunque relacionados, no son lo mismo en un entorno profesional:</p>
+        <table>
+          <thead>
+            <tr><th>Clustering</th><th>Segmentación</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Proceso <strong>técnico y automático</strong>. Es matemático
+                (Cluster 0, 1, 2…).</td>
+              <td>Proceso de <strong>negocio</strong>. Incluye el clustering + la
+                interpretación humana + estrategia.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p><strong>Pasos de la segmentación de verdad:</strong></p>
+        <ol>
+          <li><strong>Clustering:</strong> encontrar los grupos con el algoritmo.</li>
+          <li><strong>Análisis:</strong> estudiar las características de cada grupo.</li>
+          <li><strong>Nomenclatura:</strong> ponerles nombres ("Premium",
+            "Ahorradores", "Esporádicos"…).</li>
+          <li><strong>Estrategia:</strong> definir acciones específicas (ofertas,
+            sistemas de puntos, etc.).</li>
+        </ol>
+
+        <div class="example">
+          <h4>Caso real: pingüinos de la Antártida</h4>
+          <p>Si aplicamos K-Means a un dataset de pingüinos usando solo
+            <em>longitud del pico</em> y <em>longitud de las aletas</em>, el algoritmo
+            identifica <strong>3 grupos</strong> que coinciden estrechamente con las
+            3 especies reales (Adelie, Chinstrap, Gentoo). Lo bonito: lo descubre solo,
+            sin saber qué es una especie.</p>
+        </div>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ 9. RESUMEN ============ -->
+      <!-- ================================================== -->
+      <section id="resumen">
+        <h2>9. Resumen final</h2>
+
+        <p>Si te quedas con una sola tabla de todos estos apuntes, que sea esta:</p>
+
+        <table>
+          <thead>
+            <tr><th>Problema</th><th>Tipo</th><th>Modelo recomendado</th><th>Métrica clave</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Predecir un <em>número</em></td><td>Regresión</td><td>Linear Regression / Polynomial</td><td>R², MAE, RMSE</td></tr>
+            <tr><td>Predecir una <em>categoría</em> binaria</td><td>Clasificación</td><td>Logistic Regression / Random Forest</td><td>Accuracy, F1, Recall</td></tr>
+            <tr><td>Predecir entre <em>varias clases</em></td><td>Clasificación</td><td>Random Forest / KNN</td><td>Accuracy, F1</td></tr>
+            <tr><td>Encontrar <em>grupos</em> sin etiquetas</td><td>Clustering</td><td>K-Means</td><td>Silhouette, Inertia (Elbow)</td></tr>
+          </tbody>
+        </table>
+
+        <div class="note success">
+          <div class="note-title">Las 3 reglas de oro</div>
+          <ol>
+            <li><strong>Siempre</strong> divide en Train / Test (80 / 20).</li>
+            <li><strong>Siempre</strong> escala los datos antes de KNN, Logística o
+              K-Means (<code>StandardScaler</code>).</li>
+            <li><strong>Siempre</strong> mira la brecha Train − Test para detectar
+              overfitting.</li>
+          </ol>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ================== Footer ================== -->
+  <footer class="footer">
+    <p><strong>Estudio</strong> · Innovation starts here</p>
+    <p>Apuntes hechos por y para alumnos · Curso 2025-2026</p>
+  </footer>
+
+  <script src="assets/main.js"></script>
+</body>
+</html>

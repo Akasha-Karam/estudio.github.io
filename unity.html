@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unity · Apuntes · Estudio</title>
+  <link rel="icon" href="assets/logo.png" type="image/png">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+  <!-- ================== HEADER ================== -->
+  <header class="header">
+    <a href="index.html" class="brand" style="text-decoration:none">
+      <img src="assets/logo.png" alt="Logo Estudio">
+      <h1>Estudio</h1>
+    </a>
+    <nav>
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="unity.html">Unity</a></li>
+        <li><a href="index.html#about">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ================== Página título ================== -->
+  <section class="page-title">
+    <div class="page-title-inner">
+      <h1>Unity · C# + GameObjects</h1>
+      <p class="subtitle">Apuntes para alumnos: aprende a hacer videojuegos con Unity desde
+        cero. Estructura del proyecto, GameObjects y Components, ciclo de vida de
+        MonoBehaviour, físicas, prefabs, escenas, Input, UI, animaciones, ScriptableObjects
+        y patrones (Singleton, Events) del curso Kitchen Chaos. Con ejemplos prácticos
+        y ejercicios resueltos.</p>
+      <div class="chips">
+        <span class="chip">Unity 2022 LTS</span>
+        <span class="chip">C# 9</span>
+        <span class="chip">MonoBehaviour</span>
+        <span class="chip">Prefabs</span>
+        <span class="chip">Rigidbody</span>
+        <span class="chip">ScriptableObject</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================== Contenido ================== -->
+  <div class="notes-layout">
+
+    <!-- ============== Sidebar / TOC ============== -->
+    <aside class="toc">
+      <h4>Índice</h4>
+      <ul>
+        <li><a href="#unity">1. Unity</a></li>
+        <li class="sub"><a href="#que-es">1.1 ¿Qué es?</a></li>
+        <li class="sub"><a href="#unity-hub">1.2 Unity Hub</a></li>
+        <li class="sub"><a href="#estructura">1.3 Estructura del proyecto</a></li>
+        <li class="sub"><a href="#editor">1.4 El Editor</a></li>
+
+        <li><a href="#gameobjects">2. GameObjects y Components</a></li>
+        <li class="sub"><a href="#gameobject">2.1 ¿Qué es un GameObject?</a></li>
+        <li class="sub"><a href="#components">2.2 Components</a></li>
+        <li class="sub"><a href="#transform">2.3 Transform</a></li>
+
+        <li><a href="#scripts">3. Scripts (MonoBehaviour)</a></li>
+        <li class="sub"><a href="#crear-script">3.1 Crear un script</a></li>
+        <li class="sub"><a href="#ciclo-vida">3.2 Ciclo de vida</a></li>
+        <li class="sub"><a href="#serialize">3.3 [SerializeField] y públicos</a></li>
+        <li class="sub"><a href="#getcomponent">3.4 GetComponent y referencias</a></li>
+
+        <li><a href="#input">4. Input del jugador</a></li>
+        <li class="sub"><a href="#input-legacy">4.1 Input Manager (clásico)</a></li>
+        <li class="sub"><a href="#mover">4.2 Mover un personaje</a></li>
+
+        <li><a href="#fisicas">5. Físicas y colisiones</a></li>
+        <li class="sub"><a href="#rigidbody">5.1 Rigidbody</a></li>
+        <li class="sub"><a href="#collider">5.2 Colliders</a></li>
+        <li class="sub"><a href="#triggers">5.3 Triggers</a></li>
+
+        <li><a href="#prefabs">6. Prefabs</a></li>
+        <li class="sub"><a href="#prefab-crear">6.1 Crear un prefab</a></li>
+        <li class="sub"><a href="#instantiate">6.2 Instantiate y Destroy</a></li>
+
+        <li><a href="#escenas">7. Escenas</a></li>
+        <li class="sub"><a href="#scenemanager">7.1 SceneManager</a></li>
+        <li class="sub"><a href="#dontdestroy">7.2 DontDestroyOnLoad</a></li>
+
+        <li><a href="#ui">8. UI (Canvas)</a></li>
+        <li class="sub"><a href="#canvas">8.1 Canvas y EventSystem</a></li>
+        <li class="sub"><a href="#botones">8.2 Botones, textos, listeners</a></li>
+
+        <li><a href="#animaciones">9. Animaciones y Audio</a></li>
+        <li class="sub"><a href="#animator">9.1 Animator</a></li>
+        <li class="sub"><a href="#audiosource">9.2 AudioSource</a></li>
+
+        <li><a href="#patrones">10. Patrones (Kitchen Chaos)</a></li>
+        <li class="sub"><a href="#singleton">10.1 Singleton</a></li>
+        <li class="sub"><a href="#eventos">10.2 Events / Action</a></li>
+        <li class="sub"><a href="#scriptable">10.3 ScriptableObject</a></li>
+
+        <li><a href="#ejercicios">11. Ejercicios</a></li>
+        <li><a href="#cheatsheet">12. Cheatsheet</a></li>
+      </ul>
+    </aside>
+
+    <!-- ============== Contenido principal ============== -->
+    <main class="content">
+
+      <!-- ================================================== -->
+      <!-- ============ 1. UNITY ============ -->
+      <!-- ================================================== -->
+      <section id="unity">
+        <h2>1. Unity</h2>
+
+        <h3 id="que-es">1.1 ¿Qué es Unity?</h3>
+        <p><strong>Unity</strong> es un motor de videojuegos (game engine) multiplataforma:
+          un programa que te da todas las piezas necesarias para hacer un juego — render
+          3D/2D, físicas, audio, animación, UI, input… — y tú solo escribes la
+          <em>lógica</em> en <strong>C#</strong>.</p>
+
+        <p>Con Unity puedes publicar el mismo proyecto en muchas plataformas:</p>
+        <ul>
+          <li><strong>PC</strong>: Windows, macOS, Linux.</li>
+          <li><strong>Móvil</strong>: Android, iOS.</li>
+          <li><strong>Consolas</strong>: Switch, PlayStation, Xbox.</li>
+          <li><strong>Web</strong>: WebGL (juega en el navegador).</li>
+          <li><strong>VR/AR</strong>: Quest, Vision Pro, etc.</li>
+        </ul>
+
+        <div class="note">
+          <div class="note-title">Idea clave (analogía con Spring Boot)</div>
+          <p>Si vienes de <a href="springboot.html">Spring Boot</a>, piensa en Unity como
+            un framework parecido: en Spring tú no montas el servidor, solo escribes
+            <code>@RestController</code> y Spring se encarga del resto. En Unity tú no
+            programas el render ni las físicas, solo escribes <em>scripts</em>
+            (<code>MonoBehaviour</code>) que Unity engancha automáticamente a los
+            objetos de la escena.</p>
+        </div>
+
+        <h3 id="unity-hub">1.2 Unity Hub</h3>
+        <p><strong>Unity Hub</strong> es la aplicación que gestiona tus proyectos y las
+          versiones de Unity. Es como SDK Manager + Android Studio Welcome Screen juntos.</p>
+
+        <ol>
+          <li>Descarga <a href="https://unity.com/download" target="_blank">Unity Hub</a>.</li>
+          <li>Inicia sesión con una cuenta Unity (la versión Personal es gratis).</li>
+          <li>En la pestaña <strong>Installs</strong>, instala una versión <strong>LTS</strong>
+            (Long Term Support), por ejemplo <code>2022.3.x LTS</code>.</li>
+          <li>En la pestaña <strong>Projects</strong>, pulsa <strong>New project</strong>,
+            elige una plantilla (<code>3D Core</code>, <code>2D Core</code>, etc.) y un
+            nombre.</li>
+        </ol>
+
+        <div class="note warning">
+          <div class="note-title">Usa siempre LTS</div>
+          <p>Las versiones LTS son las estables, las que se actualizan durante 2 años con
+            bugfixes. Las versiones "Tech" son novedades pero traen bugs. Para aprender y
+            para proyectos serios: <strong>LTS</strong>.</p>
+        </div>
+
+        <h3 id="estructura">1.3 Estructura de un proyecto Unity</h3>
+        <p>Cuando creas un proyecto, Unity genera muchas carpetas. La única que importa
+          al día a día es <code>Assets/</code>: todo lo que pongas ahí dentro forma parte
+          del juego (scripts, sprites, modelos, sonidos, escenas…).</p>
+
+        <div class="code-header">MiProyecto/</div>
+<pre><code>MiProyecto/
+├── Assets/                  ← TODO lo que tú creas (scripts, escenas, sprites…)
+│   ├── Scripts/             ← código C#
+│   ├── Scenes/              ← escenas (.unity)
+│   ├── Prefabs/             ← objetos reutilizables
+│   ├── Materials/           ← materiales y shaders
+│   ├── Sprites/             ← imágenes 2D
+│   ├── Models/              ← modelos 3D (.fbx)
+│   ├── Audio/               ← sonidos y música
+│   └── Resources/           ← assets cargables por código (Resources.Load)
+├── Packages/                ← dependencias (manifest.json)
+├── ProjectSettings/         ← configuración del proyecto
+├── Library/                 ← caché generada por Unity (NO subir a git)
+├── Temp/, Logs/, obj/       ← temporales (NO subir a git)
+└── MiProyecto.sln           ← solución de Visual Studio (autogenerada)</code></pre>
+
+        <div class="note">
+          <div class="note-title">Analogía con Spring Boot</div>
+          <p>Mapea así si vienes de Spring:</p>
+          <table>
+            <thead><tr><th>Spring Boot</th><th>Unity</th><th>Para qué sirve</th></tr></thead>
+            <tbody>
+              <tr><td><code>src/main/java/</code></td><td><code>Assets/Scripts/</code></td><td>Tu código fuente.</td></tr>
+              <tr><td><code>src/main/resources/</code></td><td><code>Assets/</code> (Sprites, Audio…)</td><td>Recursos estáticos.</td></tr>
+              <tr><td><code>pom.xml</code> / <code>build.gradle</code></td><td><code>Packages/manifest.json</code></td><td>Dependencias.</td></tr>
+              <tr><td><code>application.properties</code></td><td><code>ProjectSettings/</code></td><td>Configuración del proyecto.</td></tr>
+              <tr><td><code>target/</code> (no commitear)</td><td><code>Library/</code>, <code>Temp/</code> (no commitear)</td><td>Caché compilada.</td></tr>
+              <tr><td><code>ApplicationContext</code></td><td><code>Scene</code></td><td>"Contenedor" que tiene todos los objetos vivos.</td></tr>
+              <tr><td><code>@Component</code> / <code>@Service</code></td><td><code>MonoBehaviour</code> en un GameObject</td><td>Pieza de lógica registrada en el sistema.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="note warning">
+          <div class="note-title">.gitignore obligatorio</div>
+          <p>Sube a git solo <code>Assets/</code>, <code>Packages/</code> y
+            <code>ProjectSettings/</code>. Las demás carpetas las regenera Unity sola y
+            pesan muchísimo.</p>
+        </div>
+
+        <h3 id="editor">1.4 El Editor de Unity</h3>
+        <p>Al abrir un proyecto verás 5 paneles (ventanas) principales. Apréndete los
+          nombres porque son tu sitio de trabajo:</p>
+
+        <table>
+          <thead><tr><th>Panel</th><th>Para qué sirve</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Hierarchy</strong></td><td>Lista de los <em>GameObjects</em> de la escena actual. Es el árbol vivo.</td></tr>
+            <tr><td><strong>Scene</strong></td><td>Vista 3D/2D editable: arrastras y colocas los objetos.</td></tr>
+            <tr><td><strong>Game</strong></td><td>Lo que vería el jugador cuando le des Play.</td></tr>
+            <tr><td><strong>Inspector</strong></td><td>Propiedades del GameObject seleccionado (componentes y sus valores).</td></tr>
+            <tr><td><strong>Project</strong></td><td>Explorador de la carpeta <code>Assets/</code>.</td></tr>
+            <tr><td><strong>Console</strong></td><td>Errores, warnings y <code>Debug.Log()</code>.</td></tr>
+          </tbody>
+        </table>
+
+        <p>Arriba del todo verás los botones <strong>▶ Play</strong>, <strong>⏸ Pause</strong>
+          y <strong>⏭ Step</strong>. Al pulsar Play, Unity arranca la escena
+          (como <code>mvn spring-boot:run</code>, pero en directo dentro del editor).</p>
+
+        <div class="note danger">
+          <div class="note-title">¡Cuidado con Play!</div>
+          <p>Mientras estás en modo Play, los cambios que hagas en el Inspector
+            <strong>no se guardan</strong>. Si modificas valores y luego sales de Play,
+            todo vuelve a como estaba. Para experimentar con valores definitivos: sal de
+            Play primero.</p>
+        </div>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ 2. GAMEOBJECTS Y COMPONENTS ============ -->
+      <!-- ================================================== -->
+      <section id="gameobjects">
+        <h2>2. GameObjects y Components</h2>
+
+        <p>El modelo mental de Unity es muy simple, pero importante entenderlo:</p>
+        <ul>
+          <li>Una <strong>escena</strong> contiene <strong>GameObjects</strong>.</li>
+          <li>Cada GameObject es solo un contenedor — no hace nada por sí mismo.</li>
+          <li>Lo que hace que un GameObject sea algo (cubo, cámara, enemigo, botón…) son
+            los <strong>Components</strong> que tiene pegados.</li>
+        </ul>
+
+        <h3 id="gameobject">2.1 ¿Qué es un GameObject?</h3>
+        <p>Un <strong>GameObject</strong> es cualquier "cosa" en la escena: el suelo, el
+          personaje, la cámara, una luz, un enemigo, un UI. Es básicamente un nodo con
+          nombre, posición (<code>Transform</code>) y una lista de componentes.</p>
+
+        <div class="note">
+          <div class="note-title">GameObject vs Spring Bean</div>
+          <p>Un <code>GameObject</code> es como un <em>bean</em> de Spring, y los
+            <code>Component</code>s pegados son sus interfaces implementadas. La diferencia
+            es que en Unity tú los compones <em>arrastrando en el Inspector</em>, no con
+            <code>@Autowired</code>.</p>
+        </div>
+
+        <h3 id="components">2.2 Components</h3>
+        <p>Un <strong>Component</strong> es una "pieza" que añade comportamiento o datos
+          a un GameObject. Unity trae muchos de fábrica:</p>
+
+        <table>
+          <thead><tr><th>Component</th><th>Para qué</th></tr></thead>
+          <tbody>
+            <tr><td><code>Transform</code></td><td>Posición, rotación y escala. <em>Todos</em> los GameObjects lo tienen, no se puede quitar.</td></tr>
+            <tr><td><code>MeshRenderer</code></td><td>Hace que el objeto se vea (dibuja el modelo 3D).</td></tr>
+            <tr><td><code>SpriteRenderer</code></td><td>Dibuja un sprite (2D).</td></tr>
+            <tr><td><code>Collider</code> (Box, Sphere, Mesh…)</td><td>Da forma "física" para detectar colisiones.</td></tr>
+            <tr><td><code>Rigidbody</code></td><td>Hace que el objeto reaccione a la física (gravedad, fuerzas).</td></tr>
+            <tr><td><code>Camera</code></td><td>Convierte un GameObject en la cámara que renderiza la escena.</td></tr>
+            <tr><td><code>Light</code></td><td>Emite luz.</td></tr>
+            <tr><td><code>AudioSource</code></td><td>Reproduce sonido.</td></tr>
+            <tr><td><code>Animator</code></td><td>Controla animaciones.</td></tr>
+            <tr><td>Tus scripts <code>MonoBehaviour</code></td><td>Tu lógica de juego.</td></tr>
+          </tbody>
+        </table>
+
+        <p>Para añadir un component: selecciona el GameObject en el <em>Hierarchy</em> y
+          pulsa <strong>Add Component</strong> al final del Inspector.</p>
+
+        <h3 id="transform">2.3 Transform</h3>
+        <p>El <code>Transform</code> guarda la <strong>posición</strong>, <strong>rotación</strong>
+          y <strong>escala</strong> del GameObject, y forma parte del árbol jerárquico
+          (un objeto puede ser hijo de otro y moverse con él).</p>
+
+        <div class="example">
+          <h4>Ejemplo: mover algo por código</h4>
+
+          <div class="code-header">Assets/Scripts/EjemploTransform.cs</div>
+<pre><code>using UnityEngine;
+
+public class EjemploTransform : MonoBehaviour
+{
+    void Start()
+    {
+        // Posición absoluta
+        transform.position = new Vector3(0f, 1f, 0f);
+
+        // Mover relativo (añade al actual)
+        transform.Translate(Vector3.forward * 2f);
+
+        // Rotar 90º sobre el eje Y
+        transform.Rotate(0f, 90f, 0f);
+
+        // Escalar al doble
+        transform.localScale = new Vector3(2f, 2f, 2f);
+    }
+}</code></pre>
+        </div>
+
+        <div class="note">
+          <div class="note-title">Vector3</div>
+          <p><code>Vector3</code> es una tripleta (x, y, z). En 2D solo se usan x e y.
+            Atajos típicos:</p>
+          <ul>
+            <li><code>Vector3.zero</code> = (0,0,0)</li>
+            <li><code>Vector3.one</code> = (1,1,1)</li>
+            <li><code>Vector3.up</code> / <code>down</code> / <code>left</code> / <code>right</code> / <code>forward</code> / <code>back</code></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ 3. SCRIPTS (MONOBEHAVIOUR) ============ -->
+      <!-- ================================================== -->
+      <section id="scripts">
+        <h2>3. Scripts (MonoBehaviour)</h2>
+
+        <p>La forma de meter tu lógica en el juego es crear una clase que herede de
+          <strong><code>MonoBehaviour</code></strong> y pegarla a un GameObject como
+          componente. Unity llamará automáticamente a los métodos especiales
+          (<code>Start</code>, <code>Update</code>…) en el momento adecuado.</p>
+
+        <h3 id="crear-script">3.1 Crear un script</h3>
+        <ol>
+          <li>En el panel <em>Project</em>, click derecho → <strong>Create → C# Script</strong>.</li>
+          <li>Ponle nombre, por ejemplo <code>Jugador</code>. El nombre del fichero
+            <em>debe</em> coincidir con el nombre de la clase.</li>
+          <li>Arrástralo encima de un GameObject del <em>Hierarchy</em> (o pulsa
+            <em>Add Component → Jugador</em>).</li>
+          <li>Haz doble click para abrirlo en Visual Studio o Rider.</li>
+        </ol>
+
+        <div class="code-header">Assets/Scripts/Jugador.cs</div>
+<pre><code>using UnityEngine;
+
+public class Jugador : MonoBehaviour
+{
+    void Start()
+    {
+        Debug.Log("¡Hola Unity!");
+    }
+
+    void Update()
+    {
+        // Se ejecuta una vez por frame (~60 veces por segundo)
+    }
+}</code></pre>
+
+        <div class="note warning">
+          <div class="note-title">El script SOLO se ejecuta si está pegado a un GameObject</div>
+          <p>Crear el archivo <code>.cs</code> no es suficiente. Tienes que <em>arrastrarlo</em>
+            a un GameObject (o usar Add Component). Si no, no pasa nada al darle a Play.
+            Es parecido a registrar un <code>@Component</code> de Spring: no basta con
+            tener la clase, hay que ponerla en el contexto.</p>
+        </div>
+
+        <h3 id="ciclo-vida">3.2 Ciclo de vida de un MonoBehaviour</h3>
+        <p>Unity llama a estos métodos en este orden. No los llamas tú: los implementas
+          y Unity los invoca. Es como las anotaciones de ciclo de vida de Spring
+          (<code>@PostConstruct</code>, <code>@PreDestroy</code>).</p>
+
+        <table>
+          <thead><tr><th>Método</th><th>Cuándo se llama</th><th>Para qué</th></tr></thead>
+          <tbody>
+            <tr><td><code>Awake()</code></td><td>Al crear el objeto, antes que nada.</td><td>Inicializar referencias internas (<code>GetComponent</code>).</td></tr>
+            <tr><td><code>OnEnable()</code></td><td>Cada vez que el objeto se activa.</td><td>Suscribirse a eventos.</td></tr>
+            <tr><td><code>Start()</code></td><td>Antes del primer frame (después de Awake de todos).</td><td>Setup que depende de otros objetos.</td></tr>
+            <tr><td><code>Update()</code></td><td>Una vez por frame.</td><td>Input, movimiento no físico, lógica de juego.</td></tr>
+            <tr><td><code>FixedUpdate()</code></td><td>A intervalos fijos (50 veces/s por defecto).</td><td>Físicas (mover Rigidbody, aplicar fuerzas).</td></tr>
+            <tr><td><code>LateUpdate()</code></td><td>Después de Update de todos.</td><td>Cámara que sigue al jugador.</td></tr>
+            <tr><td><code>OnDisable()</code></td><td>Al desactivar el objeto.</td><td>Desuscribirse de eventos.</td></tr>
+            <tr><td><code>OnDestroy()</code></td><td>Al destruirse.</td><td>Limpiar recursos.</td></tr>
+          </tbody>
+        </table>
+
+        <div class="note">
+          <div class="note-title">Awake vs Start</div>
+          <p><strong>Awake</strong> se llama <em>al instante</em> al crearse el objeto.
+            <strong>Start</strong> se llama <em>justo antes del primer Update</em>. En
+            Awake aún puede que otros objetos no estén listos. Regla práctica: en
+            <code>Awake</code> haces <code>GetComponent</code> de tu propio GameObject; en
+            <code>Start</code> haces referencias a OTROS GameObjects.</p>
+        </div>
+
+        <div class="note warning">
+          <div class="note-title">Update vs FixedUpdate</div>
+          <p>Si mueves un objeto con físicas (<code>Rigidbody</code>), <strong>hazlo en
+            <code>FixedUpdate</code></strong>. Si lo mueves "a mano" (cambiando
+            <code>transform.position</code>), puedes hacerlo en <code>Update</code> pero
+            multiplica por <code>Time.deltaTime</code> para que la velocidad no dependa
+            de los FPS.</p>
+        </div>
+
+        <h3 id="serialize">3.3 [SerializeField] y campos públicos</h3>
+        <p>Para que un valor de tu script <em>aparezca en el Inspector</em> y se pueda
+          editar sin tocar código, hay dos formas:</p>
+
+        <div class="code-header">Assets/Scripts/Jugador.cs</div>
+<pre><code>using UnityEngine;
+
+public class Jugador : MonoBehaviour
+{
+    // OPCIÓN A: campo público (no recomendado: rompe encapsulación)
+    public float velocidad = 5f;
+
+    // OPCIÓN B: campo privado + [SerializeField] (recomendado)
+    [SerializeField] private float vida = 100f;
+
+    // No aparece en el Inspector (privado sin SerializeField)
+    private float tiempoVivo;
+
+    void Update()
+    {
+        tiempoVivo += Time.deltaTime;
+        transform.Translate(Vector3.forward * velocidad * Time.deltaTime);
+    }
+}</code></pre>
+
+        <div class="note">
+          <div class="note-title">Analogía con Spring</div>
+          <p><code>[SerializeField]</code> es el equivalente a marcar un campo para que
+            Spring lo inyecte: tú declaras <em>qué necesita</em> el script y luego, en el
+            Inspector, lo "inyectas" arrastrando el GameObject u objeto adecuado. Es DI
+            visual.</p>
+        </div>
+
+        <h3 id="getcomponent">3.4 GetComponent y referencias a otros objetos</h3>
+        <p>Para hablar con otro componente del mismo GameObject (o de otro):</p>
+
+        <div class="code-header">Assets/Scripts/Jugador.cs</div>
+<pre><code>using UnityEngine;
+
+public class Jugador : MonoBehaviour
+{
+    private Rigidbody rb;                           // componente del MISMO GameObject
+    [SerializeField] private Transform enemigo;     // referencia inyectada en el Inspector
+
+    void Awake()
+    {
+        // Buscar un componente en este mismo GameObject
+        rb = GetComponent&lt;Rigidbody&gt;();
+    }
+
+    void Update()
+    {
+        // Distancia al enemigo
+        float dist = Vector3.Distance(transform.position, enemigo.position);
+        Debug.Log($"Distancia: {dist}");
+    }
+}</code></pre>
+
+        <p>Formas de conseguir una referencia, de mejor a peor:</p>
+        <ol>
+          <li><strong><code>[SerializeField]</code> y arrastrar en el Inspector</strong> —
+            la mejor, lo ves en el editor.</li>
+          <li><strong><code>GetComponent&lt;T&gt;()</code></strong> — para componentes del
+            mismo GameObject.</li>
+          <li><strong><code>GetComponentInChildren&lt;T&gt;()</code></strong> /
+            <strong><code>InParent</code></strong> — para hijos o padres.</li>
+          <li><strong><code>FindObjectOfType&lt;T&gt;()</code></strong> — lento, evítalo en
+            <code>Update</code>.</li>
+          <li><strong><code>GameObject.Find("Nombre")</code></strong> — frágil (busca por
+            nombre, si lo renombras se rompe).</li>
+        </ol>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ 4. INPUT ============ -->
+      <!-- ================================================== -->
+      <section id="input">
+        <h2>4. Input del jugador</h2>
+
+        <h3 id="input-legacy">4.1 Input Manager (clásico)</h3>
+        <p>El sistema antiguo (pero más sencillo para empezar) lee teclado, ratón y
+          mando con la clase <code>Input</code>. Está siempre disponible.</p>
+
+        <table>
+          <thead><tr><th>Llamada</th><th>Qué devuelve</th></tr></thead>
+          <tbody>
+            <tr><td><code>Input.GetKey(KeyCode.W)</code></td><td>true mientras esté pulsada.</td></tr>
+            <tr><td><code>Input.GetKeyDown(KeyCode.Space)</code></td><td>true SOLO el frame en que se pulsa.</td></tr>
+            <tr><td><code>Input.GetKeyUp(KeyCode.Space)</code></td><td>true SOLO el frame en que se suelta.</td></tr>
+            <tr><td><code>Input.GetAxis("Horizontal")</code></td><td>float entre -1 y 1 (A/D, flechas, stick).</td></tr>
+            <tr><td><code>Input.GetAxisRaw("Vertical")</code></td><td>Igual pero sin suavizado (-1, 0 o 1).</td></tr>
+            <tr><td><code>Input.GetMouseButtonDown(0)</code></td><td>true al pulsar click izquierdo.</td></tr>
+            <tr><td><code>Input.mousePosition</code></td><td>Posición del ratón en píxeles.</td></tr>
+          </tbody>
+        </table>
+
+        <h3 id="mover">4.2 Mover un personaje con WASD</h3>
+
+        <div class="example">
+          <h4>Ejemplo: movimiento básico en plano (estilo Kitchen Chaos)</h4>
+
+          <div class="code-header">Assets/Scripts/JugadorMovimiento.cs</div>
+<pre><code>using UnityEngine;
+
+public class JugadorMovimiento : MonoBehaviour
+{
+    [SerializeField] private float velocidad = 5f;
+
+    void Update()
+    {
+        // Lee dirección desde teclado (-1, 0, 1)
+        float x = Input.GetAxisRaw("Horizontal");  // A/D, flechas izquierda/derecha
+        float z = Input.GetAxisRaw("Vertical");    // W/S, flechas arriba/abajo
+
+        Vector3 direccion = new Vector3(x, 0f, z).normalized;
+
+        // Mover, multiplicando por deltaTime → independiente de los FPS
+        transform.position += direccion * velocidad * Time.deltaTime;
+
+        // Mirar hacia donde va, si se está moviendo
+        if (direccion != Vector3.zero)
+        {
+            transform.forward = direccion;
+        }
+    }
+}</code></pre>
+        </div>
+
+        <div class="note">
+          <div class="note-title">¿Por qué <code>* Time.deltaTime</code>?</div>
+          <p><code>Time.deltaTime</code> es el tiempo que ha pasado desde el frame
+            anterior (en segundos). Multiplicando por él, "velocidad" pasa a ser
+            <em>unidades por segundo</em> en lugar de "unidades por frame". Sin esto, en
+            un PC potente el personaje iría 3x más rápido que en uno lento.</p>
+        </div>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ 5. FÍSICAS ============ -->
+      <!-- ================================================== -->
+      <section id="fisicas">
+        <h2>5. Físicas y colisiones</h2>
+
+        <h3 id="rigidbody">5.1 Rigidbody</h3>
+        <p>El componente <strong><code>Rigidbody</code></strong> hace que el GameObject
+          reaccione a la física: gravedad, fuerzas, choques. Sin Rigidbody, un objeto
+          con Collider es <em>estático</em> (paredes, suelo).</p>
+
+        <table>
+          <thead><tr><th>Propiedad</th><th>Significado</th></tr></thead>
+          <tbody>
+            <tr><td><code>Mass</code></td><td>Masa en kg.</td></tr>
+            <tr><td><code>Use Gravity</code></td><td>Si le afecta la gravedad.</td></tr>
+            <tr><td><code>Is Kinematic</code></td><td>Si está activado, el Rigidbody no se mueve por física. Tú lo mueves con <code>transform</code>.</td></tr>
+            <tr><td><code>Drag</code></td><td>Resistencia al movimiento (frenado).</td></tr>
+            <tr><td><code>Constraints</code></td><td>Bloquear ejes (útil para 2.5D).</td></tr>
+          </tbody>
+        </table>
+
+        <div class="example">
+          <h4>Ejemplo: saltar al pulsar espacio</h4>
+
+          <div class="code-header">Assets/Scripts/Salto.cs</div>
+<pre><code>using UnityEngine;
+
+[RequireComponent(typeof(Rigidbody))]   // obliga a tener Rigidbody
+public class Salto : MonoBehaviour
+{
+    [SerializeField] private float fuerzaSalto = 7f;
+    private Rigidbody rb;
+
+    void Awake()
+    {
+        rb = GetComponent&lt;Rigidbody&gt;();
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            // Empuja hacia arriba instantáneamente
+            rb.AddForce(Vector3.up * fuerzaSalto, ForceMode.Impulse);
+        }
+    }
+}</code></pre>
+        </div>
+
+        <h3 id="collider">5.2 Colliders</h3>
+        <p>El <strong>Collider</strong> define la "forma" sólida del objeto. Tipos
+          principales:</p>
+        <ul>
+          <li><code>BoxCollider</code> — caja. Rápido, ideal para suelos y cajas.</li>
+          <li><code>SphereCollider</code> — esfera.</li>
+          <li><code>CapsuleCollider</code> — pastilla, perfecta para personajes.</li>
+          <li><code>MeshCollider</code> — sigue la malla 3D. Caro, solo para escenarios.</li>
+          <li>En 2D: <code>BoxCollider2D</code>, <code>CircleCollider2D</code>, <code>PolygonCollider2D</code>…</li>
+        </ul>
+
+        <div class="note warning">
+          <div class="note-title">Regla del Rigidbody en colisiones</div>
+          <p>Para que dos objetos choquen y se detecte la colisión, <strong>al menos uno
+            de los dos debe tener Rigidbody</strong>. Si los dos son colliders sin
+            Rigidbody (paredes), no pasa nada al "tocarse".</p>
+        </div>
+
+        <p>Eventos de colisión (los implementas en un script del objeto que choca):</p>
+
+        <div class="code-header">Assets/Scripts/Bala.cs</div>
+<pre><code>void OnCollisionEnter(Collision col)
+{
+    Debug.Log("Choqué con: " + col.gameObject.name);
+    Destroy(gameObject);   // se destruye al chocar
+}
+
+void OnCollisionStay(Collision col) { /* mientras siguen chocando */ }
+void OnCollisionExit(Collision col) { /* al separarse */ }</code></pre>
+
+        <h3 id="triggers">5.3 Triggers (sensores)</h3>
+        <p>Si marcas la casilla <em>"Is Trigger"</em> de un Collider, el objeto deja de
+          ser sólido y pasa a ser un <strong>sensor</strong>: detecta cuando algo entra
+          o sale, pero no le frena. Perfecto para zonas (zona de daño, puerta automática,
+          ítem que se recoge…).</p>
+
+        <div class="code-header">Assets/Scripts/Moneda.cs</div>
+<pre><code>using UnityEngine;
+
+public class Moneda : MonoBehaviour
+{
+    void OnTriggerEnter(Collider otro)
+    {
+        if (otro.CompareTag("Player"))
+        {
+            Debug.Log("¡Moneda recogida!");
+            Destroy(gameObject);
+        }
+    }
+}</code></pre>
+
+        <div class="note">
+          <div class="note-title">Tags</div>
+          <p>Un <em>tag</em> es una etiqueta de texto que puedes asignar a un GameObject
+            en lo alto del Inspector. Sirve para identificarlo sin depender del nombre.
+            Usa <code>CompareTag("Player")</code> en lugar de <code>gameObject.tag == "Player"</code>
+            (es más rápido).</p>
+        </div>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ 6. PREFABS ============ -->
+      <!-- ============ -->
+      <section id="prefabs">
+        <h2>6. Prefabs</h2>
+
+        <p>Un <strong>prefab</strong> es una "plantilla" de GameObject guardada como
+          asset. Si arrastras el mismo prefab 50 veces a la escena, tienes 50 copias
+          conectadas a la plantilla: si cambias el prefab, todas las copias se
+          actualizan.</p>
+
+        <div class="note">
+          <div class="note-title">Analogía</div>
+          <p>Un prefab es como una clase: la plantilla es la clase, los GameObjects en
+            la escena son las <em>instancias</em>. En Spring sería la diferencia entre
+            la clase <code>UserService</code> (definición) y el bean concreto que vive
+            en el contexto.</p>
+        </div>
+
+        <h3 id="prefab-crear">6.1 Crear un prefab</h3>
+        <ol>
+          <li>Construye el GameObject en la escena (con sus components y valores).</li>
+          <li>Arrástralo desde el <em>Hierarchy</em> a una carpeta del panel
+            <em>Project</em> (típicamente <code>Assets/Prefabs/</code>).</li>
+          <li>El GameObject del Hierarchy se vuelve azul → ahora es una <em>instancia</em>
+            del prefab.</li>
+          <li>Doble click en el prefab para editarlo en modo aislado.</li>
+        </ol>
+
+        <h3 id="instantiate">6.2 Instantiate y Destroy</h3>
+        <p>Para crear copias de un prefab en tiempo de ejecución (balas, enemigos,
+          partículas…):</p>
+
+        <div class="code-header">Assets/Scripts/Pistola.cs</div>
+<pre><code>using UnityEngine;
+
+public class Pistola : MonoBehaviour
+{
+    [SerializeField] private GameObject balaPrefab;
+    [SerializeField] private Transform puntoDisparo;
+    [SerializeField] private float velocidadBala = 20f;
+
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            // Crear una bala en el punto de disparo, mirando hacia delante
+            GameObject bala = Instantiate(balaPrefab,
+                                          puntoDisparo.position,
+                                          puntoDisparo.rotation);
+
+            // Empujarla hacia delante
+            Rigidbody rb = bala.GetComponent&lt;Rigidbody&gt;();
+            rb.velocity = puntoDisparo.forward * velocidadBala;
+
+            // Auto-destruir a los 3 segundos
+            Destroy(bala, 3f);
+        }
+    }
+}</code></pre>
+
+        <div class="note warning">
+          <div class="note-title">Destroy(this) vs Destroy(gameObject)</div>
+          <p><code>Destroy(this)</code> elimina <em>solo el script</em>. Para borrar el
+            GameObject entero usa <code>Destroy(gameObject)</code>.</p>
+        </div>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ 7. ESCENAS ============ -->
+      <!-- ============ -->
+      <section id="escenas">
+        <h2>7. Escenas</h2>
+
+        <p>Una <strong>escena</strong> (archivo <code>.unity</code>) es un nivel del
+          juego: contiene todos los GameObjects de un momento (menú principal, nivel 1,
+          nivel 2, pantalla de game over…). Solo hay una escena cargada a la vez
+          (salvo carga aditiva).</p>
+
+        <h3 id="scenemanager">7.1 SceneManager</h3>
+        <p>Para cargar otra escena por código:</p>
+
+        <div class="code-header">Assets/Scripts/MenuPrincipal.cs</div>
+<pre><code>using UnityEngine;
+using UnityEngine.SceneManagement;   // ← necesario
+
+public class MenuPrincipal : MonoBehaviour
+{
+    public void Jugar()
+    {
+        SceneManager.LoadScene("Nivel1");   // por nombre
+        // o por índice: SceneManager.LoadScene(1);
+    }
+
+    public void Salir()
+    {
+        Application.Quit();   // cierra el juego (solo en build, no en el editor)
+    }
+}</code></pre>
+
+        <div class="note warning">
+          <div class="note-title">Build Settings</div>
+          <p>Para poder cargar una escena por nombre o índice, primero hay que añadirla
+            en <em>File → Build Settings → Scenes In Build</em>. Si no está ahí, da error
+            en tiempo de ejecución.</p>
+        </div>
+
+        <h3 id="dontdestroy">7.2 DontDestroyOnLoad</h3>
+        <p>Por defecto, al cambiar de escena, todos los GameObjects se destruyen. Si
+          quieres que algo persista (música de fondo, gestor de partida…):</p>
+
+        <div class="code-header">Assets/Scripts/Musica.cs</div>
+<pre><code>void Awake()
+{
+    DontDestroyOnLoad(gameObject);
+}</code></pre>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ 8. UI ============ -->
+      <!-- ============ -->
+      <section id="ui">
+        <h2>8. UI (Canvas)</h2>
+
+        <h3 id="canvas">8.1 Canvas y EventSystem</h3>
+        <p>Toda la UI vive dentro de un GameObject especial llamado <strong>Canvas</strong>.
+          Cuando creas el primer elemento de UI (<em>GameObject → UI → Button</em>),
+          Unity crea automáticamente:</p>
+        <ul>
+          <li><strong>Canvas</strong> — el "lienzo" donde se pinta la UI.</li>
+          <li><strong>EventSystem</strong> — gestiona los clicks y la navegación con
+            teclado/mando. Sin él, los botones no responden.</li>
+        </ul>
+
+        <p>El Canvas tiene tres modos de render:</p>
+        <table>
+          <thead><tr><th>Render Mode</th><th>Cuándo usarlo</th></tr></thead>
+          <tbody>
+            <tr><td><code>Screen Space - Overlay</code></td><td>UI pegada a la pantalla (lo más común: HUD, menús).</td></tr>
+            <tr><td><code>Screen Space - Camera</code></td><td>UI ligada a una cámara concreta (para efectos).</td></tr>
+            <tr><td><code>World Space</code></td><td>UI dentro del mundo 3D (cartel sobre la cabeza de un personaje).</td></tr>
+          </tbody>
+        </table>
+
+        <h3 id="botones">8.2 Botones, textos y listeners</h3>
+        <p>Un botón se enlaza a un método público de un script de dos formas: desde el
+          Inspector o desde código.</p>
+
+        <div class="example">
+          <h4>Opción A: desde el Inspector</h4>
+          <ol>
+            <li>Crea un script con un método público (<code>public void OnJugar()</code>).</li>
+            <li>Pégaselo a un GameObject de la escena.</li>
+            <li>Selecciona el botón → en su componente <code>Button</code>, sección
+              <em>On Click ()</em>, pulsa "+".</li>
+            <li>Arrastra el GameObject que tiene el script al hueco.</li>
+            <li>En el desplegable, elige <code>NombreScript → OnJugar()</code>.</li>
+          </ol>
+        </div>
+
+        <div class="example">
+          <h4>Opción B: desde código</h4>
+
+          <div class="code-header">Assets/Scripts/MenuUI.cs</div>
+<pre><code>using UnityEngine;
+using UnityEngine.UI;
+using TMPro;   // si usas TextMeshPro (recomendado)
+
+public class MenuUI : MonoBehaviour
+{
+    [SerializeField] private Button btnJugar;
+    [SerializeField] private TextMeshProUGUI txtPuntuacion;
+    private int puntos = 0;
+
+    void Start()
+    {
+        btnJugar.onClick.AddListener(OnJugar);
+        txtPuntuacion.text = "Puntos: 0";
+    }
+
+    void OnJugar()
+    {
+        puntos += 10;
+        txtPuntuacion.text = $"Puntos: {puntos}";
+    }
+}</code></pre>
+        </div>
+
+        <div class="note">
+          <div class="note-title">TextMeshPro</div>
+          <p>El componente <code>Text</code> clásico tiene tipografía borrosa. Usa
+            <strong>TextMeshPro</strong> (<em>GameObject → UI → Text - TextMeshPro</em>):
+            mucha mejor calidad, soporta efectos y es lo estándar moderno.</p>
+        </div>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ 9. ANIMACIONES Y AUDIO ============ -->
+      <!-- ================================================== -->
+      <section id="animaciones">
+        <h2>9. Animaciones y Audio</h2>
+
+        <h3 id="animator">9.1 Animator</h3>
+        <p>Las animaciones en Unity se controlan con dos cosas:</p>
+        <ul>
+          <li><strong>AnimationClip</strong> — la animación en sí (movimiento de un modelo,
+            cambio de sprite…).</li>
+          <li><strong>AnimatorController</strong> — una máquina de estados que decide
+            qué clip se está reproduciendo, con transiciones entre ellos.</li>
+        </ul>
+
+        <p>El flujo típico:</p>
+        <ol>
+          <li>Selecciona el personaje en la escena.</li>
+          <li>Abre la ventana <em>Window → Animation → Animator</em>.</li>
+          <li>Crea estados (Idle, Run, Jump) y transiciones.</li>
+          <li>Define parámetros (<code>bool isRunning</code>, <code>trigger jump</code>).</li>
+          <li>Desde el script, cambia los parámetros con <code>SetBool</code>, <code>SetTrigger</code>…</li>
+        </ol>
+
+        <div class="code-header">Assets/Scripts/JugadorAnim.cs</div>
+<pre><code>using UnityEngine;
+
+public class JugadorAnim : MonoBehaviour
+{
+    private Animator animator;
+
+    void Awake()
+    {
+        animator = GetComponent&lt;Animator&gt;();
+    }
+
+    void Update()
+    {
+        bool moviendose = Input.GetAxisRaw("Horizontal") != 0f
+                       || Input.GetAxisRaw("Vertical")   != 0f;
+
+        animator.SetBool("isRunning", moviendose);
+
+        if (Input.GetKeyDown(KeyCode.Space))
+            animator.SetTrigger("jump");
+    }
+}</code></pre>
+
+        <h3 id="audiosource">9.2 AudioSource</h3>
+        <p>Para reproducir un sonido:</p>
+        <ol>
+          <li>Añade el componente <code>AudioSource</code> a un GameObject.</li>
+          <li>Asigna un <code>AudioClip</code> en el campo <em>AudioClip</em>.</li>
+          <li>Marca <em>Play On Awake</em> si quieres que suene al cargar la escena (música
+            de fondo) o llama tú a <code>Play()</code> desde código.</li>
+        </ol>
+
+        <div class="code-header">Assets/Scripts/Disparo.cs</div>
+<pre><code>using UnityEngine;
+
+public class Disparo : MonoBehaviour
+{
+    [SerializeField] private AudioClip clipDisparo;
+    private AudioSource audioSource;
+
+    void Awake() { audioSource = GetComponent&lt;AudioSource&gt;(); }
+
+    void Disparar()
+    {
+        // PlayOneShot permite solapar sonidos sin cortarse
+        audioSource.PlayOneShot(clipDisparo);
+    }
+}</code></pre>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ 10. PATRONES (KITCHEN CHAOS) ============ -->
+      <!-- ================================================== -->
+      <section id="patrones">
+        <h2>10. Patrones (estilo Kitchen Chaos)</h2>
+
+        <p>El curso <em>Kitchen Chaos</em> de Code Monkey introduce tres patrones que
+          aparecen en casi todos los proyectos Unity profesionales: <strong>Singleton</strong>,
+          <strong>Events</strong> y <strong>ScriptableObject</strong>.</p>
+
+        <h3 id="singleton">10.1 Singleton</h3>
+        <p>Un <strong>Singleton</strong> es un objeto del que solo existe una instancia
+          en toda la app. En Unity se usa para gestores únicos: <code>GameManager</code>,
+          <code>SoundManager</code>, <code>InputManager</code>…</p>
+
+        <div class="note">
+          <div class="note-title">Es como un @Service de Spring</div>
+          <p>En Spring, <code>@Service</code> crea un bean único (por defecto). En Unity
+            no hay esa magia: el patrón Singleton lo implementas tú.</p>
+        </div>
+
+        <div class="code-header">Assets/Scripts/GameManager.cs</div>
+<pre><code>using UnityEngine;
+
+public class GameManager : MonoBehaviour
+{
+    // Acceso global: GameManager.Instance.HacerAlgo();
+    public static GameManager Instance { get; private set; }
+
+    [SerializeField] private int vidas = 3;
+
+    void Awake()
+    {
+        if (Instance != null &amp;&amp; Instance != this)
+        {
+            Destroy(gameObject);   // ya hay uno, este sobra
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
+    public void PerderVida()
+    {
+        vidas--;
+        Debug.Log($"Te quedan {vidas} vidas");
+    }
+}</code></pre>
+
+        <p>Desde cualquier otro script:</p>
+<pre><code>GameManager.Instance.PerderVida();</code></pre>
+
+        <h3 id="eventos">10.2 Events / Action (desacoplar código)</h3>
+        <p>En lugar de que el jugador llame directamente a la UI ("UI, súmame un punto"),
+          el jugador <em>lanza un evento</em> y quien quiera escuchar se suscribe. Igual
+          que un <code>ApplicationEventPublisher</code> en Spring.</p>
+
+        <div class="code-header">Assets/Scripts/Jugador.cs</div>
+<pre><code>using System;
+using UnityEngine;
+
+public class Jugador : MonoBehaviour
+{
+    // Evento sin parámetros
+    public event Action OnSalto;
+
+    // Evento con dato (cuántos puntos)
+    public event Action&lt;int&gt; OnPuntuar;
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+            OnSalto?.Invoke();                  // notifica a todos los suscriptores
+
+        if (Input.GetKeyDown(KeyCode.P))
+            OnPuntuar?.Invoke(10);
+    }
+}</code></pre>
+
+        <div class="code-header">Assets/Scripts/UIPuntos.cs</div>
+<pre><code>using UnityEngine;
+using TMPro;
+
+public class UIPuntos : MonoBehaviour
+{
+    [SerializeField] private Jugador jugador;
+    [SerializeField] private TextMeshProUGUI txt;
+    private int total = 0;
+
+    void OnEnable()  { jugador.OnPuntuar += SumarPuntos; }
+    void OnDisable() { jugador.OnPuntuar -= SumarPuntos; }   // ¡siempre desuscribir!
+
+    void SumarPuntos(int cuantos)
+    {
+        total += cuantos;
+        txt.text = $"Puntos: {total}";
+    }
+}</code></pre>
+
+        <div class="note warning">
+          <div class="note-title">Desuscríbete siempre</div>
+          <p>Si te suscribes a un evento (<code>+=</code>) y no te desuscribes
+            (<code>-=</code>) al destruir el objeto, generas memory leaks. Patrón seguro:
+            <code>+=</code> en <code>OnEnable</code>, <code>-=</code> en
+            <code>OnDisable</code>.</p>
+        </div>
+
+        <h3 id="scriptable">10.3 ScriptableObject</h3>
+        <p>Un <strong>ScriptableObject</strong> es un asset reutilizable que guarda datos
+          en disco — como un <code>@ConfigurationProperties</code> de Spring, pero
+          editable visualmente. Perfecto para definir cosas como "tipos de enemigos",
+          "armas", "recetas" sin meter constantes en código.</p>
+
+        <div class="code-header">Assets/Scripts/RecetaSO.cs</div>
+<pre><code>using UnityEngine;
+
+[CreateAssetMenu(fileName = "Receta", menuName = "Cocina/Receta")]
+public class RecetaSO : ScriptableObject
+{
+    public string nombre;
+    public Sprite icono;
+    public int tiempoCoccion;
+    public Ingrediente[] ingredientes;
+}</code></pre>
+
+        <p>Después, en el panel <em>Project</em> → click derecho → <em>Create → Cocina →
+        Receta</em>. Cada asset <code>.asset</code> es una receta concreta (Hamburguesa,
+        Ensalada, Pizza…). Los scripts apuntan a esas recetas con
+        <code>[SerializeField] private RecetaSO receta;</code>.</p>
+
+        <div class="note">
+          <div class="note-title">Ventaja gorda</div>
+          <p>Cambias los valores de una receta sin tocar código y sin recompilar.
+            Diseñadores y artistas pueden trabajar contigo sin pisarse.</p>
+        </div>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ 11. EJERCICIOS ============ -->
+      <!-- ================================================== -->
+      <section id="ejercicios">
+        <h2>11. Ejercicios</h2>
+
+        <div class="exercise">
+          <h4>Ejercicio 1 — Cubo que cae</h4>
+          <p>Crea una escena con un suelo (Plane) y un cubo encima a 5 unidades de
+            altura. El cubo debe caer por gravedad y rebotar un poco al chocar con el
+            suelo.</p>
+
+          <details class="solution">
+            <summary>Ver solución</summary>
+            <ol>
+              <li><em>GameObject → 3D Object → Plane</em> — escálalo a (5, 1, 5).</li>
+              <li><em>GameObject → 3D Object → Cube</em> — ponlo en (0, 5, 0).</li>
+              <li>En el cubo: <em>Add Component → Rigidbody</em>.</li>
+              <li>Crea un <em>Physic Material</em> (click derecho en Project → Create →
+                Physic Material), llámalo "Goma", pon <code>Bounciness = 0.6</code>.</li>
+              <li>Arrastra "Goma" al campo <code>Material</code> del <em>BoxCollider</em>
+                del cubo.</li>
+              <li>Play. El cubo cae y rebota.</li>
+            </ol>
+          </details>
+        </div>
+
+        <div class="exercise">
+          <h4>Ejercicio 2 — Mover con WASD y rotar al moverse</h4>
+          <p>Crea un cubo y un script <code>JugadorMovimiento</code> que lo mueva con
+            WASD a una velocidad configurable desde el Inspector. Debe mirar siempre
+            hacia donde se mueve.</p>
+
+          <details class="solution">
+            <summary>Ver solución</summary>
+            <div class="code-header">Assets/Scripts/JugadorMovimiento.cs</div>
+<pre><code>using UnityEngine;
+
+public class JugadorMovimiento : MonoBehaviour
+{
+    [SerializeField] private float velocidad = 5f;
+
+    void Update()
+    {
+        float x = Input.GetAxisRaw("Horizontal");
+        float z = Input.GetAxisRaw("Vertical");
+        Vector3 dir = new Vector3(x, 0, z).normalized;
+
+        transform.position += dir * velocidad * Time.deltaTime;
+
+        if (dir != Vector3.zero) transform.forward = dir;
+    }
+}</code></pre>
+            <p>Pegar al cubo. Ajustar la velocidad en el Inspector.</p>
+          </details>
+        </div>
+
+        <div class="exercise">
+          <h4>Ejercicio 3 — Recoger monedas (Trigger)</h4>
+          <p>Añade 5 cubos pequeños amarillos en la escena. Cuando el jugador los toca,
+            desaparecen y suma 1 al contador. Muestra el contador en pantalla con un
+            <code>TextMeshProUGUI</code>.</p>
+
+          <details class="solution">
+            <summary>Ver solución</summary>
+            <p>1) Crea un cubo "Moneda", márcale en <em>BoxCollider → Is Trigger</em>.
+              Asígnale el tag "Coin".<br>
+              2) Crea el prefab arrastrando "Moneda" a <code>Assets/Prefabs/</code>.<br>
+              3) Asigna al jugador el tag "Player".</p>
+
+            <div class="code-header">Assets/Scripts/Moneda.cs</div>
+<pre><code>public class Moneda : MonoBehaviour
+{
+    void OnTriggerEnter(Collider c)
+    {
+        if (c.CompareTag("Player"))
+        {
+            ContadorMonedas.Instance.Sumar();
+            Destroy(gameObject);
+        }
+    }
+}</code></pre>
+            <div class="code-header">Assets/Scripts/ContadorMonedas.cs</div>
+<pre><code>using UnityEngine;
+using TMPro;
+
+public class ContadorMonedas : MonoBehaviour
+{
+    public static ContadorMonedas Instance { get; private set; }
+
+    [SerializeField] private TextMeshProUGUI txt;
+    private int total = 0;
+
+    void Awake() { Instance = this; }
+
+    public void Sumar()
+    {
+        total++;
+        txt.text = $"Monedas: {total}";
+    }
+}</code></pre>
+            <p>4) Crea un Canvas + Text (TMP), arrástralo al campo <code>txt</code>.<br>
+              5) Coloca varias instancias del prefab Moneda en la escena. Play.</p>
+          </details>
+        </div>
+
+        <div class="exercise">
+          <h4>Ejercicio 4 — Disparar balas (Instantiate + Rigidbody)</h4>
+          <p>Al hacer click izquierdo, el jugador dispara una bala (prefab esférico con
+            Rigidbody) que sale hacia delante. La bala se autodestruye a los 3 segundos
+            o al chocar con algo.</p>
+
+          <details class="solution">
+            <summary>Ver solución</summary>
+            <div class="code-header">Assets/Scripts/Pistola.cs</div>
+<pre><code>using UnityEngine;
+
+public class Pistola : MonoBehaviour
+{
+    [SerializeField] private GameObject balaPrefab;
+    [SerializeField] private Transform punto;
+    [SerializeField] private float velocidad = 20f;
+
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            GameObject b = Instantiate(balaPrefab, punto.position, punto.rotation);
+            b.GetComponent&lt;Rigidbody&gt;().velocity = punto.forward * velocidad;
+            Destroy(b, 3f);
+        }
+    }
+}</code></pre>
+            <div class="code-header">Assets/Scripts/Bala.cs</div>
+<pre><code>public class Bala : MonoBehaviour
+{
+    void OnCollisionEnter(Collision c) { Destroy(gameObject); }
+}</code></pre>
+          </details>
+        </div>
+
+        <div class="exercise">
+          <h4>Ejercicio 5 — Recetas con ScriptableObject</h4>
+          <p>Crea un <code>ItemSO</code> (ScriptableObject) con campos
+            <code>nombre</code>, <code>icono</code> y <code>valor</code>. Crea tres
+            assets concretos (Manzana, Pan, Espada). Haz un script
+            <code>Inventario</code> que liste los items en consola al pulsar I.</p>
+
+          <details class="solution">
+            <summary>Ver solución</summary>
+            <div class="code-header">Assets/Scripts/ItemSO.cs</div>
+<pre><code>using UnityEngine;
+
+[CreateAssetMenu(menuName = "Inventario/Item")]
+public class ItemSO : ScriptableObject
+{
+    public string nombre;
+    public Sprite icono;
+    public int valor;
+}</code></pre>
+            <div class="code-header">Assets/Scripts/Inventario.cs</div>
+<pre><code>using UnityEngine;
+
+public class Inventario : MonoBehaviour
+{
+    [SerializeField] private ItemSO[] items;
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            foreach (var it in items)
+                Debug.Log($"{it.nombre} — {it.valor}€");
+        }
+    }
+}</code></pre>
+            <p>En el Project: click derecho → <em>Create → Inventario → Item</em> tres
+              veces. Arrastra los tres assets al array <code>items</code> del Inspector.</p>
+          </details>
+        </div>
+
+        <div class="exercise">
+          <h4>Ejercicio 6 — Cambiar de escena con un botón</h4>
+          <p>Crea dos escenas: <code>Menu</code> y <code>Juego</code>. En <code>Menu</code>
+            pon un botón "Jugar" que cargue la escena <code>Juego</code>. En
+            <code>Juego</code> pon un botón "Volver" que cargue <code>Menu</code>.</p>
+
+          <details class="solution">
+            <summary>Ver solución</summary>
+            <p>1) <em>File → Build Settings</em> → añade ambas escenas a "Scenes In Build".</p>
+            <div class="code-header">Assets/Scripts/MenuUI.cs</div>
+<pre><code>using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class MenuUI : MonoBehaviour
+{
+    public void Jugar()  { SceneManager.LoadScene("Juego"); }
+    public void Volver() { SceneManager.LoadScene("Menu"); }
+}</code></pre>
+            <p>2) Pega el script a un GameObject vacío en cada escena.<br>
+              3) En cada botón: <em>On Click ()</em> → "+" → arrastra el GameObject →
+              elige <code>MenuUI.Jugar</code> (o <code>Volver</code>).</p>
+          </details>
+        </div>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ 12. CHEATSHEET ============ -->
+      <!-- ================================================== -->
+      <section id="cheatsheet">
+        <h2>12. Cheatsheet</h2>
+
+        <h3>Atajos del editor</h3>
+        <table>
+          <thead><tr><th>Atajo</th><th>Acción</th></tr></thead>
+          <tbody>
+            <tr><td><code>Q</code> / <code>W</code> / <code>E</code> / <code>R</code></td><td>Herramientas Move / Translate / Rotate / Scale.</td></tr>
+            <tr><td><code>F</code></td><td>Centrar la vista en el objeto seleccionado.</td></tr>
+            <tr><td><code>Ctrl+D</code></td><td>Duplicar.</td></tr>
+            <tr><td><code>Ctrl+P</code></td><td>Play / Stop.</td></tr>
+            <tr><td><code>Ctrl+Shift+P</code></td><td>Pause.</td></tr>
+            <tr><td><code>Ctrl+S</code></td><td>Guardar la escena.</td></tr>
+            <tr><td><code>Click derecho + WASD</code></td><td>Volar por la Scene view.</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Snippets más usados</h3>
+
+        <div class="code-header">snippets.cs</div>
+<pre><code>// Logs
+Debug.Log("mensaje");
+Debug.LogWarning("aviso");
+Debug.LogError("error");
+
+// Tiempo
+float dt = Time.deltaTime;       // segundos desde último frame
+float t  = Time.time;             // segundos desde que arrancó el juego
+
+// Mover algo independiente de FPS
+transform.position += direccion * velocidad * Time.deltaTime;
+
+// Esperar (corrutinas)
+StartCoroutine(EsperarYHacer());
+
+IEnumerator EsperarYHacer()
+{
+    yield return new WaitForSeconds(2f);
+    Debug.Log("Han pasado 2 segundos");
+}
+
+// Comparar tags
+if (col.CompareTag("Enemy")) { /* ... */ }
+
+// Activar/desactivar
+gameObject.SetActive(false);
+miComponente.enabled = false;
+
+// Pausar el juego
+Time.timeScale = 0f;   // 1f = normal, 0f = pausa, 2f = doble velocidad</code></pre>
+
+        <h3>Tabla rápida: quiero… → uso</h3>
+        <table>
+          <thead><tr><th>Quiero…</th><th>Uso</th></tr></thead>
+          <tbody>
+            <tr><td>Que un script se ejecute una vez al arrancar</td><td><code>void Start()</code></td></tr>
+            <tr><td>Que algo pase cada frame</td><td><code>void Update()</code></td></tr>
+            <tr><td>Mover algo con físicas</td><td><code>void FixedUpdate()</code> + <code>Rigidbody</code></td></tr>
+            <tr><td>Hacer que un valor aparezca en el Inspector</td><td><code>[SerializeField] private T x;</code></td></tr>
+            <tr><td>Obtener otro componente del mismo objeto</td><td><code>GetComponent&lt;T&gt;()</code></td></tr>
+            <tr><td>Crear un objeto en runtime</td><td><code>Instantiate(prefab, pos, rot)</code></td></tr>
+            <tr><td>Borrar un objeto</td><td><code>Destroy(gameObject)</code></td></tr>
+            <tr><td>Detectar colisión sólida</td><td><code>OnCollisionEnter</code> + Rigidbody</td></tr>
+            <tr><td>Detectar paso por una zona</td><td><code>OnTriggerEnter</code> + <em>Is Trigger</em></td></tr>
+            <tr><td>Cambiar de escena</td><td><code>SceneManager.LoadScene("Nombre")</code></td></tr>
+            <tr><td>Sobrevivir al cambio de escena</td><td><code>DontDestroyOnLoad(gameObject)</code></td></tr>
+            <tr><td>Hablar entre scripts sin acoplarlos</td><td><code>event Action&lt;T&gt;</code></td></tr>
+            <tr><td>Guardar datos sin tocar código</td><td><code>ScriptableObject</code></td></tr>
+            <tr><td>Reproducir un sonido puntual</td><td><code>AudioSource.PlayOneShot(clip)</code></td></tr>
+            <tr><td>Cambiar texto de UI</td><td><code>TextMeshProUGUI.text = "…"</code></td></tr>
+          </tbody>
+        </table>
+
+        <h3>Equivalencias Unity ↔ Spring Boot</h3>
+        <table>
+          <thead><tr><th>Spring Boot</th><th>Unity</th></tr></thead>
+          <tbody>
+            <tr><td><code>@Component</code> / <code>@Service</code></td><td><code>MonoBehaviour</code> pegado a un GameObject</td></tr>
+            <tr><td><code>@Autowired</code></td><td><code>[SerializeField]</code> + arrastrar en Inspector</td></tr>
+            <tr><td><code>@PostConstruct</code></td><td><code>Awake()</code> / <code>Start()</code></td></tr>
+            <tr><td><code>@PreDestroy</code></td><td><code>OnDestroy()</code></td></tr>
+            <tr><td><code>@ConfigurationProperties</code></td><td><code>ScriptableObject</code></td></tr>
+            <tr><td><code>ApplicationContext</code></td><td><code>Scene</code></td></tr>
+            <tr><td><code>ApplicationEventPublisher</code></td><td><code>event Action&lt;T&gt;</code></td></tr>
+            <tr><td><code>main()</code> / SpringApplication.run</td><td>No hay: Unity arranca la primera escena</td></tr>
+            <tr><td><code>spring-boot:run</code></td><td>Botón <strong>▶ Play</strong></td></tr>
+            <tr><td><code>mvn package</code> → <code>.jar</code></td><td><em>File → Build And Run</em> → <code>.exe</code> / <code>.apk</code></td></tr>
+          </tbody>
+        </table>
+
+        <div class="note success">
+          <div class="note-title">Las 7 reglas de oro de Unity</div>
+          <ol>
+            <li><strong>Usa LTS</strong>. Nada de versiones Tech para aprender.</li>
+            <li><strong>El nombre del fichero = nombre de la clase</strong>. Si no,
+              el script no se compila ni se puede pegar.</li>
+            <li><strong>Movimiento físico → FixedUpdate</strong>. Movimiento "a mano" →
+              Update con <code>Time.deltaTime</code>.</li>
+            <li><strong>Sólido vs sensor</strong>: para chocar, ambos con Collider y
+              al menos uno con Rigidbody. Para detectar paso, <em>Is Trigger</em>.</li>
+            <li><strong>Referencias en el Inspector</strong> mejor que <code>Find</code>.
+              Es la "DI visual" de Unity.</li>
+            <li><strong>Suscríbete en <code>OnEnable</code>, desuscríbete en
+              <code>OnDisable</code></strong>. Evita memory leaks.</li>
+            <li><strong>Cuidado con Play</strong>: los cambios en Inspector mientras
+              está en Play <em>no se guardan</em>.</li>
+          </ol>
+        </div>
+
+        <div class="note">
+          <div class="note-title">¿Y ahora qué?</div>
+          <p>Cuando domines lo anterior, prueba:</p>
+          <ul>
+            <li><strong>Curso Kitchen Chaos</strong> (Code Monkey) — proyecto completo
+              que pone en práctica Singletons, Events, ScriptableObjects y arquitectura
+              limpia: <a href="https://unitycodemonkey.com/kitchenchaoscourse.php" target="_blank">unitycodemonkey.com/kitchenchaoscourse.php</a>.</li>
+            <li><strong>Input System</strong> nuevo (en lugar del clásico
+              <code>Input.GetKey</code>): Action Maps, soporte de mando.</li>
+            <li><strong>Cinemachine</strong> para cámaras profesionales.</li>
+            <li><strong>Addressables</strong> para cargar assets bajo demanda.</li>
+            <li><strong>NavMesh</strong> para hacer enemigos con pathfinding.</li>
+            <li><strong>DOTween</strong> (o <code>Mathf.Lerp</code> + corrutinas) para
+              animar valores por código.</li>
+          </ul>
+          <p>Referencias usadas en estos apuntes:</p>
+          <ul>
+            <li><a href="https://docs.unity3d.com/Manual/" target="_blank">Manual oficial de Unity</a></li>
+            <li><a href="https://davidfs-itic.github.io/davidfs-itic/Unity/" target="_blank">Apuntes de David FS</a></li>
+            <li><a href="https://classesjs.gitlab.io/dam/m08/m08-teoria/unity/" target="_blank">Apuntes M08 Classes.js</a></li>
+            <li><a href="https://unitycodemonkey.com/kitchenchaoscourse.php" target="_blank">Kitchen Chaos course</a></li>
+          </ul>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ================== Footer ================== -->
+  <footer class="footer">
+    <p><strong>Estudio</strong> · Innovation starts here</p>
+    <p>Apuntes hechos por y para alumnos · Curso 2025-2026</p>
+  </footer>
+
+  <script src="assets/main.js"></script>
+</body>
+</html>

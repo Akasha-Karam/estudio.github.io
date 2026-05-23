@@ -170,6 +170,7 @@ img {
 .card.card-sql .card-img        { background: linear-gradient(135deg, #00758f, #004b5c); }
 .card.card-react .card-img      { background: linear-gradient(135deg, #61dafb, #2db5e0); color: #222; }
 .card.card-android .card-img    { background: linear-gradient(135deg, #3ddc84, #1ca764); }
+.card.card-unity .card-img      { background: linear-gradient(135deg, #4a4a4a, #1a1a1a); }
 
 .card .card-body {
   padding: 14px 4px;

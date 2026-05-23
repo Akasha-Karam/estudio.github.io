@@ -205,24 +205,63 @@
         </div>
 
         <h3 id="editor">1.4 El Editor de Unity</h3>
-        <p>Al abrir un proyecto verás 5 paneles (ventanas) principales. Apréndete los
-          nombres porque son tu sitio de trabajo:</p>
+        <p>Al abrir un proyecto verás 6 paneles (ventanas) principales. Apréndete los
+          nombres y dónde están porque es tu sitio de trabajo:</p>
+
+        <div class="code-header">Distribución por defecto del Editor</div>
+<pre><code>┌─────────────────────────────────────────────────────────────────┐
+│  ▶ ⏸ ⏭   ← barra superior (Play / Pause / Step)                 │
+├──────────────┬─────────────────────────────────┬────────────────┤
+│              │                                 │                │
+│  Hierarchy   │   Scene  /  Game                │   Inspector    │
+│              │                                 │                │
+│  (lista de   │   (vista 3D/2D editable;        │   (componentes │
+│   objetos)   │    pestaña "Game" arriba para   │    del objeto  │
+│              │    ver lo que ve el jugador)    │    seleccionado│
+│              │                                 │    en Hierarchy│
+│              │                                 │                │
+├──────────────┴─────────────────────────────────┤                │
+│                                                │                │
+│   Project          │      Console              │                │
+│   (carpeta Assets/)│   (Debug.Log, errores)    │                │
+│                    │                           │                │
+└────────────────────┴───────────────────────────┴────────────────┘
+   IZQUIERDA              CENTRO / ABAJO            DERECHA</code></pre>
 
         <table>
-          <thead><tr><th>Panel</th><th>Para qué sirve</th></tr></thead>
+          <thead><tr><th>Panel</th><th>Dónde está</th><th>Para qué sirve</th></tr></thead>
           <tbody>
-            <tr><td><strong>Hierarchy</strong></td><td>Lista de los <em>GameObjects</em> de la escena actual. Es el árbol vivo.</td></tr>
-            <tr><td><strong>Scene</strong></td><td>Vista 3D/2D editable: arrastras y colocas los objetos.</td></tr>
-            <tr><td><strong>Game</strong></td><td>Lo que vería el jugador cuando le des Play.</td></tr>
-            <tr><td><strong>Inspector</strong></td><td>Propiedades del GameObject seleccionado (componentes y sus valores).</td></tr>
-            <tr><td><strong>Project</strong></td><td>Explorador de la carpeta <code>Assets/</code>.</td></tr>
-            <tr><td><strong>Console</strong></td><td>Errores, warnings y <code>Debug.Log()</code>.</td></tr>
+            <tr><td><strong>Hierarchy</strong></td><td>Izquierda</td><td>Lista de los <em>GameObjects</em> de la escena actual. Es el árbol vivo.</td></tr>
+            <tr><td><strong>Scene</strong></td><td>Centro (pestaña arriba)</td><td>Vista 3D/2D editable: arrastras y colocas los objetos.</td></tr>
+            <tr><td><strong>Game</strong></td><td>Centro (pestaña al lado de Scene)</td><td>Lo que vería el jugador cuando le des Play.</td></tr>
+            <tr><td><strong>Inspector</strong></td><td>Derecha</td><td>Propiedades del GameObject seleccionado (componentes y sus valores).</td></tr>
+            <tr><td><strong>Project</strong></td><td>Abajo a la izquierda</td><td>Explorador de la carpeta <code>Assets/</code>.</td></tr>
+            <tr><td><strong>Console</strong></td><td>Abajo (pestaña al lado de Project)</td><td>Errores, warnings y <code>Debug.Log()</code>.</td></tr>
+            <tr><td><strong>Barra de herramientas</strong></td><td>Arriba del todo</td><td>Botones <strong>▶ Play</strong>, <strong>⏸ Pause</strong>, <strong>⏭ Step</strong> y selector de layout.</td></tr>
           </tbody>
         </table>
 
-        <p>Arriba del todo verás los botones <strong>▶ Play</strong>, <strong>⏸ Pause</strong>
-          y <strong>⏭ Step</strong>. Al pulsar Play, Unity arranca la escena
-          (como <code>mvn spring-boot:run</code>, pero en directo dentro del editor).</p>
+        <div class="note">
+          <div class="note-title">¿Y si no veo algún panel?</div>
+          <p>Cualquier panel se abre desde el menú <strong>Window</strong>:</p>
+          <ul>
+            <li><em>Window → General → Hierarchy / Scene / Game / Inspector / Project / Console</em></li>
+          </ul>
+          <p>Si has movido las ventanas y quieres volver al diseño original: arriba a la
+            derecha hay un desplegable de <em>Layout</em> → elige <strong>Default</strong>.</p>
+        </div>
+
+        <div class="note">
+          <div class="note-title">Tabs y arrastrar</div>
+          <p>Cada panel es una pestaña que puedes <em>arrastrar por su título</em> a otra
+            zona del editor para reorganizar tu espacio. Si la sueltas fuera del editor,
+            se convierte en una ventana flotante (útil con dos monitores).</p>
+        </div>
+
+        <p>La <strong>barra de herramientas</strong> arriba tiene los botones
+          <strong>▶ Play</strong>, <strong>⏸ Pause</strong> y <strong>⏭ Step</strong>.
+          Al pulsar Play, Unity arranca la escena (como <code>mvn spring-boot:run</code>,
+          pero en directo dentro del editor).</p>
 
         <div class="note danger">
           <div class="note-title">¡Cuidado con Play!</div>

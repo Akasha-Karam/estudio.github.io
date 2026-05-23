@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Java · Apuntes · Estudio</title>
+  <link rel="icon" href="assets/logo.png" type="image/png">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+  <!-- ================== HEADER ================== -->
+  <header class="header">
+    <a href="index.html" class="brand" style="text-decoration:none">
+      <img src="assets/logo.png" alt="Logo Estudio">
+      <h1>Estudio</h1>
+    </a>
+    <nav>
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="java.html">Java</a></li>
+        <li><a href="index.html#about">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ================== Página título ================== -->
+  <section class="page-title">
+    <div class="page-title-inner">
+      <h1>Java · Fundamentos y POO</h1>
+      <p class="subtitle">Apuntes para alumnos: aprende Java desde cero. Tipos de datos,
+        estructuras de control, métodos, arrays, Strings, programación orientada a
+        objetos (clases, herencia, polimorfismo, interfaces), colecciones y excepciones.
+        Explicado fácil, con ejemplos cortos.</p>
+      <div class="chips">
+        <span class="chip">Java 17</span>
+        <span class="chip">JDK</span>
+        <span class="chip">POO</span>
+        <span class="chip">Collections</span>
+        <span class="chip">Eclipse / IntelliJ</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================== Contenido ================== -->
+  <div class="notes-layout">
+
+    <!-- ============== Sidebar / TOC ============== -->
+    <aside class="toc">
+      <h4>Índice</h4>
+      <ul>
+        <li><a href="#intro">1. Introducción</a></li>
+        <li class="sub"><a href="#que-es">1.1 ¿Qué es Java?</a></li>
+        <li class="sub"><a href="#primer">1.2 Primer programa</a></li>
+
+        <li><a href="#tipos">2. Tipos de datos</a></li>
+        <li class="sub"><a href="#primitivos">2.1 Primitivos</a></li>
+        <li class="sub"><a href="#referencia">2.2 Por referencia</a></li>
+        <li class="sub"><a href="#operadores">2.3 Operadores</a></li>
+        <li class="sub"><a href="#io">2.4 Entrada / Salida</a></li>
+
+        <li><a href="#control">3. Control de flujo</a></li>
+        <li class="sub"><a href="#if">3.1 if / else</a></li>
+        <li class="sub"><a href="#switch">3.2 switch</a></li>
+        <li class="sub"><a href="#while">3.3 while</a></li>
+        <li class="sub"><a href="#for">3.4 for / for-each</a></li>
+
+        <li><a href="#metodos">4. Métodos</a></li>
+
+        <li><a href="#arrays">5. Arrays</a></li>
+
+        <li><a href="#strings">6. Strings</a></li>
+
+        <li><a href="#poo">7. POO</a></li>
+        <li class="sub"><a href="#clases">7.1 Clases y objetos</a></li>
+        <li class="sub"><a href="#encapsulacion">7.2 Encapsulación</a></li>
+        <li class="sub"><a href="#herencia">7.3 Herencia</a></li>
+        <li class="sub"><a href="#polimorfismo">7.4 Polimorfismo</a></li>
+        <li class="sub"><a href="#abstractas">7.5 Clases abstractas</a></li>
+        <li class="sub"><a href="#interfaces">7.6 Interfaces</a></li>
+
+        <li><a href="#colecciones">8. Colecciones</a></li>
+        <li class="sub"><a href="#list">8.1 List</a></li>
+        <li class="sub"><a href="#set">8.2 Set</a></li>
+        <li class="sub"><a href="#map">8.3 Map</a></li>
+
+        <li><a href="#excepciones">9. Excepciones</a></li>
+
+        <li><a href="#resumen">10. Resumen final</a></li>
+      </ul>
+    </aside>
+
+    <!-- ============== Contenido principal ============== -->
+    <main class="content">
+
+      <!-- ================================================== -->
+      <!-- ============ 1. INTRODUCCIÓN ============ -->
+      <!-- ================================================== -->
+      <section id="intro">
+        <h2>1. Introducción a Java</h2>
+
+        <h3 id="que-es">1.1 ¿Qué es Java?</h3>
+        <p><strong>Java</strong> es un lenguaje de programación de propósito general,
+          orientado a objetos y multiplataforma. Fue creado por Sun Microsystems (hoy
+          Oracle) y se ejecuta sobre la <strong>JVM</strong> (Java Virtual Machine),
+          lo que permite que el mismo código funcione en Windows, Mac o Linux sin
+          cambios. Su lema es <em>"write once, run anywhere"</em>.</p>
+
+        <table>
+          <thead>
+            <tr><th>Componente</th><th>Qué es</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>JDK</strong></td><td>Java Development Kit. Lo que necesitas para <em>programar</em> en Java.</td></tr>
+            <tr><td><strong>JRE</strong></td><td>Java Runtime Environment. Lo que necesitas para <em>ejecutar</em> programas Java.</td></tr>
+            <tr><td><strong>JVM</strong></td><td>Java Virtual Machine. La máquina virtual donde corre el código.</td></tr>
+          </tbody>
+        </table>
+
+        <div class="note">
+          <div class="note-title">¿Por qué Java?</div>
+          <p>Es uno de los lenguajes más usados del mundo: aplicaciones Android, sistemas
+            bancarios, APIs empresariales (Spring Boot), big data (Hadoop)… y es la base
+            para entender lenguajes derivados como Kotlin o Scala.</p>
+        </div>
+
+        <h3 id="primer">1.2 Tu primer programa</h3>
+        <p>El "Hola Mundo" en Java se ve así:</p>
+
+        <div class="code-header">HolaMundo.java</div>
+<pre><code>public class HolaMundo {
+    public static void main(String[] args) {
+        System.out.println("¡Hola, mundo!");
+    }
+}</code></pre>
+
+        <ul>
+          <li><strong>class HolaMundo</strong>: todo en Java vive dentro de una clase.</li>
+          <li><strong>public static void main(String[] args)</strong>: el punto de
+            entrada. Java empieza a ejecutar siempre desde este método.</li>
+          <li><strong>System.out.println(…)</strong>: imprime una línea por consola.</li>
+        </ul>
+
+        <div class="note">
+          <div class="note-title">Compilar y ejecutar</div>
+<pre><code>javac HolaMundo.java    # compila → genera HolaMundo.class
+java HolaMundo          # ejecuta</code></pre>
+          <p>En IDEs como <strong>IntelliJ IDEA</strong>, <strong>Eclipse</strong> o
+            <strong>VS Code</strong> esto se hace pulsando el botón ▶ "Run".</p>
+        </div>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ 2. TIPOS DE DATOS ============ -->
+      <!-- ================================================== -->
+      <section id="tipos">
+        <h2>2. Variables y tipos de datos</h2>
+
+        <p>En Java, <em>todas</em> las variables tienen un tipo declarado. Esto se llama
+          tipado <strong>estático</strong>: el compilador comprueba los tipos antes de
+          ejecutar el programa.</p>
+
+        <h3 id="primitivos">2.1 Tipos primitivos</h3>
+        <p>Hay <strong>8 tipos primitivos</strong>. Son muy eficientes porque se
+          almacenan directamente en memoria y no tienen métodos asociados.</p>
+
+        <table>
+          <thead>
+            <tr><th>Tipo</th><th>Tamaño</th><th>Rango / Valor</th><th>Ejemplo</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>byte</code></td><td>1 byte</td><td>−128 a 127</td><td><code>byte b = 100;</code></td></tr>
+            <tr><td><code>short</code></td><td>2 bytes</td><td>−32 768 a 32 767</td><td><code>short s = 1000;</code></td></tr>
+            <tr><td><code>int</code></td><td>4 bytes</td><td>≈ ±2 100 millones</td><td><code>int edad = 25;</code></td></tr>
+            <tr><td><code>long</code></td><td>8 bytes</td><td>números muy grandes</td><td><code>long L = 9999999L;</code></td></tr>
+            <tr><td><code>float</code></td><td>4 bytes</td><td>decimal (~7 cifras)</td><td><code>float f = 3.14f;</code></td></tr>
+            <tr><td><code>double</code></td><td>8 bytes</td><td>decimal (~15 cifras)</td><td><code>double d = 3.14159;</code></td></tr>
+            <tr><td><code>char</code></td><td>2 bytes</td><td>un carácter Unicode</td><td><code>char c = 'A';</code></td></tr>
+            <tr><td><code>boolean</code></td><td>1 bit</td><td><code>true</code> o <code>false</code></td><td><code>boolean ok = true;</code></td></tr>
+          </tbody>
+        </table>
+
+        <h3 id="referencia">2.2 Tipos por referencia</h3>
+        <p>Todo lo que no es primitivo es un <strong>tipo por referencia</strong>:
+          clases, arrays, interfaces. Tienen métodos y propiedades, y se guardan
+          como una <em>referencia</em> al objeto en memoria.</p>
+
+<pre><code>String nombre = "Anna";           // clase String
+int[] numeros = {1, 2, 3};        // array
+Scanner sc = new Scanner(System.in);  // objeto Scanner</code></pre>
+
+        <table>
+          <thead>
+            <tr><th>Aspecto</th><th>Primitivo</th><th>Por referencia</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Almacena</td><td>Valor directo</td><td>Referencia a un objeto</td></tr>
+            <tr><td>Métodos</td><td>No</td><td>Sí</td></tr>
+            <tr><td>Valor por defecto</td><td>0, 0.0, false…</td><td><code>null</code></td></tr>
+          </tbody>
+        </table>
+
+        <h3 id="operadores">2.3 Operadores</h3>
+
+        <table>
+          <thead><tr><th>Categoría</th><th>Operadores</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Aritméticos</strong></td><td><code>+ &nbsp; - &nbsp; * &nbsp; / &nbsp; %</code></td></tr>
+            <tr><td><strong>Relacionales</strong></td><td><code>== &nbsp; != &nbsp; &lt; &nbsp; &gt; &nbsp; &lt;= &nbsp; &gt;=</code></td></tr>
+            <tr><td><strong>Lógicos</strong></td><td><code>&amp;&amp;</code> (AND) · <code>||</code> (OR) · <code>!</code> (NOT)</td></tr>
+            <tr><td><strong>Asignación</strong></td><td><code>= &nbsp; += &nbsp; -= &nbsp; *= &nbsp; /=</code></td></tr>
+            <tr><td><strong>Incremento</strong></td><td><code>++</code> &nbsp; <code>--</code></td></tr>
+            <tr><td><strong>Ternario</strong></td><td><code>condición ? valorSi : valorNo</code></td></tr>
+          </tbody>
+        </table>
+
+<pre><code>int a = 10, b = 3;
+int suma   = a + b;     // 13
+int resto  = a % b;     // 1  (el % es el módulo, el resto de la división)
+boolean ok = (a > b);   // true
+
+int max = (a > b) ? a : b;  // operador ternario → 10</code></pre>
+
+        <h3 id="io">2.4 Entrada y salida básica</h3>
+
+        <p><strong>Salida</strong> con <code>System.out</code>:</p>
+<pre><code>System.out.println("Hola");    // imprime y salta de línea
+System.out.print("Sin salto"); // imprime sin saltar
+System.out.printf("Edad: %d%n", 25);  // formateado</code></pre>
+
+        <p><strong>Entrada</strong> con <code>Scanner</code>:</p>
+<pre><code>import java.util.Scanner;
+
+Scanner sc = new Scanner(System.in);
+System.out.print("Tu nombre: ");
+String nombre = sc.nextLine();
+System.out.print("Tu edad: ");
+int edad = sc.nextInt();
+sc.close();
+
+System.out.println("Hola " + nombre + ", tienes " + edad + " años");</code></pre>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ 3. CONTROL DE FLUJO ============ -->
+      <!-- ================================================== -->
+      <section id="control">
+        <h2>3. Estructuras de control</h2>
+
+        <p>Son las que deciden <em>qué se ejecuta</em> y <em>cuántas veces</em>.</p>
+
+        <h3 id="if">3.1 if / else</h3>
+        <p>Ejecuta código solo si una condición es verdadera.</p>
+
+<pre><code>if (edad &lt; 18) {
+    System.out.println("Menor de edad");
+} else if (edad &lt; 65) {
+    System.out.println("Adulto");
+} else {
+    System.out.println("Mayor");
+}</code></pre>
+
+        <div class="note">
+          <div class="note-title">Operador ternario</div>
+          <p>Para un <code>if/else</code> simple que asigna un valor, queda más limpio
+            con el ternario:</p>
+<pre><code>String tipo = (edad &lt; 18) ? "Menor" : "Adulto";</code></pre>
+        </div>
+
+        <h3 id="switch">3.2 switch</h3>
+        <p>Útil cuando comparas una variable contra muchos valores fijos.</p>
+
+<pre><code>switch (dia) {
+    case 1: System.out.println("Lunes");     break;
+    case 2: System.out.println("Martes");    break;
+    case 3: System.out.println("Miércoles"); break;
+    default: System.out.println("Otro día");
+}</code></pre>
+
+        <p>Desde Java 14 hay una sintaxis más moderna con flecha:</p>
+<pre><code>String nombre = switch (dia) {
+    case 1 -&gt; "Lunes";
+    case 2 -&gt; "Martes";
+    case 3 -&gt; "Miércoles";
+    default -&gt; "Otro día";
+};</code></pre>
+
+        <h3 id="while">3.3 while / do-while</h3>
+        <p><strong>while</strong>: repite mientras se cumpla la condición.</p>
+<pre><code>int i = 0;
+while (i &lt; 5) {
+    System.out.println(i);
+    i++;
+}</code></pre>
+
+        <p><strong>do-while</strong>: ejecuta <em>al menos una vez</em>, y luego mira
+          la condición.</p>
+<pre><code>int n;
+do {
+    System.out.print("Número entre 1 y 10: ");
+    n = sc.nextInt();
+} while (n &lt; 1 || n &gt; 10);</code></pre>
+
+        <h3 id="for">3.4 for / for-each</h3>
+        <p>El <strong>for clásico</strong> tiene tres partes: inicialización, condición,
+          incremento.</p>
+
+<pre><code>// Contar de 0 a 9
+for (int i = 0; i &lt; 10; i++) {
+    System.out.print(i + " ");
+}
+
+// De 10 a 1 (descendente)
+for (int j = 10; j &gt; 0; j--) {
+    System.out.print(j + " ");
+}
+
+// De 2 en 2
+for (int z = 0; z &lt; 20; z += 2) {
+    System.out.println(z);
+}</code></pre>
+
+        <p>El <strong>for-each</strong> es más limpio cuando solo quieres recorrer una
+          colección o array:</p>
+
+<pre><code>int[] numeros = {1, 2, 3, 4, 5};
+for (int n : numeros) {
+    System.out.println(n);
+}</code></pre>
+
+        <div class="note warning">
+          <div class="note-title">break y continue</div>
+          <ul>
+            <li><code>break</code> → sale del bucle inmediatamente.</li>
+            <li><code>continue</code> → salta a la siguiente iteración sin acabar la actual.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ 4. MÉTODOS ============ -->
+      <!-- ================================================== -->
+      <section id="metodos">
+        <h2>4. Métodos</h2>
+
+        <p>Un <strong>método</strong> es un conjunto de instrucciones que realizan una
+          tarea concreta. Sirve para <em>reutilizar código</em> y evitar repeticiones.</p>
+
+        <h3>Anatomía de un método</h3>
+
+        <div class="code-header">Partes de un método</div>
+<pre><code>public static int suma(int a, int b) {
+//  │      │      │   │    │
+//  │      │      │   │    └─ parámetros (con tipo)
+//  │      │      │   └────── nombre del método
+//  │      │      └────────── tipo de retorno (int, void, String…)
+//  │      └───────────────── static (opcional, lo veremos en POO)
+//  └──────────────────────── modificador de acceso (public, private…)
+
+    return a + b;          // ← devuelve un valor (obligatorio si retorno != void)
+}</code></pre>
+
+        <h3>Métodos void</h3>
+        <p>Cuando no devuelven nada, se declaran como <code>void</code> y no llevan
+          <code>return</code> (o llevan un <code>return;</code> sin valor).</p>
+
+<pre><code>public static void saludar(String nombre) {
+    System.out.println("Hola, " + nombre);
+}
+
+// Uso:
+saludar("Anna");   // imprime "Hola, Anna"</code></pre>
+
+        <h3>Estáticos vs de instancia</h3>
+        <ul>
+          <li><strong>Estáticos</strong> (<code>static</code>): se invocan sobre la
+            <em>clase</em>. Ejemplo: <code>Math.sqrt(16)</code>.</li>
+          <li><strong>De instancia</strong>: se invocan sobre un <em>objeto</em>.
+            Ejemplo: <code>texto.length()</code>.</li>
+        </ul>
+
+        <div class="example">
+          <h4>Ejemplo completo</h4>
+<pre><code>public class Calculadora {
+
+    public static int suma(int a, int b) {
+        return a + b;
+    }
+
+    public static double media(int[] numeros) {
+        int total = 0;
+        for (int n : numeros) total += n;
+        return (double) total / numeros.length;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(suma(5, 3));               // 8
+        System.out.println(media(new int[]{2, 4, 6})); // 4.0
+    }
+}</code></pre>
+        </div>
+
+        <div class="note">
+          <div class="note-title">Sobrecarga (overloading)</div>
+          <p>Puedes tener <em>varios métodos con el mismo nombre</em> si tienen
+            parámetros distintos. Java elige cuál llamar según los argumentos.</p>
+<pre><code>public static int suma(int a, int b)       { return a + b; }
+public static double suma(double a, double b) { return a + b; }
+public static int suma(int a, int b, int c)   { return a + b + c; }</code></pre>
+        </div>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ 5. ARRAYS ============ -->
+      <!-- ================================================== -->
+      <section id="arrays">
+        <h2>5. Arrays</h2>
+
+        <p>Un <strong>array</strong> es una colección de tamaño <em>fijo</em> que guarda
+          elementos del mismo tipo en posiciones consecutivas. Se accede por
+          <strong>índice</strong>, que empieza en <code>0</code>.</p>
+
+        <h3>Declaración e inicialización</h3>
+
+<pre><code>// Crear vacío con tamaño fijo
+int[] edades = new int[4];
+String[] nombres = new String[5];
+
+// Crear con valores iniciales
+int[] edades = {13, 25, 34, 78};
+double[] precios = {3.5, 78.9, 102.56};
+
+// Acceso por índice
+String primero = nombres[0];   // primer elemento
+edades[2] = 50;                // modificar elemento
+
+// Tamaño del array
+int tamanyo = edades.length;</code></pre>
+
+        <div class="note warning">
+          <div class="note-title">ArrayIndexOutOfBoundsException</div>
+          <p>Si intentas acceder a una posición que no existe (por ejemplo
+            <code>edades[100]</code>) Java lanza esta excepción y rompe el programa.</p>
+        </div>
+
+        <h3>Recorrer un array</h3>
+
+<pre><code>// for clásico (cuando necesitas el índice)
+for (int i = 0; i &lt; edades.length; i++) {
+    System.out.println("Posición " + i + ": " + edades[i]);
+}
+
+// for-each (más limpio, sin índice)
+for (int edad : edades) {
+    System.out.println(edad);
+}</code></pre>
+
+        <h3>Valores por defecto</h3>
+        <table>
+          <thead><tr><th>Tipo</th><th>Valor inicial</th></tr></thead>
+          <tbody>
+            <tr><td>Enteros (<code>int</code>, <code>byte</code>…)</td><td><code>0</code></td></tr>
+            <tr><td>Decimales (<code>double</code>, <code>float</code>)</td><td><code>0.0</code></td></tr>
+            <tr><td><code>boolean</code></td><td><code>false</code></td></tr>
+            <tr><td>Objetos / <code>String</code></td><td><code>null</code></td></tr>
+          </tbody>
+        </table>
+
+        <h3>Arrays bidimensionales (matrices)</h3>
+<pre><code>int[][] tablero = new int[3][3];
+tablero[0][0] = 1;
+tablero[1][1] = 5;
+tablero[2][2] = 9;
+
+// Recorrido típico
+for (int i = 0; i &lt; tablero.length; i++) {
+    for (int j = 0; j &lt; tablero[i].length; j++) {
+        System.out.print(tablero[i][j] + " ");
+    }
+    System.out.println();
+}</code></pre>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ 6. STRINGS ============ -->
+      <!-- ================================================== -->
+      <section id="strings">
+        <h2>6. Strings (cadenas de texto)</h2>
+
+        <p><code>String</code> es una clase para representar texto. A diferencia de los
+          tipos primitivos, los Strings son <em>objetos</em>: tienen muchos métodos
+          útiles.</p>
+
+        <h3>Métodos más importantes</h3>
+
+        <table>
+          <thead>
+            <tr><th>Método</th><th>Qué hace</th><th>Ejemplo</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>length()</code></td><td>Devuelve el nº de caracteres</td><td><code>"hola".length()</code> → 4</td></tr>
+            <tr><td><code>charAt(n)</code></td><td>Carácter en la posición n</td><td><code>"hola".charAt(0)</code> → <code>'h'</code></td></tr>
+            <tr><td><code>substring(x, y)</code></td><td>Trozo entre x (incluido) e y (excluido)</td><td><code>"holamundo".substring(0, 4)</code> → <code>"hola"</code></td></tr>
+            <tr><td><code>indexOf(s)</code></td><td>Posición de la primera aparición (−1 si no está)</td><td><code>"hola".indexOf("la")</code> → 2</td></tr>
+            <tr><td><code>equals(s2)</code></td><td>Compara contenido (¡no uses <code>==</code>!)</td><td><code>"a".equals("A")</code> → false</td></tr>
+            <tr><td><code>equalsIgnoreCase(s2)</code></td><td>Compara ignorando mayúsculas</td><td><code>"a".equalsIgnoreCase("A")</code> → true</td></tr>
+            <tr><td><code>toUpperCase()</code> / <code>toLowerCase()</code></td><td>Cambia mayús/minús</td><td><code>"hola".toUpperCase()</code> → <code>"HOLA"</code></td></tr>
+            <tr><td><code>replace(a, b)</code></td><td>Sustituye a por b</td><td><code>"hola".replace("o", "0")</code> → <code>"h0la"</code></td></tr>
+            <tr><td><code>split(regex)</code></td><td>Divide en un array por el separador</td><td><code>"a,b,c".split(",")</code> → <code>["a","b","c"]</code></td></tr>
+            <tr><td><code>trim()</code></td><td>Quita espacios al principio y final</td><td><code>"  hola  ".trim()</code> → <code>"hola"</code></td></tr>
+            <tr><td><code>contains(s)</code></td><td>true si contiene la subcadena</td><td><code>"hola".contains("ol")</code> → true</td></tr>
+            <tr><td><code>isEmpty()</code></td><td>true si la cadena está vacía</td><td><code>"".isEmpty()</code> → true</td></tr>
+          </tbody>
+        </table>
+
+        <div class="note danger">
+          <div class="note-title">¡Nunca compares Strings con ==!</div>
+          <p><code>==</code> compara referencias en memoria, no contenido. Usa
+            siempre <code>.equals()</code>:</p>
+<pre><code>String a = "hola";
+String b = "hola";
+a == b           // puede dar true o false según JVM
+a.equals(b)      // siempre da true ✓</code></pre>
+        </div>
+
+        <h3>StringBuilder (para concatenar mucho)</h3>
+        <p>Concatenar muchos Strings con <code>+</code> es lento porque cada operación
+          crea un objeto nuevo. Para bucles, usa <code>StringBuilder</code>:</p>
+
+<pre><code>StringBuilder sb = new StringBuilder();
+for (int i = 0; i &lt; 1000; i++) {
+    sb.append("línea ").append(i).append("\n");
+}
+String resultado = sb.toString();</code></pre>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ 7. POO ============ -->
+      <!-- ================================================== -->
+      <section id="poo">
+        <h2>7. Programación Orientada a Objetos (POO)</h2>
+
+        <p>La <strong>POO</strong> es un paradigma de programación basado en
+          <em>objetos</em>: estructuras que combinan <strong>datos</strong> (atributos)
+          y <strong>comportamiento</strong> (métodos). Java es un lenguaje orientado a
+          objetos por naturaleza.</p>
+
+        <h3 id="clases">7.1 Clases y objetos</h3>
+        <p>Una <strong>clase</strong> es un <em>plano</em> o <em>plantilla</em>. Un
+          <strong>objeto</strong> es una <em>instancia</em> concreta de esa clase.</p>
+
+        <p>Por ejemplo: la clase <code>Estudiante</code> describe cómo son <em>todos</em>
+          los estudiantes (tienen nombre, edad, id…). Un objeto sería un estudiante
+          concreto: Anna, 17 años, id 42.</p>
+
+        <p>Una clase tiene <strong>tres partes</strong>:</p>
+        <ul>
+          <li><strong>Atributos</strong>: las características del objeto.</li>
+          <li><strong>Constructor</strong>: cómo se crea un objeto.</li>
+          <li><strong>Métodos</strong>: las acciones que puede hacer.</li>
+        </ul>
+
+        <div class="code-header">Estudiante.java</div>
+<pre><code>public class Estudiante {
+
+    // 1. Atributos (privados)
+    private String nombre;
+    private byte edad;
+    private String id;
+
+    // 2. Constructor
+    public Estudiante(String nombre, byte edad, String id) {
+        this.nombre = nombre;
+        this.edad   = edad;
+        this.id     = id;
+    }
+
+    // 3. Métodos
+    public void saludar() {
+        System.out.println("Hola, soy " + nombre);
+    }
+}</code></pre>
+
+        <p>Y así se <strong>crea</strong> e <strong>usa</strong> un objeto:</p>
+
+<pre><code>Estudiante anna = new Estudiante("Anna", (byte) 17, "EST001");
+anna.saludar();      // imprime "Hola, soy Anna"</code></pre>
+
+        <div class="note">
+          <div class="note-title">La palabra clave <code>this</code></div>
+          <p><code>this</code> hace referencia al <em>objeto actual</em>. Sirve para
+            distinguir el atributo (<code>this.nombre</code>) del parámetro
+            (<code>nombre</code>) cuando se llaman igual.</p>
+        </div>
+
+        <h3 id="encapsulacion">7.2 Encapsulación (getters y setters)</h3>
+        <p>Los atributos suelen ser <strong><code>private</code></strong>: solo se
+          pueden tocar desde dentro de la clase. Esto evita modificaciones accidentales
+          desde fuera. Para acceder a ellos desde fuera, usamos
+          <strong>getters</strong> y <strong>setters</strong>:</p>
+
+<pre><code>public class Estudiante {
+    private String nombre;
+
+    // Getter: para leer el atributo
+    public String getNombre() {
+        return nombre;
+    }
+
+    // Setter: para modificarlo (con posibilidad de validar)
+    public void setNombre(String nombre) {
+        if (nombre != null &amp;&amp; !nombre.isEmpty()) {
+            this.nombre = nombre;
+        }
+    }
+}</code></pre>
+
+        <h4>Modificadores de acceso</h4>
+        <table>
+          <thead>
+            <tr><th>Modificador</th><th>Quién puede acceder</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>private</code></td><td>Solo dentro de la propia clase</td></tr>
+            <tr><td><em>(sin nada)</em></td><td>Dentro del mismo paquete</td></tr>
+            <tr><td><code>protected</code></td><td>Mismo paquete + subclases</td></tr>
+            <tr><td><code>public</code></td><td>Desde cualquier sitio</td></tr>
+          </tbody>
+        </table>
+
+        <h3 id="herencia">7.3 Herencia</h3>
+        <p>La <strong>herencia</strong> permite que una clase <em>nueva</em> reutilice
+          los atributos y métodos de una clase ya existente. Se usa la palabra
+          <strong><code>extends</code></strong>.</p>
+
+        <div class="code-header">Vehículo y Coche</div>
+<pre><code>public class Vehiculo {
+    protected String matricula;
+    protected String marca;
+
+    public Vehiculo(String matricula, String marca) {
+        this.matricula = matricula;
+        this.marca = marca;
+    }
+
+    public void arrancar() {
+        System.out.println("El vehículo arranca");
+    }
+}
+
+public class Coche extends Vehiculo {
+    private byte numPlazas;
+
+    public Coche(String matricula, String marca, byte numPlazas) {
+        super(matricula, marca);   // llama al constructor del padre
+        this.numPlazas = numPlazas;
+    }
+}</code></pre>
+
+        <div class="note">
+          <div class="note-title">La palabra clave <code>super</code></div>
+          <ul>
+            <li><code>super(...)</code> llama al constructor del padre. Si lo usas,
+              debe ser la <strong>primera línea</strong> del constructor.</li>
+            <li><code>super.metodo()</code> llama a un método del padre desde la subclase.</li>
+            <li>Todas las clases heredan implícitamente de <code>Object</code>.</li>
+          </ul>
+        </div>
+
+        <h4>Tipos de herencia</h4>
+        <ul>
+          <li><strong>Simple</strong>: una subclase hereda de una superclase.</li>
+          <li><strong>Jerárquica</strong>: varias subclases comparten una superclase.</li>
+          <li><strong>Multinivel</strong>: cadena A → B → C.</li>
+        </ul>
+
+        <div class="note warning">
+          <div class="note-title">Java no permite herencia múltiple</div>
+          <p>Una clase <strong>solo puede tener un padre</strong>. Para simular
+            herencia múltiple se usan <em>interfaces</em> (lo veremos en 7.6).</p>
+        </div>
+
+        <h3 id="polimorfismo">7.4 Polimorfismo</h3>
+        <p>Polimorfismo significa <em>"muchas formas"</em>: un mismo objeto puede
+          comportarse de varias maneras según el contexto.</p>
+
+        <h4>Polimorfismo de asignación</h4>
+        <p>Puedes asignar un objeto de una <em>subclase</em> a una variable de la
+          <em>superclase</em>:</p>
+
+<pre><code>Vehiculo v;
+v = new Coche("1234ABC", "Seat", (byte) 5);
+v = new Moto("5678DEF", "Honda");
+
+v.arrancar();   // funciona aunque v sea de tipo Vehiculo</code></pre>
+
+        <p>Si necesitas acceder a métodos específicos de la subclase, haz
+          <strong>casting</strong>:</p>
+
+<pre><code>Vehiculo v = new Coche(...);
+Coche c = (Coche) v;     // casting explícito
+c.abrirMaletero();</code></pre>
+
+        <div class="note danger">
+          <div class="note-title">ClassCastException</div>
+          <p>Si haces un casting inválido (intentas convertir un <code>Vehiculo</code>
+            que en realidad es una <code>Moto</code> a <code>Coche</code>), Java lanza
+            <code>ClassCastException</code>. Comprueba antes con
+            <code>instanceof</code>:</p>
+<pre><code>if (v instanceof Coche c) {
+    c.abrirMaletero();
+}</code></pre>
+        </div>
+
+        <h4>Sobreescritura (overriding)</h4>
+        <p>Una subclase puede <strong>redefinir</strong> un método del padre. Se marca
+          con <code>@Override</code>:</p>
+
+<pre><code>public class Coche extends Vehiculo {
+    @Override
+    public void arrancar() {
+        System.out.println("El coche arranca con la llave");
+    }
+}</code></pre>
+
+        <h4>Sobrecarga (overloading)</h4>
+        <p>Varios métodos con el <em>mismo nombre</em> pero distintos parámetros (ya
+          visto en el apartado de Métodos):</p>
+
+<pre><code>public Cuadrado(double lado) { ... }
+public Cuadrado(double x, double y, double lado) { ... }</code></pre>
+
+        <h3 id="abstractas">7.5 Clases abstractas</h3>
+        <p>Una <strong>clase abstracta</strong> es una clase que <em>no se puede
+          instanciar</em> directamente. Sirve para definir un <em>esqueleto</em> común
+          que las subclases deben completar.</p>
+
+        <p>Se marca con <code>abstract</code>. Puede tener métodos abstractos
+          (sin cuerpo) y métodos normales.</p>
+
+<pre><code>public abstract class Figura {
+    protected double x, y;
+
+    // Método abstracto: las subclases DEBEN implementarlo
+    public abstract double area();
+
+    // Método normal: las subclases lo heredan tal cual
+    public void mover(double dx, double dy) {
+        this.x += dx;
+        this.y += dy;
+    }
+}
+
+public class Circulo extends Figura {
+    private double radio;
+
+    @Override
+    public double area() {
+        return Math.PI * radio * radio;
+    }
+}</code></pre>
+
+        <div class="note">
+          <div class="note-title">Características</div>
+          <ul>
+            <li><strong>No se pueden instanciar</strong> directamente
+              (<code>new Figura()</code> daría error).</li>
+            <li>Pueden tener constructores (los llaman las subclases con <code>super</code>).</li>
+            <li>Pueden mezclar métodos abstractos y normales.</li>
+            <li>Las subclases concretas <strong>deben</strong> implementar todos los
+              métodos abstractos.</li>
+          </ul>
+        </div>
+
+        <h3 id="interfaces">7.6 Interfaces</h3>
+        <p>Una <strong>interfaz</strong> define un <em>contrato</em>: una lista de
+          métodos que las clases que la implementen <em>deben</em> tener. Es como una
+          clase abstracta sin atributos ni constructor.</p>
+
+<pre><code>public interface Movible {
+    void mover();
+    void saltar();
+}
+
+public class Coche implements Movible {
+    @Override
+    public void mover()  { System.out.println("Rodando"); }
+
+    @Override
+    public void saltar() { System.out.println("Los coches no saltan…"); }
+}</code></pre>
+
+        <h4>Herencia múltiple con interfaces</h4>
+        <p>Una clase puede <strong>implementar varias interfaces</strong> a la vez
+          (separadas por coma). Por eso decimos que en Java <em>se simula</em> la
+          herencia múltiple con interfaces:</p>
+
+<pre><code>public class Coche implements Movible, Reparable, Repostable {
+    // Implementar todos los métodos de las tres interfaces
+}</code></pre>
+
+        <h4>Interface vs Clase abstracta</h4>
+        <table>
+          <thead>
+            <tr><th>Aspecto</th><th>Interface</th><th>Clase abstracta</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Atributos</td><td>Solo constantes (<code>public static final</code>)</td><td>Cualquier tipo</td></tr>
+            <tr><td>Constructor</td><td>No</td><td>Sí</td></tr>
+            <tr><td>Métodos con cuerpo</td><td>Solo <code>default</code> y <code>static</code> (Java 8+)</td><td>Sí, los que quieras</td></tr>
+            <tr><td>Herencia múltiple</td><td>Sí (varias interfaces)</td><td>No (una sola superclase)</td></tr>
+            <tr><td>Palabra clave</td><td><code>implements</code></td><td><code>extends</code></td></tr>
+          </tbody>
+        </table>
+
+        <div class="note success">
+          <div class="note-title">Cuándo usar cada uno</div>
+          <ul>
+            <li><strong>Interface</strong>: cuando quieres definir <em>qué</em> debe
+              hacer algo (un contrato), sin importar el <em>cómo</em>.</li>
+            <li><strong>Clase abstracta</strong>: cuando varias clases <em>comparten</em>
+              código y solo necesitas que cada una complete unos pocos métodos.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ 8. COLECCIONES ============ -->
+      <!-- ================================================== -->
+      <section id="colecciones">
+        <h2>8. Colecciones</h2>
+
+        <p>Las <strong>colecciones</strong> son estructuras dinámicas para guardar
+          grupos de elementos. A diferencia de los arrays, <em>crecen y se reducen</em>
+          según necesites: no tienes que fijar el tamaño al crearlas.</p>
+
+        <p>Las tres familias principales son <strong>List</strong>, <strong>Set</strong>
+          y <strong>Map</strong>.</p>
+
+        <table>
+          <thead>
+            <tr><th>Tipo</th><th>Permite repetidos</th><th>Mantiene orden</th><th>Acceso por índice</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>List</strong></td><td>Sí</td><td>Sí (inserción)</td><td>Sí</td></tr>
+            <tr><td><strong>Set</strong></td><td>No</td><td>Depende (HashSet no, TreeSet ordena)</td><td>No</td></tr>
+            <tr><td><strong>Map</strong></td><td>Claves no, valores sí</td><td>Depende</td><td>Por clave</td></tr>
+          </tbody>
+        </table>
+
+        <h3 id="list">8.1 List</h3>
+        <p>Una <strong>List</strong> es una colección <em>ordenada</em> que permite
+          elementos <em>repetidos</em> y acceso por <em>índice</em>.</p>
+
+        <ul>
+          <li><strong>ArrayList</strong>: la más usada. Acceso rápido por índice e
+            iteración eficiente.</li>
+          <li><strong>LinkedList</strong>: rápida para insertar/eliminar al principio
+            o al final.</li>
+        </ul>
+
+<pre><code>import java.util.ArrayList;
+import java.util.List;
+
+List&lt;String&gt; nombres = new ArrayList&lt;&gt;();
+nombres.add("Anna");
+nombres.add("Marc");
+nombres.add("Júlia");
+nombres.add("Anna");    // ← se permite repetido
+
+System.out.println(nombres.get(0));      // Anna
+System.out.println(nombres.size());      // 4
+System.out.println(nombres.contains("Marc")); // true
+nombres.remove(0);                       // borra el primero
+
+// Recorrer con for-each
+for (String n : nombres) {
+    System.out.println(n);
+}</code></pre>
+
+        <h4>Métodos principales de List</h4>
+        <table>
+          <thead><tr><th>Método</th><th>Qué hace</th></tr></thead>
+          <tbody>
+            <tr><td><code>add(e)</code></td><td>Añade al final</td></tr>
+            <tr><td><code>add(i, e)</code></td><td>Inserta en la posición i</td></tr>
+            <tr><td><code>get(i)</code></td><td>Devuelve el elemento en la posición i</td></tr>
+            <tr><td><code>set(i, e)</code></td><td>Reemplaza el elemento en la posición i</td></tr>
+            <tr><td><code>remove(i)</code></td><td>Elimina el elemento en la posición i</td></tr>
+            <tr><td><code>size()</code></td><td>Devuelve el número de elementos</td></tr>
+            <tr><td><code>contains(e)</code></td><td>true si contiene el elemento</td></tr>
+            <tr><td><code>indexOf(e)</code></td><td>Posición de la primera aparición (−1 si no está)</td></tr>
+            <tr><td><code>isEmpty()</code></td><td>true si está vacía</td></tr>
+            <tr><td><code>clear()</code></td><td>Borra todo</td></tr>
+          </tbody>
+        </table>
+
+        <h3 id="set">8.2 Set</h3>
+        <p>Un <strong>Set</strong> es una colección que <strong>NO admite elementos
+          repetidos</strong>. Si añades un elemento que ya está, simplemente no se
+          inserta.</p>
+
+        <table>
+          <thead>
+            <tr><th>Implementación</th><th>Orden de inserción</th><th>Ordenado</th><th>Velocidad</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>HashSet</strong></td><td>❌</td><td>❌</td><td>Más rápido</td></tr>
+            <tr><td><strong>LinkedHashSet</strong></td><td>✅</td><td>❌</td><td>Intermedio</td></tr>
+            <tr><td><strong>TreeSet</strong></td><td>❌</td><td>✅ (natural)</td><td>Más lento</td></tr>
+          </tbody>
+        </table>
+
+<pre><code>import java.util.HashSet;
+import java.util.Set;
+
+Set&lt;String&gt; ciudades = new HashSet&lt;&gt;();
+ciudades.add("Barcelona");
+ciudades.add("Madrid");
+ciudades.add("Barcelona");   // se ignora (ya existe)
+
+System.out.println(ciudades.size());            // 2
+System.out.println(ciudades.contains("Madrid")); // true</code></pre>
+
+        <h3 id="map">8.3 Map</h3>
+        <p>Un <strong>Map</strong> es una colección de pares <strong>clave → valor</strong>
+          (también llamado <em>diccionario</em>). Las claves no se repiten; los valores sí.</p>
+
+        <table>
+          <thead>
+            <tr><th>Implementación</th><th>Orden</th><th>Velocidad</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>HashMap</strong></td><td>Sin orden</td><td>Más rápido (recomendado por defecto)</td></tr>
+            <tr><td><strong>LinkedHashMap</strong></td><td>Por inserción</td><td>Intermedio</td></tr>
+            <tr><td><strong>TreeMap</strong></td><td>Por clave</td><td>Más lento (pero ordenado)</td></tr>
+          </tbody>
+        </table>
+
+<pre><code>import java.util.HashMap;
+import java.util.Map;
+
+Map&lt;String, Integer&gt; edades = new HashMap&lt;&gt;();
+edades.put("Anna", 17);
+edades.put("Marc", 22);
+edades.put("Júlia", 19);
+
+System.out.println(edades.get("Anna"));         // 17
+System.out.println(edades.containsKey("Marc")); // true
+System.out.println(edades.get("Pere"));         // null (no existe)
+
+// Iteración por entradas
+for (Map.Entry&lt;String, Integer&gt; e : edades.entrySet()) {
+    System.out.println(e.getKey() + " → " + e.getValue());
+}</code></pre>
+
+        <h4>Métodos principales de Map</h4>
+        <table>
+          <thead><tr><th>Método</th><th>Qué hace</th></tr></thead>
+          <tbody>
+            <tr><td><code>put(k, v)</code></td><td>Añade o reemplaza el par clave-valor</td></tr>
+            <tr><td><code>get(k)</code></td><td>Devuelve el valor de la clave (null si no existe)</td></tr>
+            <tr><td><code>remove(k)</code></td><td>Borra el par con esa clave</td></tr>
+            <tr><td><code>containsKey(k)</code></td><td>true si existe la clave</td></tr>
+            <tr><td><code>keySet()</code></td><td>Devuelve un Set con todas las claves</td></tr>
+            <tr><td><code>values()</code></td><td>Devuelve una colección con todos los valores</td></tr>
+            <tr><td><code>entrySet()</code></td><td>Devuelve un Set de pares (clave, valor)</td></tr>
+          </tbody>
+        </table>
+
+        <div class="note">
+          <div class="note-title">Genéricos &lt;T&gt;</div>
+          <p>Las colecciones usan <strong>genéricos</strong>: indicas entre <code>&lt;&gt;</code>
+            el tipo de los elementos. Así Java te avisa en tiempo de compilación si
+            intentas meter algo de otro tipo.</p>
+<pre><code>List&lt;String&gt; lista = new ArrayList&lt;&gt;();
+lista.add("hola");
+lista.add(42);   // ❌ ERROR de compilación</code></pre>
+        </div>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ 9. EXCEPCIONES ============ -->
+      <!-- ================================================== -->
+      <section id="excepciones">
+        <h2>9. Excepciones</h2>
+
+        <p>Una <strong>excepción</strong> es un error en tiempo de ejecución que
+          interrumpe el flujo normal del programa (por ejemplo, dividir entre 0 o
+          acceder a una posición inexistente de un array). Java nos permite
+          <em>capturar</em> estas excepciones y reaccionar ante ellas.</p>
+
+        <h3>try / catch / finally</h3>
+
+<pre><code>try {
+    // Código que puede lanzar una excepción
+    int resultado = 10 / 0;
+} catch (ArithmeticException e) {
+    // Qué hacer si ocurre la excepción
+    System.out.println("Error: " + e.getMessage());
+} finally {
+    // Se ejecuta SIEMPRE (con o sin excepción)
+    System.out.println("Fin del bloque");
+}</code></pre>
+
+        <h3>Dos familias de excepciones</h3>
+
+        <table>
+          <thead>
+            <tr><th>Tipo</th><th>Hay que capturar obligatoriamente</th><th>Ejemplos</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Runtime (Unchecked)</strong></td>
+              <td>No (el compilador no obliga)</td>
+              <td><code>NullPointerException</code>, <code>ArithmeticException</code>,
+                <code>ArrayIndexOutOfBoundsException</code>, <code>NumberFormatException</code></td>
+            </tr>
+            <tr>
+              <td><strong>Checked</strong></td>
+              <td>Sí (con <code>try/catch</code> o <code>throws</code>)</td>
+              <td><code>IOException</code>, <code>SQLException</code>,
+                <code>FileNotFoundException</code></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>throw y throws</h3>
+
+        <p><strong><code>throw</code></strong> lanza una excepción manualmente:</p>
+<pre><code>public void setEdad(int edad) {
+    if (edad &lt; 0) {
+        throw new IllegalArgumentException("La edad no puede ser negativa");
+    }
+    this.edad = edad;
+}</code></pre>
+
+        <p><strong><code>throws</code></strong> avisa de que un método <em>puede</em>
+          lanzar una excepción (no la captura, la delega):</p>
+<pre><code>public void leerFichero(String ruta) throws IOException {
+    BufferedReader br = new BufferedReader(new FileReader(ruta));
+    // ...
+}</code></pre>
+
+        <h3>Capturar varias excepciones a la vez</h3>
+<pre><code>try {
+    int n = Integer.parseInt(args[0]);
+    int[] a = new int[n];
+    a[100] = 1;
+} catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+    System.out.println("Argumento inválido: " + e.getMessage());
+}</code></pre>
+
+        <h3>Excepciones personalizadas</h3>
+        <p>Puedes crear tus propias excepciones extendiendo <code>Exception</code> o
+          <code>RuntimeException</code>:</p>
+
+<pre><code>public class SaldoInsuficienteException extends RuntimeException {
+    public SaldoInsuficienteException(String mensaje) {
+        super(mensaje);
+    }
+}
+
+// Uso
+public void retirar(double importe) {
+    if (importe &gt; saldo) {
+        throw new SaldoInsuficienteException(
+            "No hay saldo suficiente para retirar " + importe);
+    }
+    saldo -= importe;
+}</code></pre>
+
+        <div class="note success">
+          <div class="note-title">try-with-resources (Java 7+)</div>
+          <p>Cuando trabajas con recursos que hay que cerrar (ficheros, conexiones),
+            usa <code>try-with-resources</code>: Java los cierra automáticamente.</p>
+<pre><code>try (BufferedReader br = new BufferedReader(new FileReader("a.txt"))) {
+    System.out.println(br.readLine());
+}   // ← br.close() se llama solo aquí</code></pre>
+        </div>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ 10. RESUMEN ============ -->
+      <!-- ================================================== -->
+      <section id="resumen">
+        <h2>10. Resumen final (cheatsheet)</h2>
+
+        <p>Si te quedas con una sola tabla de todos estos apuntes, que sea esta:</p>
+
+        <table>
+          <thead>
+            <tr><th>Quiero…</th><th>Uso</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Guardar un número entero</td><td><code>int x = 5;</code></td></tr>
+            <tr><td>Guardar texto</td><td><code>String s = "hola";</code></td></tr>
+            <tr><td>Comparar Strings</td><td><code>s1.equals(s2)</code> (NO <code>==</code>)</td></tr>
+            <tr><td>Lista ordenada con repetidos</td><td><code>new ArrayList&lt;&gt;()</code></td></tr>
+            <tr><td>Conjunto sin repetidos</td><td><code>new HashSet&lt;&gt;()</code></td></tr>
+            <tr><td>Diccionario clave-valor</td><td><code>new HashMap&lt;&gt;()</code></td></tr>
+            <tr><td>Recorrer un array/colección</td><td><code>for (T t : col)</code></td></tr>
+            <tr><td>Heredar de otra clase</td><td><code>class Hijo extends Padre</code></td></tr>
+            <tr><td>Implementar un contrato</td><td><code>class C implements I</code></td></tr>
+            <tr><td>Llamar constructor del padre</td><td><code>super(...)</code></td></tr>
+            <tr><td>Redefinir método</td><td><code>@Override</code></td></tr>
+            <tr><td>Capturar errores</td><td><code>try { … } catch (E e) { … }</code></td></tr>
+            <tr><td>Lanzar mi propio error</td><td><code>throw new MyException(...)</code></td></tr>
+          </tbody>
+        </table>
+
+        <div class="note success">
+          <div class="note-title">Las 5 reglas de oro de Java</div>
+          <ol>
+            <li><strong>Una clase por fichero</strong>, y el nombre del fichero =
+              nombre de la clase pública.</li>
+            <li><strong>Atributos siempre <code>private</code></strong>, y acceso con
+              getters/setters.</li>
+            <li><strong>Compara Strings con <code>.equals()</code></strong>, nunca con
+              <code>==</code>.</li>
+            <li><strong>Usa genéricos</strong> en colecciones:
+              <code>List&lt;String&gt;</code>, no <code>List</code> a secas.</li>
+            <li><strong>Marca con <code>@Override</code></strong> los métodos que
+              sobreescribes — te ahorra muchos bugs.</li>
+          </ol>
+        </div>
+
+        <div class="note">
+          <div class="note-title">¿Y ahora qué?</div>
+          <p>Cuando domines estas bases, salta a los apuntes de
+            <a href="springboot.html"><strong>Spring Boot</strong></a> para construir
+            APIs REST profesionales con todo lo que has aprendido aquí.</p>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ================== Footer ================== -->
+  <footer class="footer">
+    <p><strong>Estudio</strong> · Innovation starts here</p>
+    <p>Apuntes hechos por y para alumnos · Curso 2025-2026</p>
+  </footer>
+
+  <script src="assets/main.js"></script>
+</body>
+</html>

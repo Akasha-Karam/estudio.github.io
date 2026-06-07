@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ca">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sistema Operatiu · Apunts · Estudio</title>
+  <title>Sistema Operativo · Apuntes · Estudio</title>
   <link rel="icon" href="assets/logo.png" type="image/png">
   <link rel="stylesheet" href="assets/styles.css">
 </head>
@@ -17,20 +17,20 @@
     </a>
     <nav>
       <ul>
-        <li><a href="index.html">Inici</a></li>
-        <li><a href="sistema_operativo.html">Sistema Operatiu</a></li>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="sistema_operativo.html">Sistema Operativo</a></li>
         <li><a href="index.html#about">About</a></li>
       </ul>
     </nav>
   </header>
 
-  <!-- ================== Pàgina títol ================== -->
+  <!-- ================== Página título ================== -->
   <section class="page-title">
     <div class="page-title-inner">
-      <h1>Sistema Operatiu · Linux</h1>
-      <p class="subtitle">Apunts per a alumnes: sistemes de fitxers, particions, RAID,
-        discs virtuals, administració de Linux i eines de terminal. Explicat pas a pas
-        amb exemples pràctics.</p>
+      <h1>Sistema Operativo · Linux</h1>
+      <p class="subtitle">Apuntes para alumnos: sistemas de ficheros, particiones, RAID,
+        discos virtuales, administración de Linux y herramientas de terminal. Explicado
+        paso a paso con ejemplos prácticos.</p>
       <div class="chips">
         <span class="chip">Linux</span>
         <span class="chip">ext4 / XFS / Btrfs</span>
@@ -42,14 +42,14 @@
     </div>
   </section>
 
-  <!-- ================== Contingut ================== -->
+  <!-- ================== Contenido ================== -->
   <div class="notes-layout">
 
     <!-- ============== Sidebar / TOC ============== -->
     <aside class="toc">
-      <h4>Índex</h4>
+      <h4>Índice</h4>
       <ul>
-        <li><a href="#particions">1. Particions i FS</a></li>
+        <li><a href="#particiones">1. Particiones y FS</a></li>
         <li class="sub"><a href="#mbr-gpt">1.1 MBR vs GPT</a></li>
         <li class="sub"><a href="#fdisk">1.2 fdisk</a></li>
         <li class="sub"><a href="#gdisk">1.3 gdisk</a></li>
@@ -59,16 +59,16 @@
         <li class="sub"><a href="#parted">1.7 parted</a></li>
 
         <li><a href="#raid">2. RAID</a></li>
-        <li class="sub"><a href="#que-es-raid">2.1 Què és RAID</a></li>
-        <li class="sub"><a href="#nivells">2.2 Nivells RAID</a></li>
+        <li class="sub"><a href="#que-es-raid">2.1 ¿Qué es RAID?</a></li>
+        <li class="sub"><a href="#niveles">2.2 Niveles RAID</a></li>
         <li class="sub"><a href="#mdadm">2.3 mdadm</a></li>
         <li class="sub"><a href="#loop">2.4 Loop devices</a></li>
 
-        <li><a href="#fada">3. Fada dels Discos</a></li>
+        <li><a href="#fada">3. Fada de los Discos</a></li>
 
         <li><a href="#filenest">4. FileNest</a></li>
 
-        <li><a href="#usuaris">5. Usuaris i grups</a></li>
+        <li><a href="#usuarios">5. Usuarios y grupos</a></li>
 
         <li><a href="#permisos">6. Permisos Linux</a></li>
 
@@ -77,41 +77,52 @@
         <li><a href="#ssh">8. SSH / OpenSSH</a></li>
 
         <li><a href="#scripts">9. Scripting</a></li>
+
+        <li><a href="#ejercicios">10. Ejercicios</a></li>
+        <li><a href="#comandos">11. Comandos (chuleta)</a></li>
       </ul>
     </aside>
 
-    <!-- ============== Contingut principal ============== -->
+    <!-- ============== Contenido principal ============== -->
     <main class="content">
 
       <!-- ================================================== -->
-      <!-- ============ 1. PARTICIONS I FS ============ -->
+      <!-- ============ 1. PARTICIONES Y FS ============ -->
       <!-- ================================================== -->
-      <section id="particions">
-        <h2>1. Particions i sistemes de fitxers</h2>
+      <section id="particiones">
+        <h2>1. Particiones y sistemas de ficheros</h2>
 
-        <p>Un <strong>sistema de fitxers</strong> (filesystem) és l'estructura que defineix
-          com s'organitzen i s'accedeixen les dades als dispositius d'emmagatzematge:
-          estableix com es guarden els fitxers, carpetes, enllaços, permisos, etc.
-          Sense un sistema de fitxers els discos serien només un espai en brut sense cap
-          manera d'identificar els continguts.</p>
+        <p>Un <strong>sistema de ficheros</strong> (filesystem) es la estructura que define
+          cómo se organizan y se accede a los datos en los dispositivos de almacenamiento:
+          establece cómo se guardan los ficheros, carpetas, enlaces, permisos, etc.
+          Sin un sistema de ficheros los discos serían solo un espacio en bruto sin ninguna
+          manera de identificar los contenidos.</p>
 
         <div class="note">
-          <div class="note-title">Discs i particions</div>
-          <p>Un <strong>disc</strong> és un dispositiu físic d'emmagatzematge.
-            Una <strong>partició</strong> és una subdivisió lògica d'un disc físic,
-            definida en una taula de particions. El disc és el suport físic, la partició
-            és una divisió del disc, i el filesystem és la manera com es gestionen els
-            fitxers dins d'aquesta partició.</p>
+          <div class="note-title">Discos y particiones</div>
+          <p>Un <strong>disco</strong> es un dispositivo físico de almacenamiento.
+            Una <strong>partición</strong> es una subdivisión lógica de un disco físico,
+            definida en una tabla de particiones. El disco es el soporte físico, la partición
+            es una división del disco, y el filesystem es la manera como se gestionan los
+            ficheros dentro de esa partición.</p>
         </div>
 
-        <p>A GNU/Linux, <strong>tot és un arxiu</strong>. Cada partició s'identifica com
-          un dispositiu dins de <code>/dev</code>:</p>
+        <p>En GNU/Linux, <strong>todo es un archivo</strong>. Cada partición se identifica como
+          un dispositivo dentro de <code>/dev</code>:</p>
         <ul>
-          <li><code>/dev/sda1</code>, <code>/dev/sda2</code> — discs SATA, SCSI, USB</li>
-          <li><code>/dev/nvme0n1p1</code> — discs NVMe</li>
-          <li><code>/dev/mmcblk0p1</code> — targetes SD / memòria extraïble</li>
-          <li><code>/dev/hdX</code> — discs IDE antics</li>
+          <li><code>/dev/sda1</code>, <code>/dev/sda2</code> — discos SATA, SCSI, USB</li>
+          <li><code>/dev/nvme0n1p1</code> — discos NVMe</li>
+          <li><code>/dev/mmcblk0p1</code> — tarjetas SD / memoria extraíble</li>
+          <li><code>/dev/hdX</code> — discos IDE antiguos</li>
         </ul>
+
+        <div class="note">
+          <div class="note-title">Idea clave</div>
+          <p>Todo dispositivo de bloque en Linux aparece en <code>/dev/</code>. Los discos
+            se nombran como <code>sdX</code> (SATA/SCSI/USB) o <code>nvmeXnYpZ</code> (NVMe),
+            y sus particiones llevan un número al final: <code>/dev/sda1</code>,
+            <code>/dev/sda2</code>…</p>
+        </div>
 
         <h3 id="mbr-gpt">1.1 MBR vs GPT</h3>
         <table>
@@ -119,152 +130,192 @@
             <tr><th>Característica</th><th>MBR</th><th>GPT</th></tr>
           </thead>
           <tbody>
-            <tr><td>Any</td><td>1983 (MS-DOS)</td><td>Modern</td></tr>
-            <tr><td>Particions primàries</td><td>Màxim 4</td><td>Fins a 128</td></tr>
-            <tr><td>Màxim disc</td><td>2 TB</td><td>Sense límit pràctic</td></tr>
-            <tr><td>Còpia seguretat</td><td>No</td><td>Sí (taula duplicada)</td></tr>
-            <tr><td>GUID únic</td><td>No</td><td>Sí (128 bits)</td></tr>
+            <tr><td>Año</td><td>1983 (MS-DOS)</td><td>Moderno</td></tr>
+            <tr><td>Particiones primarias</td><td>Máximo 4</td><td>Hasta 128</td></tr>
+            <tr><td>Máximo disco</td><td>2 TB</td><td>Sin límite práctico</td></tr>
+            <tr><td>Copia seguridad</td><td>No</td><td>Sí (tabla duplicada)</td></tr>
+            <tr><td>GUID único</td><td>No</td><td>Sí (128 bits)</td></tr>
           </tbody>
         </table>
 
         <div class="note">
           <div class="note-title">Boot sector</div>
-          <p>MBR emmagatzema la taula de particions al primer sector del disc (Boot Sector).
-            GPT utilitza còpies de seguretat de la taula de particions per a més seguretat.</p>
+          <p>MBR almacena la tabla de particiones en el primer sector del disco (Boot Sector).
+            GPT utiliza copias de seguridad de la tabla de particiones para mayor seguridad.</p>
         </div>
 
-        <h3 id="fdisk">1.2 Gestionar particions MBR amb fdisk</h3>
-        <p><code>fdisk</code> és l'eina clàssica per gestionar taules de particions MBR.</p>
+        <h3 id="fdisk">1.2 Gestionar particiones MBR con fdisk</h3>
+        <p><code>fdisk</code> es la herramienta clásica para gestionar tablas de particiones MBR.</p>
 
         <div class="code-header">fdisk</div>
         <pre><code># fdisk /dev/sda
-  m — mostra l'ajuda
-  p — mostra la taula de particions actual
-  n — crea una nova partició
-  d — elimina una partició
-  t — canvia el tipus
-  w — desa els canvis
-  q — surt sense desar</code></pre>
+  m — muestra la ayuda
+  p — muestra la tabla de particiones actual
+  n — crea una nueva partición
+  d — elimina una partición
+  t — cambia el tipo
+  w — guarda los cambios
+  q — sale sin guardar</code></pre>
 
         <div class="note warning">
-          <div class="note-title">Atenció</div>
-          <p>Els canvis no s'apliquen fins que escrius <code>w</code>.</p>
+          <div class="note-title">Atención</div>
+          <p>Los cambios no se aplican hasta que escribes <code>w</code>.</p>
         </div>
 
-        <p><strong>Tipus de particions MBR:</strong></p>
+        <p><strong>Tipos de particiones MBR:</strong></p>
         <ul>
-          <li><strong>Primary</strong> — màxim 4.</li>
-          <li><strong>Extended</strong> — conté diverses particions lògiques (logical).</li>
+          <li><strong>Primary</strong> — máximo 4.</li>
+          <li><strong>Extended</strong> — contiene varias particiones lógicas (logical).</li>
         </ul>
 
-        <h3 id="gdisk">1.3 Gestionar particions GPT amb gdisk</h3>
-        <p><code>gdisk</code> és com <code>fdisk</code> però per a discs GPT.</p>
+        <div class="example">
+          <h4>Ejemplo: crear una partición con fdisk</h4>
+          <pre><code>$ sudo fdisk /dev/sdb
+
+Comando (m para ayuda): n
+Tipo de partición: primary
+Número de partición (1-4): 1
+Primer sector (2048-16777215): [Enter]
+Último sector: +500M
+
+Comando (m para ayuda): w
+La tabla de particiones ha sido modificada.</code></pre>
+          <p>Tras crear la partición, se podrá formatear con <code>mkfs</code>.</p>
+        </div>
+
+        <h3 id="gdisk">1.3 Gestionar particiones GPT con gdisk</h3>
+        <p><code>gdisk</code> es como <code>fdisk</code> pero para discos GPT.</p>
 
         <div class="code-header">gdisk</div>
         <pre><code># gdisk /dev/sdb
-  p — mostra les particions
-  n — crea nova partició
+  p — muestra las particiones
+  n — crea nueva partición
   d — elimina
   s — ordena
-  r — menú de recuperació
-  w — desa els canvis</code></pre>
+  r — menú de recuperación
+  w — guarda los cambios</code></pre>
 
         <div class="note warning">
-          <div class="note-title">Atenció</div>
-          <p>Els canvis no s'apliquen fins que escrius <code>w</code>.</p>
+          <div class="note-title">Atención</div>
+          <p>Los cambios no se aplican hasta que escribes <code>w</code>.</p>
         </div>
 
-        <h3 id="mkfs">1.4 Crear sistemes de fitxers amb mkfs</h3>
-        <p>Després de particionar, cal <strong>formatejar</strong> cada partició amb un
-          sistema de fitxers.</p>
+        <h3 id="mkfs">1.4 Crear sistemas de ficheros con mkfs</h3>
+        <p>Después de particionar, hay que <strong>formatear</strong> cada partición con un
+          sistema de ficheros.</p>
 
         <h4>ext2 / ext3 / ext4</h4>
         <pre><code># mkfs.ext4 /dev/sdb1
 # mke2fs -t ext4 /dev/sdb1
 
-# Opcions útils:
-  -b       — mida de bloc
-  -c       — comprova blocs dolents
-  -L       — etiqueta del volum
-  -n       — simulació sense escriure</code></pre>
+# Opciones útiles:
+  -b       — tamaño de bloque
+  -c       — comprueba bloques defectuosos
+  -L       — etiqueta del volumen
+  -n       — simulación sin escribir</code></pre>
 
         <h4>XFS</h4>
         <pre><code># mkfs.xfs /dev/sda1
 
-# Opcions:
-  -b size=4096   — mida del bloc
+# Opciones:
+  -b size=4096   — tamaño del bloque
   -L label       — etiqueta
-  -N             — mode simulació</code></pre>
+  -N             — modo simulación</code></pre>
 
         <h4>VFAT / FAT32</h4>
         <pre><code># mkfs.vfat /dev/sdc1
 
-# Opcions:
+# Opciones:
   -F 32     — selecciona FAT32
   -n NAME   — etiqueta</code></pre>
 
         <h4>exFAT</h4>
         <pre><code># mkfs.exfat /dev/sdb1
 
-# Opcions:
-  -i VOL_ID   — ID del volum
-  -n NAME     — nom del volum</code></pre>
+# Opciones:
+  -i VOL_ID   — ID del volumen
+  -n NAME     — nombre del volumen</code></pre>
+
+        <div class="note">
+          <div class="note-title">¿Qué sistema elegir?</div>
+          <p><strong>ext4</strong> es el estándar en Linux: maduro, estable y con gran
+            compatibilidad. <strong>XFS</strong> es ideal para ficheros muy grandes y alto
+            rendimiento. <strong>Btrfs</strong> ofrece funcionalidades avanzadas como
+            snapshots y compresión.</p>
+        </div>
 
         <h3 id="swap">1.5 Swap</h3>
-        <p>El <strong>swap</strong> no és un sistema de fitxers tradicional, sinó una àrea
-          del disc que el sistema utilitza com a memòria virtual quan la RAM s'esgota.
-          Això permet continuar treballant encara que la memòria física estigui plena,
-          tot i que amb un rendiment més lent.</p>
+        <p>La <strong>swap</strong> no es un sistema de ficheros tradicional, sino un área
+          del disco que el sistema utiliza como memoria virtual cuando la RAM se agota.
+          Esto permite continuar trabajando aunque la memoria física esté llena,
+          aunque con un rendimiento más lento.</p>
 
-        <pre><code># Crear una partició swap
+        <pre><code># Crear una partición swap
 # mkswap /dev/sda2
-# swapon /dev/sda2</code></pre>
+# swapon /dev/sda2
+
+# Ver swap activa
+# swapon --show
+# free -h</code></pre>
+
+        <div class="note">
+          <div class="note-title">Regla de oro</div>
+          <p>La swap suele configurarse como el doble de la RAM en servidores, o 2-4 GB
+            en equipos de escritorio. Con SSD, la swap es bastante usable como alternativa
+            a quedarse sin memoria.</p>
+        </div>
 
         <h3 id="btrfs">1.6 Btrfs</h3>
-        <p><strong>Btrfs</strong> és un sistema de fitxers modern amb característiques avançades:</p>
+        <p><strong>Btrfs</strong> es un sistema de ficheros moderno con características avanzadas:</p>
         <ul>
-          <li>Suport multi-dispositiu (RAID, mirroring, etc.)</li>
-          <li>Subvolums i snapshots</li>
-          <li>Compressió automàtica (zlib, lzo, zstd)</li>
+          <li>Soporte multi-dispositivo (RAID, mirroring, etc.)</li>
+          <li>Subvolúmenes y snapshots</li>
+          <li>Compresión automática (zlib, lzo, zstd)</li>
         </ul>
 
-        <pre><code># Crear un sistema de fitxers Btrfs
+        <pre><code># Crear un sistema de ficheros Btrfs
 # mkfs.btrfs /dev/sdb1
 # mkfs.btrfs /dev/sdb1 -L "NewDisk"
 
-# Crear un subvolum
+# Crear un subvolumen
 # btrfs subvolume create /mnt/disk/BKP
 
 # Crear un snapshot
 # btrfs subvolume snapshot /mnt/disk /mnt/disk/snap</code></pre>
 
-        <h3 id="parted">1.7 L'eina parted</h3>
-        <p><code>parted</code> pot fer-ho tot (particions + formateig), però amb més risc
-          si no vas amb compte. A diferència de <code>fdisk</code> i <code>gdisk</code>,
-          <strong>parted aplica els canvis immediatament</strong>.</p>
+        <div class="note success">
+          <div class="note-title">Ventaja de Btrfs</div>
+          <p>Los <strong>snapshots</strong> permiten revertir el sistema a un estado
+            anterior en segundos. Muy útil antes de hacer cambios arriesgados.</p>
+        </div>
+
+        <h3 id="parted">1.7 La herramienta parted</h3>
+        <p><code>parted</code> puede hacerlo todo (particiones + formateo), pero con más riesgo
+          si no se va con cuidado. A diferencia de <code>fdisk</code> y <code>gdisk</code>,
+          <strong>parted aplica los cambios inmediatamente</strong>.</p>
 
         <div class="code-header">parted</div>
         <pre><code># parted /dev/sdb
-  print              — mostra informació del disc
-  mklabel gpt|msdos  — crea una taula nova
-  mkpart primary ext4 1MiB 100MiB  — crea una partició
-  rm 2               — elimina la partició 2
+  print              — muestra información del disco
+  mklabel gpt|msdos  — crea una tabla nueva
+  mkpart primary ext4 1MiB 100MiB  — crea una partición
+  rm 2               — elimina la partición 2
   resizepart 3 350MiB — redimensiona
   rescue START END   — intenta recuperar</code></pre>
 
         <div class="note danger">
           <div class="note-title">parted</div>
-          <p><strong>parted aplica els canvis immediatament</strong>, sense necessitat
-            d'escriure <code>w</code>. Aneu amb compte!</p>
+          <p><strong>parted aplica los cambios inmediatamente</strong>, sin necesidad
+            de escribir <code>w</code>. ¡Cuidado!</p>
         </div>
 
         <div class="note">
-          <div class="note-title">Notes finals</div>
+          <div class="note-title">Notas finales</div>
           <ul>
-            <li>Les ordres <code>mkfs</code> creen sistemes de fitxers, no particions.</li>
-            <li><code>fdisk</code> i <code>gdisk</code> modifiquen la taula de particions.</li>
-            <li><code>parted</code> pot fer-ho tot, però amb més risc.</li>
-            <li>Sempre fes còpia de seguretat abans de modificar particions.</li>
+            <li>Los comandos <code>mkfs</code> crean sistemas de ficheros, no particiones.</li>
+            <li><code>fdisk</code> y <code>gdisk</code> modifican la tabla de particiones.</li>
+            <li><code>parted</code> puede hacerlo todo, pero con más riesgo.</li>
+            <li>Haz siempre copia de seguridad antes de modificar particiones.</li>
           </ul>
         </div>
       </section>
@@ -275,51 +326,65 @@
       <section id="raid">
         <h2>2. RAID</h2>
 
-        <h3 id="que-es-raid">2.1 Què és RAID</h3>
-        <p><strong>RAID</strong> (Redundant Array of Independent Disks) és una tècnica
-          que permet combinar diversos discos físics (o virtuals) per aconseguir:</p>
+        <h3 id="que-es-raid">2.1 ¿Qué es RAID?</h3>
+        <p><strong>RAID</strong> (Redundant Array of Independent Disks) es una técnica
+          que permite combinar varios discos físicos (o virtuales) para conseguir:</p>
         <ul>
-          <li>Més velocitat (striping) ⏱️</li>
-          <li>Més seguretat / redundància (mirroring, paritat) 🛟</li>
-          <li>O una combinació de totes dues</li>
+          <li>Más velocidad (striping) ⏱️</li>
+          <li>Más seguridad / redundancia (mirroring, paridad) 🛟</li>
+          <li>O una combinación de ambas</li>
         </ul>
 
-        <h4>Els tres pilars del RAID</h4>
+        <h4>Los tres pilares del RAID</h4>
         <ol>
-          <li><strong>Striping</strong> — divideix les dades entre discos → + velocitat,
-            però cap seguretat.</li>
-          <li><strong>Mirroring</strong> — còpia exacta del disc → + seguretat, però gasta
-            més espai.</li>
-          <li><strong>Paritat</strong> — guarda informació de correcció per reconstruir
-            dades si un disc falla.</li>
+          <li><strong>Striping</strong> — divide los datos entre discos → + velocidad,
+            pero ninguna seguridad.</li>
+          <li><strong>Mirroring</strong> — copia exacta del disco → + seguridad, pero gasta
+            más espacio.</li>
+          <li><strong>Paridad</strong> — guarda información de corrección para reconstruir
+            datos si un disco falla.</li>
         </ol>
 
-        <h3 id="nivells">2.2 Quadre comparatiu RAID</h3>
+        <div class="note">
+          <div class="note-title">Idea clave</div>
+          <p>RAID no es una copia de seguridad. Si borras un archivo por error, se borra
+            en todos los discos del array. RAID protege contra fallos de disco, no contra
+            errores humanos.</p>
+        </div>
+
+        <h3 id="niveles">2.2 Cuadro comparativo RAID</h3>
         <table>
           <thead>
-            <tr><th>RAID</th><th>Què fa</th><th>Lectura</th><th>Escriptura</th><th>Redundància</th></tr>
+            <tr><th>RAID</th><th>Qué hace</th><th>Lectura</th><th>Escritura</th><th>Redundancia</th><th>Mín. discos</th></tr>
           </thead>
           <tbody>
-            <tr><td><strong>0</strong></td><td>Striping</td><td>⭐⭐⭐</td><td>⭐⭐⭐</td><td>❌ cap</td></tr>
-            <tr><td><strong>1</strong></td><td>Mirroring</td><td>⭐⭐</td><td>⭐</td><td>⭐⭐⭐ (1 disc)</td></tr>
-            <tr><td><strong>5</strong></td><td>Striping + Paritat</td><td>⭐⭐⭐</td><td>⭐</td><td>⭐⭐ (1 disc)</td></tr>
-            <tr><td><strong>6</strong></td><td>Striping + doble paritat</td><td>⭐⭐</td><td>⭐</td><td>⭐⭐⭐⭐ (2 discos)</td></tr>
-            <tr><td><strong>10</strong></td><td>Mirroring + Striping</td><td>⭐⭐⭐</td><td>⭐⭐⭐</td><td>⭐⭐ (1 per parella)</td></tr>
+            <tr><td><strong>0</strong></td><td>Striping</td><td>⭐⭐⭐</td><td>⭐⭐⭐</td><td>❌ ninguna</td><td>2</td></tr>
+            <tr><td><strong>1</strong></td><td>Mirroring</td><td>⭐⭐</td><td>⭐</td><td>⭐⭐⭐ (1 disco)</td><td>2</td></tr>
+            <tr><td><strong>5</strong></td><td>Striping + Paridad</td><td>⭐⭐⭐</td><td>⭐</td><td>⭐⭐ (1 disco)</td><td>3</td></tr>
+            <tr><td><strong>6</strong></td><td>Striping + doble paridad</td><td>⭐⭐</td><td>⭐</td><td>⭐⭐⭐⭐ (2 discos)</td><td>4</td></tr>
+            <tr><td><strong>10</strong></td><td>Mirroring + Striping</td><td>⭐⭐⭐</td><td>⭐⭐⭐</td><td>⭐⭐ (1 por pareja)</td><td>4</td></tr>
           </tbody>
         </table>
 
-        <h3 id="mdadm">2.3 mdadm — gestionar RAIDs a Linux</h3>
-        <p><code>mdadm</code> és l'eina que gestiona RAIDs a Linux.</p>
+        <div class="note success">
+          <div class="note-title">RAID 10 — lo mejor de ambos</div>
+          <p>RAID 10 combina mirroring (RAID 1) y striping (RAID 0): primero crea pares
+            de discos en espejo, luego divide los datos entre los pares. Ofrece velocidad
+            y redundancia a la vez, pero necesita al menos 4 discos.</p>
+        </div>
 
-        <div class="code-header">Instal·lació</div>
+        <h3 id="mdadm">2.3 mdadm — gestionar RAIDs en Linux</h3>
+        <p><code>mdadm</code> es la herramienta que gestiona RAIDs en Linux.</p>
+
+        <div class="code-header">Instalación</div>
         <pre><code>$ sudo apt install mdadm</code></pre>
 
-        <p><strong>Comandes principals:</strong></p>
+        <p><strong>Comandos principales:</strong></p>
         <ul>
           <li><code>mdadm --create</code> — crear arrays RAID</li>
           <li><code>mdadm --stop</code> — parar arrays</li>
-          <li><code>mdadm --detail</code> — mirar què tens muntat</li>
-          <li><code>mdadm --zero-superblock</code> — esborrar metadades</li>
+          <li><code>mdadm --detail</code> — ver qué tienes montado</li>
+          <li><code>mdadm --zero-superblock</code> — borrar metadatos</li>
         </ul>
 
         <div class="example">
@@ -354,79 +419,92 @@ $ sudo mdadm --create /dev/md0 --level=0 \
     --raid-devices=4 /dev/loop16 /dev/loop17 /dev/loop18 /dev/loop19</code></pre>
         </div>
 
-        <h4>Aturar un RAID</h4>
+        <h4>Detener un RAID</h4>
         <pre><code>$ sudo umount /dev/md0
 $ sudo mdadm --stop /dev/md0
 mdadm: stopped /dev/md0</code></pre>
 
+        <div class="note">
+          <div class="note-title">Persistencia</div>
+          <p>Los arrays RAID creados con <code>mdadm</code> no son persistentes tras
+            reinicio a menos que se guarden en <code>/etc/mdadm/mdadm.conf</code>:
+            <code>sudo mdadm --detail --scan >> /etc/mdadm/mdadm.conf</code></p>
+        </div>
+
         <h3 id="loop">2.4 Loop devices</h3>
-        <p>Els <strong>loop devices</strong> (com <code>/dev/loop5</code>) són arxius que
-          es comporten com si fossin discos de veritat. Són perfectes per practicar RAID
-          sense destruir res real.</p>
+        <p>Los <strong>loop devices</strong> (como <code>/dev/loop5</code>) son archivos que
+          se comportan como si fueran discos de verdad. Son perfectos para practicar RAID
+          sin destruir nada real.</p>
 
         <ul>
-          <li>Funcionen igual que un disc: s'hi poden fer particions i formats.</li>
-          <li>Desapareixen quan els desmuntes o esborres l'arxiu.</li>
-          <li>Són perfectes per fer pràctiques segures.</li>
+          <li>Funcionan igual que un disco: se les pueden hacer particiones y formatos.</li>
+          <li>Desaparecen cuando los desmontas o borras el archivo.</li>
+          <li>Son perfectos para hacer prácticas seguras.</li>
         </ul>
 
         <div class="note">
           <div class="note-title">Arrays</div>
-          <p>L'<strong>array</strong> és el «disc virtual gran» que resulta de combinar
-            diversos discos petits. Apareix com <code>/dev/md0</code>, <code>/dev/md1</code>,
-            etc. Sobre aquest <code>/dev/mdX</code> és on faràs la taula de particions,
-            crearàs sistemes de fitxers i muntaràs directoris.</p>
+          <p>El <strong>array</strong> es el «disco virtual grande» que resulta de combinar
+            varios discos pequeños. Aparece como <code>/dev/md0</code>, <code>/dev/md1</code>,
+            etc. Sobre ese <code>/dev/mdX</code> es donde harás la tabla de particiones,
+            crearás sistemas de ficheros y montarás directorios.</p>
         </div>
       </section>
 
       <!-- ================================================== -->
-      <!-- ============ 3. FADA DELS DISCOS ============ -->
+      <!-- ============ 3. FADA DE LOS DISCOS ============ -->
       <!-- ================================================== -->
       <section id="fada">
-        <h2>3. La Fada dels Discos</h2>
+        <h2>3. La Fada de los Discos</h2>
 
-        <p>La <strong>fada_dels_discos.sh</strong> és una eina Unix-style minimalista que:</p>
+        <p>La <strong>fada_dels_discos.sh</strong> es una herramienta Unix-style minimalista que:</p>
         <ul>
-          <li>Crea discos virtuals com a fitxers dispersos (<code>*.disk</code>)</li>
-          <li>Els converteix en loop devices (<code>/dev/loopX</code>)</li>
-          <li>De manera simple, clara i Unix-friendly</li>
+          <li>Crea discos virtuales como ficheros dispersos (<code>*.disk</code>)</li>
+          <li>Los convierte en loop devices (<code>/dev/loopX</code>)</li>
+          <li>De manera simple, clara y Unix-friendly</li>
         </ul>
 
         <h3>Invocar la fada</h3>
         <pre><code>$ wget -q https://raw.githubusercontent.com/sjornetc/aux/main/fada_dels_discos.sh
 $ chmod +x fada_dels_discos.sh</code></pre>
 
-        <h3>Ús bàsic</h3>
+        <h3>Uso básico</h3>
         <pre><code>$ sudo ./fada_dels_discos.sh -s 1G unicorn
-🧚‍♀ Creat l'arxiu «unicorn.disk» (mida 100M)
-🧚‍♀ Loop creat! disc_0.disk -> /dev/loop7</code></pre>
+🧚‍♀ Creado el archivo «unicorn.disk» (tamaño 100M)
+🧚‍♀ Loop creado! disc_0.disk -> /dev/loop7</code></pre>
 
-        <h3>Opcions</h3>
+        <h3>Opciones</h3>
         <table>
           <thead>
-            <tr><th>Opció</th><th>Descripció</th></tr>
+            <tr><th>Opción</th><th>Descripción</th></tr>
           </thead>
           <tbody>
-            <tr><td><code>-s, --size MIDA</code></td><td>Mida del disc (1G, 200M, 128k)</td></tr>
-            <tr><td><code>-q, --quiet</code></td><td>Silencia logs; stdout només conté /dev/loopX</td></tr>
-            <tr><td><code>--help</code></td><td>Mostra ajuda</td></tr>
-            <tr><td><code>--version</code></td><td>Mostra versió (2.2.0), autora i llicència</td></tr>
+            <tr><td><code>-s, --size TAMAÑO</code></td><td>Tamaño del disco (1G, 200M, 128k)</td></tr>
+            <tr><td><code>-q, --quiet</code></td><td>Silencia logs; stdout solo contiene /dev/loopX</td></tr>
+            <tr><td><code>--help</code></td><td>Muestra ayuda</td></tr>
+            <tr><td><code>--version</code></td><td>Muestra versión (2.2.0), autora y licencia</td></tr>
           </tbody>
         </table>
 
-        <h3>Què hi pots fer amb els discos màgics?</h3>
+        <h3>¿Qué puedes hacer con los discos mágicos?</h3>
         <ul>
-          <li>Crear particions (<code>fdisk</code>)</li>
-          <li>Crear sistemes de fitxers (<code>mkfs.ext4</code>)</li>
-          <li>Muntar-los (<code>mount</code>)</li>
-          <li>Fer-los servir en RAIDs (<code>mdadm</code>)</li>
-          <li>Experimentar sense por d'espatllar res</li>
+          <li>Crear particiones (<code>fdisk</code>)</li>
+          <li>Crear sistemas de ficheros (<code>mkfs.ext4</code>)</li>
+          <li>Montarlos (<code>mount</code>)</li>
+          <li>Usarlos en RAIDs (<code>mdadm</code>)</li>
+          <li>Experimentar sin miedo a estropear nada</li>
         </ul>
 
-        <h3>Netejar</h3>
+        <h3>Limpiar</h3>
         <pre><code>$ sudo umount /mnt/unicorn
 $ sudo losetup -d /dev/loop7
 $ rm unicorn.disk</code></pre>
+
+        <div class="note success">
+          <div class="note-title">Prácticas seguras</div>
+          <p>Usa siempre <strong>loop devices</strong> con la Fada para practicar.
+            Nunca trabajes directamente sobre discos reales con datos importantes.</p>
+        </div>
       </section>
 
       <!-- ================================================== -->
@@ -435,89 +513,117 @@ $ rm unicorn.disk</code></pre>
       <section id="filenest">
         <h2>4. FileNest</h2>
 
-        <p><strong>FileNest</strong> és una eina que crea o elimina una estructura de
-          carpetes i fitxers simulant una casa.</p>
+        <p><strong>FileNest</strong> es una herramienta que crea o elimina una estructura de
+          carpetas y ficheros simulando una casa.</p>
 
-        <div class="code-header">Ús</div>
-        <pre><code>filenest [OPCIONS] [PATH]
+        <div class="code-header">Uso</div>
+        <pre><code>filenest [OPCIONES] [PATH]
 
-Opcions:
-  -b, --build       Crea l'estructura
-  -d, --delete      Elimina l'estructura
-  -r, --replace     Si la carpeta existeix, l'elimina i la recrea
-  -h, --help        Mostra l'ajuda
+Opciones:
+  -b, --build       Crea la estructura
+  -d, --delete      Elimina la estructura
+  -r, --replace     Si la carpeta existe, la elimina y la recrea
+  -h, --help        Muestra la ayuda
 
-Exemples:
-  filenest -b                  → construeix la casa a ./house
-  filenest -br ~/projects/home → reconstruir la casa allà
+Ejemplos:
+  filenest -b                  → construye la casa en ./house
+  filenest -br ~/projects/home → reconstruir la casa allí
   filenest -d                  → elimina ./house</code></pre>
 
-        <p>Per executar directament des del repositori de GitHub:</p>
-        <pre><code>bash <(wget -qO- https://raw.githubusercontent.com/sjornetc/filenest/main/run.sh) [OPCIONS] [PATH]</code></pre>
+        <p>Para ejecutar directamente desde el repositorio de GitHub:</p>
+        <pre><code>bash <(wget -qO- https://raw.githubusercontent.com/sjornetc/filenest/main/run.sh) [OPCIONES] [PATH]</code></pre>
       </section>
 
       <!-- ================================================== -->
-      <!-- ============ 5. USUARIS I GRUPS ============ -->
+      <!-- ============ 5. USUARIOS Y GRUPOS ============ -->
       <!-- ================================================== -->
-      <section id="usuaris">
-        <h2>5. Usuaris i grups a Linux</h2>
+      <section id="usuarios">
+        <h2>5. Usuarios y grupos en Linux</h2>
 
-        <p>Gestió d'usuaris i grups a Linux (RA1 107.1):</p>
+        <p>Gestión de usuarios y grupos en Linux (RA1 107.1).</p>
 
-        <h3>Comandes bàsiques</h3>
+        <h3>Comandos básicos</h3>
         <table>
           <thead>
-            <tr><th>Comanda</th><th>Descripció</th></tr>
+            <tr><th>Comando</th><th>Descripción</th></tr>
           </thead>
           <tbody>
-            <tr><td><code>useradd nom</code></td><td>Crea un usuari</td></tr>
-            <tr><td><code>usermod -aG grup nom</code></td><td>Afegeix usuari a un grup</td></tr>
-            <tr><td><code>userdel nom</code></td><td>Elimina un usuari</td></tr>
-            <tr><td><code>passwd nom</code></td><td>Canvia la contrasenya</td></tr>
-            <tr><td><code>groupadd nom</code></td><td>Crea un grup</td></tr>
-            <tr><td><code>groups nom</code></td><td>Mostra els grups d'un usuari</td></tr>
-            <tr><td><code>id nom</code></td><td>Mostra UID, GID i grups</td></tr>
+            <tr><td><code>useradd nombre</code></td><td>Crea un usuario</td></tr>
+            <tr><td><code>usermod -aG grupo nombre</code></td><td>Añade usuario a un grupo</td></tr>
+            <tr><td><code>userdel nombre</code></td><td>Elimina un usuario</td></tr>
+            <tr><td><code>passwd nombre</code></td><td>Cambia la contraseña</td></tr>
+            <tr><td><code>groupadd nombre</code></td><td>Crea un grupo</td></tr>
+            <tr><td><code>groups nombre</code></td><td>Muestra los grupos de un usuario</td></tr>
+            <tr><td><code>id nombre</code></td><td>Muestra UID, GID y grupos</td></tr>
           </tbody>
         </table>
 
-        <h3>Fitxers importants</h3>
+        <h3>Ficheros importantes</h3>
         <ul>
-          <li><code>/etc/passwd</code> — usuaris del sistema</li>
-          <li><code>/etc/shadow</code> — contrasenyes xifrades</li>
-          <li><code>/etc/group</code> — grups del sistema</li>
+          <li><code>/etc/passwd</code> — usuarios del sistema</li>
+          <li><code>/etc/shadow</code> — contraseñas cifradas</li>
+          <li><code>/etc/group</code> — grupos del sistema</li>
         </ul>
+
+        <div class="note warning">
+          <div class="note-title">Seguridad</div>
+          <p>Las contraseñas se almacenan cifradas en <code>/etc/shadow</code>, no en
+            <code>/etc/passwd</code>. El fichero <code>/etc/passwd</code> es legible por
+            todos los usuarios del sistema.</p>
+        </div>
       </section>
 
       <!-- ================================================== -->
       <!-- ============ 6. PERMISOS ============ -->
       <!-- ================================================== -->
       <section id="permisos">
-        <h2>6. Permisos a Linux</h2>
+        <h2>6. Permisos en Linux</h2>
 
-        <p>Gestió de permisos de fitxers i directoris (RA1 104.5).</p>
+        <p>Gestión de permisos de ficheros y directorios (RA1 104.5).</p>
 
-        <h3>Tipus de permisos</h3>
+        <h3>Tipos de permisos</h3>
         <table>
           <thead>
-            <tr><th>Permís</th><th>Fitxer</th><th>Directori</th></tr>
+            <tr><th>Permiso</th><th>Fichero</th><th>Directorio</th></tr>
           </thead>
           <tbody>
-            <tr><td><code>r</code> (4)</td><td>Llegir</td><td>Llistar contingut</td></tr>
-            <tr><td><code>w</code> (2)</td><td>Escriure</td><td>Crear/eliminar fitxers</td></tr>
-            <tr><td><code>x</code> (1)</td><td>Executar</td><td>Accedir (entrar)</td></tr>
+            <tr><td><code>r</code> (4)</td><td>Leer</td><td>Listar contenido</td></tr>
+            <tr><td><code>w</code> (2)</td><td>Escribir</td><td>Crear/eliminar ficheros</td></tr>
+            <tr><td><code>x</code> (1)</td><td>Ejecutar</td><td>Acceder (entrar)</td></tr>
           </tbody>
         </table>
 
-        <h3>Comandes</h3>
-        <pre><code># Canviar permisos (mode octal)
+        <h3>Comandos</h3>
+        <pre><code># Cambiar permisos (modo octal)
 chmod 755 script.sh
 chmod u+x script.sh
 
-# Canviar propietari
-chown usuari:grup fitxer
+# Cambiar propietario
+chown usuario:grupo fichero
 
 # Mostrar permisos
 ls -l</code></pre>
+
+        <div class="example">
+          <h4>Ejemplo de permisos</h4>
+          <pre><code>$ ls -l script.sh
+-rwxr-xr-x 1 ana alumnos 1024 jun 5 10:00 script.sh
+#  ^^^       ^   ^
+#  |         |   └── grupo propietario (alumnos)
+#  |         └────── usuario propietario (ana)
+#  └─────────────── permisos: u=rwx, g=r-x, o=r-x
+
+$ chmod 755 script.sh   # = rwxr-xr-x
+$ chmod u+x script.sh   # añade ejecución al usuario</code></pre>
+        </div>
+
+        <div class="note">
+          <div class="note-title">Permisos especiales</div>
+          <p><strong>SUID</strong> (4xxx): el fichero se ejecuta con los permisos del propietario.
+            <strong>SGID</strong> (2xxx): el fichero se ejecuta con los permisos del grupo.
+            <strong>Sticky bit</strong> (1xxx): solo el propietario puede borrar sus ficheros
+            (típico en <code>/tmp</code>).</p>
+        </div>
       </section>
 
       <!-- ================================================== -->
@@ -526,25 +632,32 @@ ls -l</code></pre>
       <section id="logs">
         <h2>7. Logs del sistema</h2>
 
-        <p>Gestió de registres del sistema (RA1 108.2).</p>
+        <p>Gestión de registros del sistema (RA1 108.2).</p>
 
         <h3>rsyslog</h3>
-        <p>Sistema de logging tradicional. Les configuracions es troben a
-          <code>/etc/rsyslog.conf</code> i <code>/etc/rsyslog.d/</code>.</p>
+        <p>Sistema de logging tradicional. Las configuraciones se encuentran en
+          <code>/etc/rsyslog.conf</code> y <code>/etc/rsyslog.d/</code>.</p>
 
-        <pre><code># Fitxers de log habituals
-/var/log/syslog      — missatges del sistema
-/var/log/auth.log    — autenticacions
-/var/log/kern.log    — missatges del kernel</code></pre>
+        <pre><code># Ficheros de log habituales
+/var/log/syslog      — mensajes del sistema
+/var/log/auth.log    — autenticaciones
+/var/log/kern.log    — mensajes del kernel</code></pre>
 
         <h3>systemd-journald</h3>
-        <p>Sistema de logging modern de systemd.</p>
+        <p>Sistema de logging moderno de systemd.</p>
 
-        <pre><code># Veure logs
+        <pre><code># Ver logs
 journalctl
-journalctl -u servei    — logs d'un servei concret
-journalctl -f            — mode follow (temps real)
+journalctl -u servicio    — logs de un servicio concreto
+journalctl -f             — modo follow (tiempo real)
 journalctl --since "1 hour ago"</code></pre>
+
+        <div class="note">
+          <div class="note-title">journalctl vs rsyslog</div>
+          <p><strong>journald</strong> guarda los logs en formato binario (más eficiente)
+            mientras que <strong>rsyslog</strong> los guarda en texto plano. Muchos sistemas
+            usan ambos: journald para consultas recientes y rsyslog para persistencia.</p>
+        </div>
       </section>
 
       <!-- ================================================== -->
@@ -553,88 +666,312 @@ journalctl --since "1 hour ago"</code></pre>
       <section id="ssh">
         <h2>8. SSH / OpenSSH</h2>
 
-        <p>Configuració i ús d'SSH per accés remot segur (RA1 110.3).</p>
+        <p>Configuración y uso de SSH para acceso remoto seguro (RA1 110.3).</p>
 
-        <h3>Connexió bàsica</h3>
-        <pre><code>ssh usuari@servidor
-ssh -p 2222 usuari@servidor    — port personalitzat</code></pre>
+        <h3>Conexión básica</h3>
+        <pre><code>ssh usuario@servidor
+ssh -p 2222 usuario@servidor    — puerto personalizado</code></pre>
 
-        <h3>Claus SSH (autenticació sense contrasenya)</h3>
-        <pre><code># Generar clau
+        <h3>Claves SSH (autenticación sin contraseña)</h3>
+        <pre><code># Generar clave
 ssh-keygen -t rsa -b 4096
 
-# Copiar clau pública al servidor
-ssh-copy-id usuari@servidor
+# Copiar clave pública al servidor
+ssh-copy-id usuario@servidor
 
-# Fitxers importants:
-~/.ssh/id_rsa          — clau privada
-~/.ssh/id_rsa.pub      — clau pública
-~/.ssh/authorized_keys — claus autoritzades al servidor</code></pre>
+# Ficheros importantes:
+~/.ssh/id_rsa          — clave privada
+~/.ssh/id_rsa.pub      — clave pública
+~/.ssh/authorized_keys — claves autorizadas en el servidor</code></pre>
 
-        <h3>Configuració del servidor (/etc/ssh/sshd_config)</h3>
+        <h3>Configuración del servidor (/etc/ssh/sshd_config)</h3>
         <pre><code>Port 22
 PermitRootLogin no
 PasswordAuthentication yes/no
 PubkeyAuthentication yes</code></pre>
+
+        <div class="note warning">
+          <div class="note-title">Seguridad SSH</div>
+          <p>Deshabilita <code>PasswordAuthentication yes</code> y usa solo claves públicas
+            para servidores expuestos a internet. Cambia el puerto 22 por uno no estándar
+            para reducir ataques automatizados.</p>
+        </div>
+
+        <div class="example">
+          <h4>Túnel SSH (port forwarding)</h4>
+          <pre><code># Local → Remoto: acceso a servicio remoto desde local
+ssh -L 8080:localhost:80 usuario@servidor
+
+# Remoto → Local: exponer servicio local al remoto
+ssh -R 8080:localhost:3000 usuario@servidor</code></pre>
+          <p>Útil para acceder a bases de datos o servicios detrás de un firewall.</p>
+        </div>
       </section>
 
       <!-- ================================================== -->
       <!-- ============ 9. SCRIPTING ============ -->
       <!-- ================================================== -->
       <section id="scripts">
-        <h2>9. Scripting a Linux</h2>
+        <h2>9. Scripting en Linux</h2>
 
-        <p>Creació de scripts de shell (RA1 105.2).</p>
+        <p>Creación de scripts de shell (RA1 105.2).</p>
 
-        <h3>Estructura bàsica</h3>
+        <h3>Estructura básica</h3>
         <pre><code>#!/bin/bash
-# El meu primer script
+# Mi primer script
 
-echo "Hola, món!"
+echo "¡Hola, mundo!"
 
 # Variables
-NOM="Anna"
-echo "Hola, $NOM"
+NOMBRE="Ana"
+echo "Hola, $NOMBRE"
 
-# Llegir entrada
-read -p "Com et dius? " USUARI
-echo "Hola, $USUARI"</code></pre>
+# Leer entrada
+read -p "¿Cómo te llamas? " USUARIO
+echo "Hola, $USUARIO"</code></pre>
 
-        <h3>Condicionals</h3>
-        <pre><code>if [ "$NOM" = "Anna" ]; then
-    echo "Ets l'Anna"
-elif [ "$NOM" = "Pere" ]; then
-    echo "Ets en Pere"
+        <h3>Condicionales</h3>
+        <pre><code>if [ "$NOMBRE" = "Ana" ]; then
+    echo "Eres Ana"
+elif [ "$NOMBRE" = "Pedro" ]; then
+    echo "Eres Pedro"
 else
-    echo "No et conec"
+    echo "No te conozco"
 fi</code></pre>
 
         <h3>Bucles</h3>
         <pre><code># for
 for i in {1..5}; do
-    echo "Iteració $i"
+    echo "Iteración $i"
 done
 
 # while
-COUNT=0
-while [ $COUNT -lt 5 ]; do
-    echo $COUNT
-    ((COUNT++))
+CONT=0
+while [ $CONT -lt 5 ]; do
+    echo $CONT
+    ((CONT++))
 done</code></pre>
 
-        <h3>Funcions</h3>
+        <h3>Funciones</h3>
         <pre><code>saludar() {
-    echo "Hola, $1!"
+    echo "¡Hola, $1!"
 }
 
-saludar "Anna"</code></pre>
+saludar "Ana"</code></pre>
 
         <div class="note">
-          <div class="note-title">Consell</div>
-          <p>Recorda donar permisos d'execució al script:
+          <div class="note-title">Consejo</div>
+          <p>Recuerda dar permisos de ejecución al script:
             <code>chmod +x script.sh</code></p>
         </div>
+
+        <div class="example">
+          <h4>Script completo: copia de seguridad</h4>
+          <pre><code>#!/bin/bash
+# backup.sh — Copia de seguridad de un directorio
+
+ORIGEN="$1"
+DESTINO="$2"
+FECHA=$(date +%Y%m%d_%H%M%S)
+
+if [ -z "$ORIGEN" ] || [ -z "$DESTINO" ]; then
+    echo "Uso: $0 &lt;origen&gt; &lt;destino&gt;"
+    exit 1
+fi
+
+tar -czf "${DESTINO}/backup_${FECHA}.tar.gz" "$ORIGEN"
+echo "Backup creado: ${DESTINO}/backup_${FECHA}.tar.gz"</code></pre>
+        </div>
       </section>
+
+      <!-- ================================================== -->
+      <!-- ============ 10. EJERCICIOS ============ -->
+      <!-- ================================================== -->
+      <section id="ejercicios">
+        <h2>10. Ejercicios resueltos</h2>
+
+        <p>Intenta resolverlos antes de mirar la solución.</p>
+
+        <div class="exercise">
+          <h4>Ejercicio 1 — Crear partición y formatear</h4>
+          <p>Crea un disco virtual de 500 MB con la Fada, particiónalo con una única
+            partición usando <code>fdisk</code>, formatea como ext4 y móntalo en
+            <code>/mnt/midisco</code>.</p>
+
+          <details class="solution">
+            <summary>Ver solución</summary>
+<pre><code>$ sudo ./fada_dels_discos.sh -s 500M midisco
+$ sudo fdisk /dev/loopX   # ← usar el loop device que devuelva la Fada
+  n → primary → 1 → Enter → Enter → w
+
+$ sudo mkfs.ext4 /dev/loopXp1
+$ sudo mkdir -p /mnt/midisco
+$ sudo mount /dev/loopXp1 /mnt/midisco
+$ df -h /mnt/midisco</code></pre>
+          </details>
+        </div>
+
+        <div class="exercise">
+          <h4>Ejercicio 2 — RAID 1 con loop devices</h4>
+          <p>Crea dos discos virtuales de 200 MB cada uno, crea un RAID 1 con mdadm,
+            formatea como ext4 y móntalo.</p>
+
+          <details class="solution">
+            <summary>Ver solución</summary>
+<pre><code>$ sudo ./fada_dels_discos.sh -s 200M disco1
+$ sudo ./fada_dels_discos.sh -s 200M disco2
+
+$ sudo mdadm --create /dev/md0 --level=1 \
+    --raid-devices=2 /dev/loop5 /dev/loop6
+
+$ sudo mkfs.ext4 /dev/md0
+$ sudo mkdir -p /mnt/raid1
+$ sudo mount /dev/md0 /mnt/raid1
+
+# Comprobar estado
+$ sudo mdadm --detail /dev/md0</code></pre>
+          </details>
+        </div>
+
+        <div class="exercise">
+          <h4>Ejercicio 3 — Script de backup</h4>
+          <p>Crea un script que haga una copia de seguridad comprimida de un directorio,
+            con nombre que incluya la fecha, y que borre backups de más de 7 días.</p>
+
+          <details class="solution">
+            <summary>Ver solución</summary>
+<pre><code>#!/bin/bash
+ORIGEN="$1"
+DESTINO="${2:-/tmp/backups}"
+FECHA=$(date +%Y%m%d)
+
+mkdir -p "$DESTINO"
+tar -czf "${DESTINO}/backup_${FECHA}.tar.gz" "$ORIGEN"
+
+# Borrar backups de más de 7 días
+find "$DESTINO" -name "backup_*.tar.gz" -mtime +7 -delete
+
+echo "✅ Backup creado: ${DESTINO}/backup_${FECHA}.tar.gz"</code></pre>
+          </details>
+        </div>
+
+        <div class="exercise">
+          <h4>Ejercicio 4 — Usuarios y permisos</h4>
+          <p>Crea un usuario llamado <code>invitado</code>, créele un grupo
+            <code>invitados</code>, asigna el usuario al grupo, y crea un directorio
+            compartido <code>/compartido</code> con permisos <code>770</code> y grupo
+            <code>invitados</code>.</p>
+
+          <details class="solution">
+            <summary>Ver solución</summary>
+<pre><code>$ sudo groupadd invitados
+$ sudo useradd -m -g invitados invitado
+$ sudo passwd invitado
+$ sudo mkdir /compartido
+$ sudo chgrp invitados /compartido
+$ sudo chmod 770 /compartido
+$ ls -ld /compartido
+# drwxrwx--- 2 root invitados 4096 ...</code></pre>
+          </details>
+        </div>
+
+        <div class="exercise">
+          <h4>Ejercicio 5 — SSH sin contraseña</h4>
+          <p>Configura acceso SSH por claves a un servidor remoto. Genera un par de
+            claves RSA de 4096 bits y copia la clave pública al servidor.</p>
+
+          <details class="solution">
+            <summary>Ver solución</summary>
+<pre><code># En el cliente
+$ ssh-keygen -t rsa -b 4096
+$ ssh-copy-id usuario@servidor-remoto
+
+# Probar conexión (ya no pide contraseña)
+$ ssh usuario@servidor-remoto
+
+# Para más seguridad, en el servidor:
+$ sudo sed -i 's/^#PasswordAuthentication yes/PasswordAuthentication no/' \
+    /etc/ssh/sshd_config
+$ sudo systemctl restart sshd</code></pre>
+          </details>
+        </div>
+
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ 11. COMANDOS (CHULETA) ============ -->
+      <!-- ================================================== -->
+      <section id="comandos">
+        <h2>11. Comandos (chuleta)</h2>
+
+        <h3>Discos y particiones</h3>
+        <table>
+          <thead><tr><th>Comando</th><th>Qué hace</th></tr></thead>
+          <tbody>
+            <tr><td><code>fdisk /dev/sda</code></td><td>Gestionar particiones MBR</td></tr>
+            <tr><td><code>gdisk /dev/sda</code></td><td>Gestionar particiones GPT</td></tr>
+            <tr><td><code>parted /dev/sda</code></td><td>Herramienta todo-en-uno</td></tr>
+            <tr><td><code>mkfs.ext4 /dev/sda1</code></td><td>Formatear como ext4</td></tr>
+            <tr><td><code>mkswap /dev/sda2</code></td><td>Crear swap</td></tr>
+            <tr><td><code>mount /dev/sda1 /mnt</code></td><td>Montar partición</td></tr>
+            <tr><td><code>umount /mnt</code></td><td>Desmontar</td></tr>
+            <tr><td><code>lsblk</code></td><td>Listar dispositivos de bloque</td></tr>
+            <tr><td><code>blkid</code></td><td>Ver UUID y tipo de FS</td></tr>
+          </tbody>
+        </table>
+
+        <h3>RAID</h3>
+        <table>
+          <tbody>
+            <tr><td><code>mdadm --create /dev/md0 --level=1 --raid-devices=2 /dev/loop0 /dev/loop1</code></td><td>Crear RAID</td></tr>
+            <tr><td><code>mdadm --detail /dev/md0</code></td><td>Ver estado del RAID</td></tr>
+            <tr><td><code>mdadm --stop /dev/md0</code></td><td>Detener RAID</td></tr>
+            <tr><td><code>mdadm --zero-superblock /dev/loop0</code></td><td>Borrar metadatos</td></tr>
+            <tr><td><code>cat /proc/mdstat</code></td><td>Resumen de RAIDs activos</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Usuarios y permisos</h3>
+        <table>
+          <tbody>
+            <tr><td><code>useradd / userdel / usermod</code></td><td>Gestión de usuarios</td></tr>
+            <tr><td><code>groupadd / groupdel</code></td><td>Gestión de grupos</td></tr>
+            <tr><td><code>passwd</code></td><td>Cambiar contraseña</td></tr>
+            <tr><td><code>chmod</code></td><td>Cambiar permisos</td></tr>
+            <tr><td><code>chown</code></td><td>Cambiar propietario</td></tr>
+            <tr><td><code>umask</code></td><td>Establecer permisos por defecto</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Logs y SSH</h3>
+        <table>
+          <tbody>
+            <tr><td><code>journalctl -u servicio</code></td><td>Logs de un servicio</td></tr>
+            <tr><td><code>journalctl -f</code></td><td>Logs en tiempo real</td></tr>
+            <tr><td><code>ssh usuario@host</code></td><td>Conexión SSH</td></tr>
+            <tr><td><code>ssh-keygen -t rsa -b 4096</code></td><td>Generar par de claves</td></tr>
+            <tr><td><code>ssh-copy-id usuario@host</code></td><td>Copiar clave pública</td></tr>
+            <tr><td><code>scp fichero usuario@host:ruta</code></td><td>Copiar fichero por SSH</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Scripting</h3>
+        <table>
+          <tbody>
+            <tr><td><code>#!/bin/bash</code></td><td>Shebang (intérprete)</td></tr>
+            <tr><td><code>${VAR:-default}</code></td><td>Valor por defecto</td></tr>
+            <tr><td><code>$@</code></td><td>Todos los argumentos</td></tr>
+            <tr><td><code>$?</code></td><td>Código de salida del último comando</td></tr>
+            <tr><td><code>&amp;&amp;</code> / <code>||</code></td><td>Encadenar comandos</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Navegación final -->
+      <nav class="page-nav">
+        <a href="index.html">&larr; Volver al inicio</a>
+        <a href="#particiones">Subir &uarr;</a>
+      </nav>
 
     </main>
   </div>
@@ -642,7 +979,7 @@ saludar "Anna"</code></pre>
   <!-- ================== Footer ================== -->
   <footer class="footer">
     <p><strong>Estudio</strong> · Innovation starts here</p>
-    <p>Apunts fets per i per a alumnes · Curs 2025-2026</p>
+    <p>Apuntes hechos por y para alumnos · Curso 2025-2026</p>
   </footer>
 
   <script src="assets/main.js"></script>

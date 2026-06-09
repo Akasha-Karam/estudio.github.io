@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bases de Dades · Apuntes · Estudio</title>
+  <link rel="icon" href="assets/logo.png" type="image/png">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+  <!-- ================== HEADER ================== -->
+  <header class="header">
+    <a href="index.html" class="brand" style="text-decoration:none">
+      <img src="assets/logo.png" alt="Logo Estudio">
+      <h1>Estudio</h1>
+    </a>
+    <nav>
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="bd.html">Bases de Dades</a></li>
+        <li><a href="index.html#about">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ================== Página título ================== -->
+  <section class="page-title">
+    <div class="page-title-inner">
+      <h1>Bases de Dades · SQL i PL/SQL</h1>
+      <p class="subtitle">Apuntes complets del mòdul de Bases de Dades (DAM/DAW): des de la
+        instal·lació de MySQL i Oracle, DDL, DML, consultes, joins, subconsultes, CRUD,
+        usuaris i permisos, fins a PL/SQL, programació procedural i scripts. Amb exàmens,
+        pràctiques i exercicis resolts.</p>
+      <div class="chips">
+        <span class="chip">MySQL</span>
+        <span class="chip">Oracle</span>
+        <span class="chip">DDL</span>
+        <span class="chip">DML</span>
+        <span class="chip">PL/SQL</span>
+        <span class="chip">CRUD</span>
+        <span class="chip">MariaDB</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================== Contenido ================== -->
+  <div class="notes-layout">
+
+    <!-- ============== Sidebar / TOC ============== -->
+    <aside class="toc">
+      <h4>Índex</h4>
+      <ul>
+        <li><a href="#ra1">RA1 · Introducció i Instal·lació</a></li>
+        <li><a href="#ra2">RA2 · DDL i DCL</a></li>
+        <li><a href="#ra3">RA3 · DML (Consultes)</a></li>
+        <li><a href="#ra4">RA4 · CRUD (Manipulació)</a></li>
+        <li><a href="#ra5">RA5 · PL/SQL</a></li>
+        <li><a href="#ra6">RA6 · Bases de Dades</a></li>
+        <li><a href="#ra7">RA7 · Col·lecció de problemes</a></li>
+        <li><a href="#examens">Exàmens i Repàs</a></li>
+        <li><a href="#practiques">Pràctiques</a></li>
+        <li><a href="#scripts">Scripts SQL</a></li>
+      </ul>
+    </aside>
+
+    <!-- ============== Contenido principal ============== -->
+    <main class="content">
+
+      <!-- ================================================== -->
+      <!-- ============ RA1 ============ -->
+      <!-- ================================================== -->
+      <section id="ra1">
+        <h2>RA1 · Introducció i Instal·lació</h2>
+        <p>Gestió i instal·lació de sistemes gestors de bases de dades: MySQL, MariaDB i Oracle.</p>
+
+        <div class="note">
+          <div class="note-title">Documents</div>
+          <ul>
+            <li><a href="bd/RA1/1. Introducció.pdf">1. Introducció a les bases de dades</a></li>
+            <li><a href="bd/RA1/2 Instal·lació.pdf">2. Instal·lació de MySQL/MariaDB</a></li>
+            <li><a href="bd/RA1/0 Gestió de MySQL i MariaDB a Ubuntu.pdf">Gestió de MySQL i MariaDB a Ubuntu</a></li>
+            <li><a href="bd/RA1/0 Gestió de MySQL i MariaDB a windows.pdf">Gestió de MySQL i MariaDB a Windows</a></li>
+            <li><a href="bd/RA1/Taller_ Oracle 23.pdf">Taller Oracle 23</a></li>
+            <li><a href="bd/RA1/Taller_ instal·lació Oracle 11g eXpress Edition.pdf">Taller instal·lació Oracle 11g XE</a></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ RA2 ============ -->
+      <!-- ================================================== -->
+      <section id="ra2">
+        <h2>RA2 · DDL i DCL</h2>
+        <p>Llenguatge de Definició de Dades (CREATE, ALTER, DROP) i Control de Dades (usuaris, permisos).</p>
+
+        <h3>Continguts</h3>
+        <ul>
+          <li>DDL 1a part: Creació de taules, dominis i restriccions (<code>PRIMARY KEY</code>, <code>FOREIGN KEY</code>, <code>UNIQUE</code>, <code>CHECK</code>, <code>NOT NULL</code>).</li>
+          <li>DDL 2a part: Modificació d'estructures amb <code>ALTER TABLE</code>, <code>DROP TABLE</code>, <code>TRUNCATE</code>.</li>
+          <li>DDL 3a part: Vistes, seqüències i índexs.</li>
+          <li>Foreign keys: Taller pràctic de claus alienes i integritat referencial.</li>
+          <li>DCL: Creació d'usuaris, <code>GRANT</code>, <code>REVOKE</code>, rols i permisos.</li>
+        </ul>
+
+        <div class="note">
+          <div class="note-title">Documents</div>
+          <ul>
+            <li><a href="bd/RA2/3 Bases de dades.pdf">Bases de dades: introducció al model relacional</a></li>
+            <li><a href="bd/RA2/2. DDL (1a part).pdf">DDL 1a part</a></li>
+            <li><a href="bd/RA2/3. DDL (2a part).pdf">DDL 2a part</a></li>
+            <li><a href="bd/RA2/4. DDL (3a part).pdf">DDL 3a part</a></li>
+            <li><a href="bd/RA2/4 Taller foreign keys.pdf">Taller foreign keys</a></li>
+            <li><a href="bd/RA2/4. DCL (Usuaris).pdf">DCL: usuaris i permisos</a></li>
+            <li><a href="bd/RA2/Problemes usuaris mysql.pdf">Problemes usuaris MySQL</a></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ RA3 ============ -->
+      <!-- ================================================== -->
+      <section id="ra3">
+        <h2>RA3 · DML (Consultes)</h2>
+        <p>Llenguatge de Manipulació de Dades: consultes <code>SELECT</code>, funcions, unions, agrupacions i subconsultes.</p>
+
+        <h3>Continguts</h3>
+        <ul>
+          <li><strong>DML 2:</strong> SELECT bàsic: columnes, <code>WHERE</code>, operadors lògics i de comparació, <code>ORDER BY</code>, <code>LIKE</code>, <code>IN</code>, <code>BETWEEN</code>.</li>
+          <li><strong>DML 3:</strong> Funcions d'una fila: numèriques, caràcter, dates, conversió, <code>NVL</code>/<code>COALESCE</code>.</li>
+          <li><strong>DML 4:</strong> Unió de taules: <code>INNER JOIN</code>, <code>LEFT JOIN</code>, <code>RIGHT JOIN</code>, producte cartesià.</li>
+          <li><strong>DML 5:</strong> Unió de taules 2a part: autojoins, <code>NATURAL JOIN</code>, <code>USING</code>, <code>CROSS JOIN</code>.</li>
+          <li><strong>DML 6:</strong> Agrupacions: <code>GROUP BY</code>, <code>HAVING</code>, funcions d'agregat (<code>COUNT</code>, <code>SUM</code>, <code>AVG</code>, <code>MAX</code>, <code>MIN</code>).</li>
+          <li><strong>DML 7:</strong> Subconsultes: subconsultes escalars, de taula, correlacionades, <code>EXISTS</code>, <code>ANY</code>, <code>ALL</code>.</li>
+        </ul>
+
+        <div class="note">
+          <div class="note-title">Documents</div>
+          <ul>
+            <li><a href="bd/RA3/6. DML 2 (Selects primera part).pdf">DML 2 · SELECT primera part</a></li>
+            <li><a href="bd/RA3/7. DML 3 (Funcions).pdf">DML 3 · Funcions</a></li>
+            <li><a href="bd/RA3/8. DML 4 (Unió de taules).pdf">DML 4 · Unió de taules</a></li>
+            <li><a href="bd/RA3/9. DML 5 (Unió de taules 2a part).pdf">DML 5 · Unió de taules 2a part</a></li>
+            <li><a href="bd/RA3/10. DML 6 (Agrupacions).pdf">DML 6 · Agrupacions</a></li>
+            <li><a href="bd/RA3/11. DML 7 (Subconsultes).pdf">DML 7 · Subconsultes</a></li>
+            <li><a href="bd/RA3/8 CRUD (Read) (1).pdf">CRUD Read</a></li>
+            <li><a href="bd/RA3/9 CRUD (Read avançat) (1).pdf">CRUD Read avançat</a></li>
+            <li><a href="bd/RA3/10 CRUD (read arrays i objectes) (1).pdf">CRUD Read arrays i objectes</a></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ RA4 ============ -->
+      <!-- ================================================== -->
+      <section id="ra4">
+        <h2>RA4 · CRUD (Manipulació de dades)</h2>
+        <p>Operacions bàsiques de manipulació: <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>.</p>
+
+        <h3>Continguts</h3>
+        <ul>
+          <li><strong>DML 1:</strong> <code>INSERT</code> (valors, subconsultes), <code>UPDATE</code> (amb i sense condició), <code>DELETE</code> (directe, amb subconsultes), <code>MERGE</code>.</li>
+          <li><strong>CRUD Create:</strong> inserció de dades, transaccions (<code>COMMIT</code>, <code>ROLLBACK</code>, <code>SAVEPOINT</code>).</li>
+          <li><strong>CRUD Update:</strong> actualització de registres amb <code>UPDATE</code> i transaccions.</li>
+          <li><strong>CRUD Delete:</strong> eliminació de registres, <code>DELETE</code> vs <code>TRUNCATE</code>, integritat referencial.</li>
+        </ul>
+
+        <div class="note">
+          <div class="note-title">Documents</div>
+          <ul>
+            <li><a href="bd/RA4/5. DML 1 (inserts, deletes, updates).pdf">DML 1 · Inserts, Deletes, Updates</a></li>
+            <li><a href="bd/RA4/4 CRUD (Create) (1).pdf">CRUD Create</a></li>
+            <li><a href="bd/RA4/6 CRUD (Update) (1).pdf">CRUD Update</a></li>
+            <li><a href="bd/RA4/5 CRUD (Delete) (1).pdf">CRUD Delete</a></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ RA5 ============ -->
+      <!-- ================================================== -->
+      <section id="ra5">
+        <h2>RA5 · PL/SQL (Programació procedural)</h2>
+        <p>Introducció a la programació procedural amb PL/SQL d'Oracle: blocs anònims, variables, estructures de control, excepcions, cursors, procediments, funcions i triggers.</p>
+
+        <h3>Continguts</h3>
+        <ul>
+          <li>Blocs PL/SQL: declaració, execució, excepcions (<code>BEGIN ... EXCEPTION ... END;</code>).</li>
+          <li>Variables i tipus: <code>%TYPE</code>, <code>%ROWTYPE</code>, constants.</li>
+          <li>Estructures de control: <code>IF</code>, <code>CASE</code>, bucles (<code>LOOP</code>, <code>WHILE</code>, <code>FOR</code>).</li>
+          <li>Cursors: explícits i implícits, <code>FOR ... LOOP</code> amb cursors.</li>
+          <li>Procediments i funcions emmagatzemades: paràmetres (<code>IN</code>, <code>OUT</code>, <code>IN OUT</code>).</li>
+          <li>Triggers (<code>BEFORE</code>, <code>AFTER</code>, <code>INSTEAD OF</code>).</li>
+        </ul>
+
+        <div class="note">
+          <div class="note-title">Documents</div>
+          <ul>
+            <li><a href="bd/RA5/RA5 Introducció a PLSQL (1).pdf">Introducció a PL/SQL</a></li>
+            <li><a href="bd/RA5/RA5 Accés a dades simples (1).pdf">Accés a dades simples</a></li>
+            <li><a href="bd/RA5/RA5 Aspectes avançats (1).pdf">Aspectes avançats de PL/SQL</a></li>
+            <li><a href="bd/RA5/Problemes extensió procedimental (1).pdf">Problemes extensió procedimental</a></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ RA6 ============ -->
+      <!-- ================================================== -->
+      <section id="ra6">
+        <h2>RA6 · Bases de Dades</h2>
+        <p>Conceptes avançats de bases de dades: disseny, optimització i administració.</p>
+
+        <div class="note">
+          <div class="note-title">Documents</div>
+          <ul>
+            <li><a href="bd/RA6/Bases de dades.pdf">Bases de dades · conceptes avançats</a></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ RA7 ============ -->
+      <!-- ================================================== -->
+      <section id="ra7">
+        <h2>RA7 · Col·lecció de problemes</h2>
+        <p>Problemes i exercicis per practicar tots els conceptes del curs.</p>
+
+        <div class="note">
+          <div class="note-title">Documents</div>
+          <ul>
+            <li><a href="bd/RA7/RA7 Col·lecció de problemes.pdf">Col·lecció de problemes RA7</a></li>
+            <li><a href="bd/RA7/inserts_pokemon_ejer.js">Inserts Pokémon (JS)</a></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ EXÀMENS ============ -->
+      <!-- ================================================== -->
+      <section id="examens">
+        <h2>Exàmens i Repàs</h2>
+        <p>Material de repàs i exàmens de cursos anteriors per preparar les proves.</p>
+
+        <div class="note">
+          <div class="note-title">Documents</div>
+          <ul>
+            <li><a href="bd/Exàmens i Repàs/Apunts bases de dades DAM1A 2025-26.pdf">Apunts bases de dades DAM1A 2025-26</a></li>
+            <li><a href="bd/Exàmens i Repàs/13. Repas examen.pdf">Repàs examen</a></li>
+            <li><a href="bd/Exàmens i Repàs/BBDD DAM DAW Simulacre 2025-2026 (solució).pdf">Simulacre DAM/DAW 2025-2026 (solució)</a></li>
+            <li><a href="bd/Exàmens i Repàs/BBDD DAW-DAM simulacre 2025-2026.pdf">Simulacre DAM/DAW 2025-2026 (enunciat)</a></li>
+            <li><a href="bd/Exàmens i Repàs/Problemes solucionats.pdf">Problemes solucionats</a></li>
+            <li><a href="bd/Exàmens i Repàs/Problemes repas.pdf">Problemes de repàs</a></li>
+            <li><a href="bd/Exàmens i Repàs/Problemes UF1.pdf">Problemes UF1</a></li>
+            <li><a href="bd/Exàmens i Repàs/Problemes Superherois.pdf">Problemes Superherois</a></li>
+            <li><a href="bd/Exàmens i Repàs/Problemes Pelis.pdf">Problemes Pelis</a></li>
+            <li><a href="bd/Exàmens i Repàs/Cases de colònies.pdf">Cases de colònies</a></li>
+            <li><a href="bd/Exàmens i Repàs/RA7 Col·lecció de problemes.pdf">RA7 Col·lecció de problemes</a></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ PRÀCTIQUES ============ -->
+      <!-- ================================================== -->
+      <section id="practiques">
+        <h2>Pràctiques</h2>
+        <p>Enunciats i solucions de les pràctiques del curs.</p>
+
+        <div class="note">
+          <div class="note-title">Documents</div>
+          <ul>
+            <li><a href="bd/Pràctiques/Enunciat pràctica.pdf">Enunciat pràctica</a></li>
+            <li><a href="bd/Pràctiques/Enunciat fase 1.pdf">Enunciat fase 1</a></li>
+            <li><a href="bd/Pràctiques/Fase 1 Enunciat (2).pdf">Fase 1 Enunciat</a></li>
+            <li><a href="bd/Pràctiques/fase1_solucio_mysql.sql">Fase 1 Solució (SQL)</a></li>
+            <li><a href="bd/Pràctiques/Enunciat fase 2.pdf">Enunciat fase 2</a></li>
+            <li><a href="bd/Pràctiques/Fase 2 Enunciat_2526 (2).pdf">Fase 2 Enunciat 2526</a></li>
+            <li><a href="bd/Pràctiques/fase2_solucio_mysql.sql">Fase 2 Solució (SQL)</a></li>
+            <li><a href="bd/Pràctiques/Fase 3 Enunciat curs 25_26.pdf">Fase 3 Enunciat</a></li>
+            <li><a href="bd/Pràctiques/sortida fase 3.txt">Sortida fase 3 (TXT)</a></li>
+            <li><a href="bd/Pràctiques/Enunciat fase 4.pdf">Enunciat fase 4</a></li>
+            <li><a href="bd/Pràctiques/sortida_fase4.txt">Sortida fase 4 (TXT)</a></li>
+            <li><a href="bd/Pràctiques/Enunciat fase 5.pdf">Enunciat fase 5</a></li>
+            <li><a href="bd/Pràctiques/Pràctica Centre Formació 2025.pdf">Pràctica Centre Formació 2025</a></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ============ SCRIPTS SQL ============ -->
+      <!-- ================================================== -->
+      <section id="scripts">
+        <h2>Scripts SQL</h2>
+        <p>Scripts de bases de dades d'exemple: NBA, Pokémon, Suspects, i plantilles.</p>
+
+        <div class="note">
+          <div class="note-title">Documents</div>
+          <ul>
+            <li><a href="bd/Scripts SQL/nba_oracle_creates (3).sql">NBA · Creates (Oracle)</a></li>
+            <li><a href="bd/Scripts SQL/nba_oracle_inserts (1).sql">NBA · Inserts (Oracle)</a></li>
+            <li><a href="bd/Scripts SQL/nba_inserts.sql">NBA · Inserts (MySQL)</a></li>
+            <li><a href="bd/Scripts SQL/pokemon_base.sql">Pokémon · Base de dades</a></li>
+            <li><a href="bd/Scripts SQL/pokemon_oracle (1).sql">Pokémon · Oracle</a></li>
+            <li><a href="bd/Scripts SQL/Suspects.sql">Suspects · Base de dades</a></li>
+            <li><a href="bd/Scripts SQL/plantilla.sql">Plantilla SQL</a></li>
+          </ul>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ================== Footer ================== -->
+  <footer class="footer">
+    <p><strong>Estudio</strong> · Innovation starts here</p>
+    <p>Apuntes hechos por y para alumnos · Curso 2025-2026</p>
+  </footer>
+
+  <script src="assets/main.js"></script>
+</body>
+</html>

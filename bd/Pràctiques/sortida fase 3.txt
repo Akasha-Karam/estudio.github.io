@@ -1,0 +1,151 @@
++---------------------+
+| Nombre              |
++---------------------+
+| Jorge Garbajosa     |
+| Jose Calderon       |
+| Juan Carlos Navarro |
+| Pau Gasol           |
+| Sergio Rodriguez    |
++---------------------+
+5 rows in set (0.00 sec)
+
++----------------------+------+--------+
+| Nombre               | Peso | Altura |
++----------------------+------+--------+
+| Andrew Bynum         |  285 | 7-0    |
+| Chris Mihm           |  265 | 7-0    |
+| Didier Ilunga-Mbenga |  255 | 7-0    |
+| Pau Gasol            |  250 | 7-0    |
+| Ronny Turiaf         |  250 | 6-10   |
+| Vladimir Radmanovic  |  235 | 6-10   |
+| Luke Walton          |  235 | 6-8    |
+| Lamar Odom           |  230 | 6-10   |
+| Ira Newble           |  220 | 6-7    |
+| Coby Karl            |  215 | 6-5    |
+| Trevor Ariza         |  210 | 6-8    |
+| Derek Fisher         |  210 | 6-1    |
+| Kobe Bryant          |  205 | 6-6    |
+| Sasha Vujacic        |  205 | 6-7    |
+| Jordan Farmar        |  180 | 6-2    |
++----------------------+------+--------+
+15 rows in set (0.00 sec)
+
++------------------------------------------------------+
+| PREGUNTA3                                            |
++------------------------------------------------------+
+| El jugador Darko Milicic medeix 7 peus i 0 polzades. |
+| El jugador Jason Collins medeix 7 peus i 0 polzades. |
+| El jugador Kwame Brown medeix 6 peus i 11 polzades.  |
++------------------------------------------------------+
+3 rows in set (0.00 sec)
+
++--------------+-------------+----------+----------------+
+| Local        | punts_local | Visitant | punts_visitant |
++--------------+-------------+----------+----------------+
+| 76ers        |         158 | Bucks    |            158 |
+| Clippers     |         152 | Bucks    |            152 |
+| Hornets      |         152 | Spurs    |            152 |
+| Lakers       |         156 | Knicks   |            156 |
+| Nets         |         155 | Heat     |            155 |
+| Nets         |         154 | Bulls    |            154 |
+| Pacers       |         151 | Jazz     |            151 |
+| Supersonics  |         155 | Pacers   |            155 |
+| Timberwolves |         151 | Suns     |            151 |
++--------------+-------------+----------+----------------+
+9 rows in set (0.00 sec)
+
++----------+-------------+-------------+----------------+------------+
+| eq_local | punts_local | eq_visitant | punts_visitant | Diferencia |
++----------+-------------+-------------+----------------+------------+
+| Lakers   |          67 | Nuggets     |            133 |         66 |
+| Lakers   |          65 | Heat        |            132 |         67 |
+| Lakers   |          76 | Raptors     |            158 |         82 |
++----------+-------------+-------------+----------------+------------+
+3 rows in set (0.00 sec)
+
++---------------+----------+
+| Nombre        | Longitud |
++---------------+----------+
+| Trail Blazers |       13 |
+| Timberwolves  |       12 |
+| Supersonics   |       11 |
++---------------+----------+
+3 rows in set (0.00 sec)
+
++------------------+------+--------+---------+
+| Nombre           | Peso | alcada | posicio |
++------------------+------+--------+---------+
+| Andrew Bynum     |  285 | 7-0    | C       |
+| Brevin Knight    |  170 | 5-10   | G       |
+| Chucky Atkins    |  185 | 5-11   | G       |
+| Damon Stoudamire |  171 | 5-10   | G       |
+| Earl Boykins     |  133 | 5-5    | G       |
+| Eddy Curry       |  285 | 6-11   | C       |
+| Jerome James     |  285 | 7-1    | C       |
+| Kyrylo Fesenko   |  288 | 7-1    | C       |
+| Nate Robinson    |  180 | 5-9    | G       |
+| Shaquille ONeal  |  325 | 7-1    | C       |
+| Yao Ming         |  310 | 7-6    | C       |
++------------------+------+--------+---------+
+11 rows in set (0.00 sec)
+
++-----------------+---------+---------------+
+| nom             | equip   | alcada_metres |
++-----------------+---------+---------------+
+| Jerome James    | Knicks  | 215.90        |
+| Cheikh Samb     | Pistons | 215.90        |
+| Eddy Curry      | Knicks  | 210.82        |
+| Jared Jeffries  | Knicks  | 210.82        |
+| Randolph Morris | Knicks  | 210.82        |
+| Rasheed Wallace | Pistons | 210.82        |
+| Theo Ratliff    | Pistons | 208.28        |
++-----------------+---------+---------------+
+7 rows in set (0.00 sec)
+
++----------------------+
+| procedencia          |
++----------------------+
+| Connecticut          |
+| Eastern Washington   |
+| Memphis              |
+| Mount Zion Christian |
+| Notre Dame           |
+| Rutgers              |
+| Texas                |
+| Thornwood HS         |
+| Ukranie              |
+| Villanova            |
++----------------------+
+10 rows in set (0.00 sec)
+
++-----------+
+| EQUIPO    |
++-----------+
+| Bobcats   |
+| Cavaliers |
+| Grizzlies |
+| Hawks     |
+| Kings     |
+| Lakers    |
+| Magic     |
+| Mavericks |
+| Raptors   |
+| Wizards   |
++-----------+
+10 rows in set (0.01 sec)
+
++--------------+
+| equipo_local |
++--------------+
+| Bobcats      |
+| Cavaliers    |
+| Grizzlies    |
+| Hawks        |
+| Kings        |
+| Lakers       |
+| Magic        |
+| Mavericks    |
+| Raptors      |
+| Wizards      |
++--------------+
+10 rows in set (0.01 sec)

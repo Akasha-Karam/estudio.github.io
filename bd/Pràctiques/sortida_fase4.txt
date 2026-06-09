@@ -1,0 +1,63 @@
++---------------------+-------+------+------+
+| nom                 | temp  | PPP  | RBP  |
++---------------------+-------+------+------+
+| Tony Parker         | 06/07 | 18.6 |  3.2 |
+| Jose Calderon       | 06/07 |  8.7 |  1.7 |
+| Sergio Rodriguez    | 06/07 |  3.7 |  1.4 |
+| Tony Parker         | 07/08 | 18.8 |  3.2 |
+| Jose Calderon       | 07/08 | 11.6 |  2.9 |
+| Juan Carlos Navarro | 07/08 | 10.9 |  2.5 |
+| Sergio Rodriguez    | 07/08 |  2.5 |  0.8 |
++---------------------+-------+------+------+
+7 rows in set (0.03 sec)
+
++----------+----------------------+------+------+------+
+| EQUIP    | nom                  | pos  | alc  | pes  |
++----------+----------------------+------+------+------+
+| Clippers | Chris Kaman          | C    | 7-0  |  265 |
+| Lakers   | Chris Mihm           | C    | 7-0  |  265 |
+| Lakers   | Didier Ilunga-Mbenga | C    | 7-0  |  255 |
+| Lakers   | Pau Gasol            | F-C  | 7-0  |  250 |
++----------+----------------------+------+------+------+
+4 rows in set (0.01 sec)
+
++------------------+-----------+-----------+--------+---------+-------------+
+| nombre           | equipo    | temporada | puntos | rebotes | asistencias |
++------------------+-----------+-----------+--------+---------+-------------+
+| Dwyane Wade      | Heat      | 06/07     |   27.4 |     4.7 |         7.5 |
+| LeBron James     | Cavaliers | 07/08     |     30 |     7.9 |         7.2 |
+| LeBron James     | Cavaliers | 04/05     |   27.2 |     7.4 |         7.2 |
+| Shaquille ONeal  | Suns      | 99/00     |   29.7 |    13.6 |         3.8 |
+| Shaquille ONeal  | Suns      | 93/94     |   29.3 |    13.2 |         2.4 |
+| Shavlik Randolph | 76ers     | 05/06     |    131 |     133 |          19 |
+| Shavlik Randolph | 76ers     | 06/07     |     58 |      54 |           4 |
+| Tim Duncan       | Spurs     | 01/02     |   25.5 |    12.7 |         3.7 |
++------------------+-----------+-----------+--------+---------+-------------+
+8 rows in set (0.00 sec)
+
++------------------+-----------------------+---------+------------------+
+| nom              | equip                 | posicio | punts_per_partit |
++------------------+-----------------------+---------+------------------+
+| Kobe Bryant      | Lakers (Los Angeles)  | G       |             27.6 |
+| LeBron James     | Cavaliers (Cleveland) | F       |             27.2 |
+| Dirk Nowitzki    | Mavericks (Dallas)    | F       |             26.1 |
+| Amare Stoudemire | Suns (Phoenix)        | C-F     |               26 |
+| Tracy McGrady    | Rockets (Houston)     | G       |             25.7 |
+| Gilbert Arenas   | Wizards (Washington)  | G       |             25.5 |
++------------------+-----------------------+---------+------------------+
+6 rows in set (0.00 sec)
+
++----------------------+--------------------------+----------+
+| local                | visitant                 | resultat |
++----------------------+--------------------------+----------+
+| Bucks (Milwaukee)    | Grizzlies (Memphis)      | 56-158   |
+| Bucks (Milwaukee)    | Supersonics (Seattle)    | 51-153   |
+| Bulls (Chicago)      | Grizzlies (Memphis)      | 54-155   |
+| Celtics (Boston)     | Timberwolves (Minnesota) | 51-154   |
+| Pistons (Detroit)    | Suns (Phoenix)           | 50-151   |
+| Pistons (Detroit)    | Warriors (Golden State)  | 54-156   |
+| Raptors (Toronto)    | Mavericks (Dallas)       | 56-157   |
+| Wizards (Washington) | Lakers (Los Angeles)     | 54-157   |
+| Wizards (Washington) | Spurs (San Antonio)      | 55-157   |
++----------------------+--------------------------+----------+
+9 rows in set (0.01 sec)

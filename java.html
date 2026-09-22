@@ -200,6 +200,757 @@ Scanner sc = new Scanner(System.in);  // objeto Scanner</code></pre>
           </tbody>
         </table>
 
+                <!-- ================================================== -->
+        <!-- ============ 2.3 EXPRESSIONS ============ -->
+        <!-- ================================================== -->
+        <h3 id="expressions">2.3 Expressions</h3>
+
+        <p>
+          Una <strong>expressió</strong> és una combinació de
+          <strong>variables</strong>, <strong>constants</strong> i
+          <strong>operadors</strong> que, en ser avaluada pel processador,
+          produeix un <strong>únic valor</strong> com a resultat.
+        </p>
+
+        <div class="note">
+          <div class="note-title">Idea clau</div>
+          <p>
+            Una expressió es calcula i sempre produeix un únic resultat.
+          </p>
+        </div>
+
+
+        <!-- ============ EXPRESSIONS NUMÈRIQUES ============ -->
+
+        <h4>Expressions numèriques</h4>
+
+        <p>
+          Són expressions que operen amb dades de tipus
+          <code>int</code> o <code>double</code>. Serveixen per realitzar
+          <strong>càlculs matemàtics</strong> i transformacions de dades.
+        </p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Operador</th>
+              <th>Significat</th>
+              <th>Exemple</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>+</code></td>
+              <td>Suma</td>
+              <td><code>5 + 2</code> → <code>7</code></td>
+            </tr>
+            <tr>
+              <td><code>-</code></td>
+              <td>Resta</td>
+              <td><code>5 - 2</code> → <code>3</code></td>
+            </tr>
+            <tr>
+              <td><code>*</code></td>
+              <td>Multiplicació</td>
+              <td><code>5 * 2</code> → <code>10</code></td>
+            </tr>
+            <tr>
+              <td><code>/</code></td>
+              <td>Divisió</td>
+              <td><code>10 / 2</code> → <code>5</code></td>
+            </tr>
+            <tr>
+              <td><code>%</code></td>
+              <td>Residu o mòdul</td>
+              <td><code>10 % 3</code> → <code>1</code></td>
+            </tr>
+          </tbody>
+        </table>
+
+
+        <!-- ============ DIVISIÓ ENTERA ============ -->
+
+        <h4>Divisió entre <code>int</code>: truncar</h4>
+
+        <p>
+          Quan es divideixen dos valors de tipus <code>int</code>, Java
+          retorna un resultat de tipus <code>int</code>. La part decimal
+          <strong>desapareix</strong>.
+        </p>
+
+        <div class="note warning">
+          <div class="note-title">Truncar no és arrodonir</div>
+          <p>
+            <strong>Truncar</strong> significa eliminar completament la part
+            decimal sense aplicar cap regla d'arrodoniment.
+          </p>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Expressió</th>
+              <th>Resultat matemàtic</th>
+              <th>Resultat a Java</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>10 / 3</code></td>
+              <td>3.333...</td>
+              <td><strong>3</strong></td>
+            </tr>
+            <tr>
+              <td><code>19 / 5</code></td>
+              <td>3.8</td>
+              <td><strong>3</strong></td>
+            </tr>
+            <tr>
+              <td><code>5 / 2</code></td>
+              <td>2.5</td>
+              <td><strong>2</strong></td>
+            </tr>
+            <tr>
+              <td><code>8 / 4</code></td>
+              <td>2</td>
+              <td><strong>2</strong></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>
+          Per exemple:
+        </p>
+
+<pre><code>int resultat = 10 / 3;
+// resultat = 3</code></pre>
+
+        <div class="note">
+          <div class="note-title">Important amb <code>double</code></div>
+          <p>
+            Si primer es fa la divisió entre dos <code>int</code>, els decimals
+            ja s'han perdut abans de guardar el resultat en un
+            <code>double</code>.
+          </p>
+<pre><code>double resultat = 10 / 3;
+// resultat = 3.0</code></pre>
+        </div>
+
+
+        <!-- ============ CÀSTING ============ -->
+
+        <h4>Com obtenir decimals: càsting</h4>
+
+        <p>
+          Per obtenir un resultat decimal, com a mínim un dels operands ha de
+          ser de tipus <code>double</code> abans de fer la divisió.
+        </p>
+
+        <p><strong>Opció 1: utilitzar un literal decimal</strong></p>
+
+<pre><code>double resultat = 10.0 / 3;
+// resultat = 3.333333...</code></pre>
+
+        <p><strong>Opció 2: utilitzar càsting</strong></p>
+
+<pre><code>int totalPunts = 10;
+int jugadors = 3;
+
+double mitjana = (double) totalPunts / jugadors;
+// resultat = 3.333333...</code></pre>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Divisió</th>
+              <th>Resultat</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>int / int</code></td>
+              <td><code>int</code></td>
+            </tr>
+            <tr>
+              <td><code>double / int</code></td>
+              <td><code>double</code></td>
+            </tr>
+            <tr>
+              <td><code>int / double</code></td>
+              <td><code>double</code></td>
+            </tr>
+            <tr>
+              <td><code>double / double</code></td>
+              <td><code>double</code></td>
+            </tr>
+          </tbody>
+        </table>
+
+
+        <!-- ============ DIVISIÓ PER ZERO ============ -->
+
+        <div class="note danger">
+          <div class="note-title">Divisió per zero</div>
+          <p>
+            No es pot dividir un valor enter entre <code>0</code>.
+            En Java, una divisió entera entre zero provoca una
+            <code>ArithmeticException</code>.
+          </p>
+<pre><code>int resultat = 10 / 0;
+// ArithmeticException</code></pre>
+        </div>
+
+
+        <!-- ============ MÒDUL ============ -->
+
+        <h4>Mòdul <code>%</code>: el residu</h4>
+
+        <p>
+          L'operador <code>%</code> no calcula el quocient de la divisió.
+          Retorna el <strong>residu</strong>, és a dir, el que sobra després
+          de fer una divisió entera.
+        </p>
+
+<pre><code>10 % 3
+
+10 / 3 = 3
+3 * 3 = 9
+10 - 9 = 1
+
+// 10 % 3 = 1</code></pre>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Expressió</th>
+              <th>Residu</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>10 % 3</code></td>
+              <td><strong>1</strong></td>
+            </tr>
+            <tr>
+              <td><code>10 % 2</code></td>
+              <td><strong>0</strong></td>
+            </tr>
+            <tr>
+              <td><code>15 % 4</code></td>
+              <td><strong>3</strong></td>
+            </tr>
+            <tr>
+              <td><code>20 % 5</code></td>
+              <td><strong>0</strong></td>
+            </tr>
+          </tbody>
+        </table>
+
+
+        <!-- ============ PARELL / SENAR ============ -->
+
+        <h4>Utilitzar <code>%</code> per saber si un número és parell</h4>
+
+        <p>
+          Si el residu d'un número dividit entre <code>2</code> és
+          <code>0</code>, el número és <strong>parell</strong>.
+        </p>
+
+<pre><code>numero % 2 == 0</code></pre>
+
+        <p>
+          Si el residu és diferent de <code>0</code>, el número és
+          <strong>senar</strong>.
+        </p>
+
+<pre><code>numero % 2 != 0</code></pre>
+
+        <div class="note">
+          <div class="note-title">Regla ràpida</div>
+          <p>
+            <code>% 2 == 0</code> → parell
+            <br>
+            <code>% 2 != 0</code> → senar
+          </p>
+        </div>
+
+
+        <!-- ============ REINICIAR ÍNDEX ============ -->
+
+        <h4>Reiniciar un índex amb <code>%</code></h4>
+
+        <p>
+          El mòdul també es pot utilitzar per fer que un índex torni a
+          començar des de <code>0</code>.
+        </p>
+
+        <p>
+          Per exemple, la paraula <code>"kuruma"</code> té 6 caràcters:
+        </p>
+
+<pre><code>k  u  r  u  m  a
+0  1  2  3  4  5</code></pre>
+
+        <p>
+          Si volem continuar recorrent la paraula després de l'índex
+          <code>5</code>, podem utilitzar:
+        </p>
+
+<pre><code>i % texto.length()</code></pre>
+
+        <table>
+          <thead>
+            <tr>
+              <th><code>i</code></th>
+              <th><code>i % 6</code></th>
+              <th>Índex utilitzat</th>
+              <th>Caràcter</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>0</td>
+              <td><code>0 % 6 = 0</code></td>
+              <td>0</td>
+              <td><code>k</code></td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td><code>1 % 6 = 1</code></td>
+              <td>1</td>
+              <td><code>u</code></td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td><code>2 % 6 = 2</code></td>
+              <td>2</td>
+              <td><code>r</code></td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td><code>3 % 6 = 3</code></td>
+              <td>3</td>
+              <td><code>u</code></td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td><code>4 % 6 = 4</code></td>
+              <td>4</td>
+              <td><code>m</code></td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td><code>5 % 6 = 5</code></td>
+              <td>5</td>
+              <td><code>a</code></td>
+            </tr>
+            <tr>
+              <td><strong>6</strong></td>
+              <td><strong><code>6 % 6 = 0</code></strong></td>
+              <td><strong>0</strong></td>
+              <td><strong><code>k</code></strong></td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td><code>7 % 6 = 1</code></td>
+              <td>1</td>
+              <td><code>u</code></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>
+          D'aquesta manera podem utilitzar:
+        </p>
+
+<pre><code>text.charAt(i % text.length())</code></pre>
+
+        <p>
+          i l'índex torna a començar automàticament des de
+          <code>0</code> quan arriba al final del text.
+        </p>
+
+
+        <!-- ============ PRECEDÈNCIA ============ -->
+
+        <h4>Ordre de precedència</h4>
+
+        <p>
+          Java segueix un ordre de precedència quan calcula una expressió.
+          No sempre calcula les operacions simplement d'esquerra a dreta.
+        </p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Prioritat</th>
+              <th>Operadors</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td><code>()</code> Parèntesis</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td><code>*</code> <code>/</code> <code>%</code></td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td><code>+</code> <code>-</code></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="note">
+          <div class="note-title">Regla ràpida</div>
+<pre><code>()
+ ↓
+*  /  %
+ ↓
++  -</code></pre>
+        </div>
+
+        <p><strong>Exemple sense parèntesis:</strong></p>
+
+<pre><code>int a = 10;
+int b = 5;
+int c = 2;
+
+int resultat = a + b * c;
+
+// 1. 5 * 2 = 10
+// 2. 10 + 10 = 20
+
+// resultat = 20</code></pre>
+
+        <p><strong>Exemple amb parèntesis:</strong></p>
+
+<pre><code>int resultat = (a + b) * c;
+
+// 1. 10 + 5 = 15
+// 2. 15 * 2 = 30
+
+// resultat = 30</code></pre>
+
+
+        <!-- ============ EXPRESSIONS BOOLEANES ============ -->
+
+        <h4>Expressions booleanes</h4>
+
+        <p>
+          Una <strong>expressió booleana</strong> és una expressió que només
+          pot produir un dels dos valors:
+        </p>
+
+        <div class="example">
+          <h4>Els dos possibles resultats</h4>
+<pre><code>true
+false</code></pre>
+        </div>
+
+        <p>
+          S'utilitzen principalment per prendre decisions amb estructures
+          com <code>if</code> i per controlar bucles.
+        </p>
+
+<pre><code>10 > 5
+// true
+
+10 < 5
+// false</code></pre>
+
+
+        <!-- ============ COMPARACIÓ ============ -->
+
+        <h4>Operadors de relació o comparació</h4>
+
+        <p>
+          Serveixen per comparar dos valors i obtenir un resultat booleà.
+        </p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Operador</th>
+              <th>Significat</th>
+              <th>Exemple</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>==</code></td>
+              <td>Igual a</td>
+              <td><code>edat == 18</code></td>
+            </tr>
+            <tr>
+              <td><code>!=</code></td>
+              <td>Diferent de</td>
+              <td><code>edat != 18</code></td>
+            </tr>
+            <tr>
+              <td><code>></code></td>
+              <td>Major que</td>
+              <td><code>preu > 50</code></td>
+            </tr>
+            <tr>
+              <td><code><</code></td>
+              <td>Menor que</td>
+              <td><code>puntuacio < 0</code></td>
+            </tr>
+            <tr>
+              <td><code>>=</code></td>
+              <td>Major o igual</td>
+              <td><code>stock >= 1</code></td>
+            </tr>
+            <tr>
+              <td><code><=</code></td>
+              <td>Menor o igual</td>
+              <td><code>temperatura <= 36.5</code></td>
+            </tr>
+          </tbody>
+        </table>
+
+
+        <!-- ============ OPERADORS LÒGICS ============ -->
+
+        <h4>Expressions booleanes amb operadors lògics</h4>
+
+        <p>
+          Els operadors lògics permeten combinar diverses expressions
+          booleanes. El resultat final sempre serà <code>true</code> o
+          <code>false</code>.
+        </p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Operador</th>
+              <th>Nom</th>
+              <th>Significat</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>&amp;&amp;</code></td>
+              <td>AND</td>
+              <td>Totes les condicions han de ser <code>true</code></td>
+            </tr>
+            <tr>
+              <td><code>||</code></td>
+              <td>OR</td>
+              <td>Almenys una condició ha de ser <code>true</code></td>
+            </tr>
+            <tr>
+              <td><code>!</code></td>
+              <td>NOT</td>
+              <td>Inverteix el valor booleà</td>
+            </tr>
+            <tr>
+              <td><code>^</code></td>
+              <td>XOR</td>
+              <td>Exactament una condició ha de ser <code>true</code></td>
+            </tr>
+          </tbody>
+        </table>
+
+
+        <!-- ============ AND ============ -->
+
+        <h4>AND: <code>&amp;&amp;</code></h4>
+
+        <p>
+          El resultat és <code>true</code> només quan
+          <strong>totes</strong> les expressions són certes.
+        </p>
+
+<pre><code>edat >= 18 && teEntrada == true</code></pre>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Primera</th>
+              <th>Segona</th>
+              <th>Resultat</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>true</code></td>
+              <td><code>true</code></td>
+              <td><strong>true</strong></td>
+            </tr>
+            <tr>
+              <td><code>true</code></td>
+              <td><code>false</code></td>
+              <td><strong>false</strong></td>
+            </tr>
+            <tr>
+              <td><code>false</code></td>
+              <td><code>true</code></td>
+              <td><strong>false</strong></td>
+            </tr>
+            <tr>
+              <td><code>false</code></td>
+              <td><code>false</code></td>
+              <td><strong>false</strong></td>
+            </tr>
+          </tbody>
+        </table>
+
+
+        <!-- ============ OR ============ -->
+
+        <h4>OR: <code>||</code></h4>
+
+        <p>
+          El resultat és <code>true</code> quan
+          <strong>almenys una</strong> de les expressions és certa.
+        </p>
+
+<pre><code>esDissabte == true || esDiumenge == true</code></pre>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Primera</th>
+              <th>Segona</th>
+              <th>Resultat</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>true</code></td>
+              <td><code>true</code></td>
+              <td><strong>true</strong></td>
+            </tr>
+            <tr>
+              <td><code>true</code></td>
+              <td><code>false</code></td>
+              <td><strong>true</strong></td>
+            </tr>
+            <tr>
+              <td><code>false</code></td>
+              <td><code>true</code></td>
+              <td><strong>true</strong></td>
+            </tr>
+            <tr>
+              <td><code>false</code></td>
+              <td><code>false</code></td>
+              <td><strong>false</strong></td>
+            </tr>
+          </tbody>
+        </table>
+
+
+        <!-- ============ NOT ============ -->
+
+        <h4>NOT: <code>!</code></h4>
+
+        <p>
+          L'operador <code>!</code> inverteix el valor d'una expressió
+          booleana.
+        </p>
+
+<pre><code>!true
+// false
+
+!false
+// true</code></pre>
+
+        <div class="note">
+          <div class="note-title">Idea clau</div>
+          <p>
+            <code>!</code> significa invertir:
+            <code>true</code> passa a <code>false</code> i
+            <code>false</code> passa a <code>true</code>.
+          </p>
+        </div>
+
+
+        <!-- ============ XOR ============ -->
+
+        <h4>XOR: <code>^</code></h4>
+
+        <p>
+          El XOR és un OR exclusiu. El resultat és <code>true</code>
+          <strong>només quan exactament un</strong> dels operands és
+          <code>true</code>.
+        </p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Primera</th>
+              <th>Segona</th>
+              <th><code>^</code></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>true</code></td>
+              <td><code>true</code></td>
+              <td><strong>false</strong></td>
+            </tr>
+            <tr>
+              <td><code>true</code></td>
+              <td><code>false</code></td>
+              <td><strong>true</strong></td>
+            </tr>
+            <tr>
+              <td><code>false</code></td>
+              <td><code>true</code></td>
+              <td><strong>true</strong></td>
+            </tr>
+            <tr>
+              <td><code>false</code></td>
+              <td><code>false</code></td>
+              <td><strong>false</strong></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="note">
+          <div class="note-title">Diferència entre OR i XOR</div>
+          <p>
+            <code>||</code> → almenys una és certa.
+            <br>
+            <code>^</code> → exactament una és certa.
+          </p>
+        </div>
+
+
+        <!-- ============ CURTCIRCUIT ============ -->
+
+        <h4>El curtcircuit</h4>
+
+        <p>
+          Java utilitza una avaluació de <strong>curtcircuit</strong> amb
+          <code>&amp;&amp;</code> i <code>||</code>. Si Java ja pot saber el
+          resultat final, no necessita avaluar la resta de l'expressió.
+        </p>
+
+        <div class="note">
+          <div class="note-title"><code>&amp;&amp;</code> (AND)</div>
+          <p>
+            Si la primera part és <code>false</code>, Java no comprova la
+            segona part perquè el resultat final ja serà
+            <code>false</code>.
+          </p>
+<pre><code>false && algunaCosa</code></pre>
+        </div>
+
+        <div class="note">
+          <div class="note-title"><code>||</code> (OR)</div>
+          <p>
+            Si la primera part és <code>true</code>, Java no comprova la
+            segona part perquè el resultat final ja serà
+            <code>true</code>.
+          </p>
+<pre><code>true || algunaCosa</code></pre>
+        </div>
+
         <h3 id="operadores">2.3 Operadores</h3>
 
         <table>

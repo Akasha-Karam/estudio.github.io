@@ -1286,6 +1286,1079 @@ String resultado = sb.toString();</code></pre>
       </section>
 
       <!-- ================================================== -->
+<!-- ============ 6. STRINGS ============ -->
+<!-- ================================================== -->
+<section id="strings">
+
+  <h2>6. Strings (cadenas de texto)</h2>
+
+  <p>
+    Un <code>String</code> es una <strong>cadena de caracteres</strong>.
+  </p>
+
+  <pre><code>String nombre = "Akasha";</code></pre>
+
+  <p>
+    Un <code>String</code> está formado por caracteres y cada carácter tiene
+    una <strong>posición (índice)</strong>.
+  </p>
+
+  <pre><code>String:   A   k   a   s   h   a
+Índice:   0   1   2   3   4   5</code></pre>
+
+  <div class="note">
+    <div class="note-title">Importante</div>
+    <p>
+      El índice siempre empieza en <code>0</code>.
+    </p>
+  </div>
+
+
+  <!-- ================================================== -->
+  <!-- ¿QUÉ PODEMOS HACER CON UN STRING? -->
+  <!-- ================================================== -->
+
+  <h3>¿Qué podemos hacer con un String?</h3>
+
+  <p>
+    Cuando trabajamos con <code>String</code>, principalmente podemos:
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Acción</th>
+        <th>¿Qué hacemos?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Buscar</strong></td>
+        <td>Comprobar si existe algo o encontrar su posición</td>
+      </tr>
+      <tr>
+        <td><strong>Añadir</strong></td>
+        <td>Construir un String añadiendo caracteres</td>
+      </tr>
+      <tr>
+        <td><strong>Eliminar</strong></td>
+        <td>Crear otro String sin determinados caracteres</td>
+      </tr>
+      <tr>
+        <td><strong>Sustituir</strong></td>
+        <td>Cambiar un carácter o una parte del String</td>
+      </tr>
+      <tr>
+        <td><strong>Obtener</strong></td>
+        <td>Sacar un carácter o una parte del String</td>
+      </tr>
+      <tr>
+        <td><strong>Comparar</strong></td>
+        <td>Comprobar si dos Strings son iguales</td>
+      </tr>
+      <tr>
+        <td><strong>Recorrer</strong></td>
+        <td>Pasar por todos sus caracteres</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <!-- ================================================== -->
+  <!-- 1. LENGTH -->
+  <!-- ================================================== -->
+
+  <h3>6.1 Obtener la longitud</h3>
+
+  <h4><code>length()</code></h4>
+
+  <p>
+    Indica cuántos caracteres tiene el String.
+  </p>
+
+  <pre><code>String palabra = "Hola";
+
+int cantidad = palabra.length();</code></pre>
+
+  <p>Resultado:</p>
+
+  <pre><code>4</code></pre>
+
+  <pre><code>H   o   l   a
+0   1   2   3
+
+length() → 4</code></pre>
+
+  <div class="note">
+    <div class="note-title">Importante</div>
+    <p>
+      <code>str.length()</code> da la <strong>cantidad de caracteres</strong>.
+    </p>
+
+    <p>
+      El último índice es:
+    </p>
+
+    <pre><code>str.length() - 1</code></pre>
+
+    <p>
+      Por ejemplo, en <code>"Hola"</code>, <code>length()</code> es
+      <code>4</code> y el último índice es <code>3</code>.
+    </p>
+  </div>
+
+
+  <!-- ================================================== -->
+  <!-- 2. CHARAT -->
+  <!-- ================================================== -->
+
+  <h3>6.2 Obtener un carácter</h3>
+
+  <h4><code>charAt()</code></h4>
+
+  <p>
+    Permite obtener el carácter que está en una determinada posición.
+  </p>
+
+  <pre><code>String palabra = "Hola";
+
+char letra = palabra.charAt(1);</code></pre>
+
+  <p>Resultado:</p>
+
+  <pre><code>o</code></pre>
+
+  <pre><code>H   o   l   a
+0   1   2   3
+    ↑</code></pre>
+
+  <p>
+    También podemos obtener el último carácter:
+  </p>
+
+  <pre><code>char ultimo = palabra.charAt(palabra.length() - 1);</code></pre>
+
+
+  <!-- ================================================== -->
+  <!-- 3. CONTAINS -->
+  <!-- ================================================== -->
+
+  <h3>6.3 Buscar en un String</h3>
+
+  <h4><code>contains()</code></h4>
+
+  <p>
+    Comprueba si un String contiene otro texto.
+  </p>
+
+  <pre><code>String texto = "Hola mundo";
+
+texto.contains("mundo");</code></pre>
+
+  <p>Resultado:</p>
+
+  <pre><code>true</code></pre>
+
+  <pre><code>texto.contains("Java");</code></pre>
+
+  <p>Resultado:</p>
+
+  <pre><code>false</code></pre>
+
+  <div class="note">
+    <div class="note-title">Muy útil para</div>
+    <ul>
+      <li>Comprobar si el texto contiene una palabra.</li>
+      <li>Comprobar si un correo contiene <code>@</code>.</li>
+      <li>Comprobar si una frase contiene <code>"hola"</code>.</li>
+    </ul>
+  </div>
+
+
+  <!-- ================================================== -->
+  <!-- 4. INDEXOF -->
+  <!-- ================================================== -->
+
+  <h3>6.4 Buscar la posición</h3>
+
+  <h4><code>indexOf()</code></h4>
+
+  <p>
+    Busca un carácter o texto y devuelve su posición.
+  </p>
+
+  <pre><code>String palabra = "Hola";
+
+int posicion = palabra.indexOf("l");</code></pre>
+
+  <p>Resultado:</p>
+
+  <pre><code>2</code></pre>
+
+  <pre><code>H   o   l   a
+0   1   2   3
+        ↑</code></pre>
+
+  <p>
+    También podemos buscar un texto completo:
+  </p>
+
+  <pre><code>String texto = "Hola mundo";
+
+int posicion = texto.indexOf("mundo");</code></pre>
+
+  <p>Resultado:</p>
+
+  <pre><code>5</code></pre>
+
+  <h4>Si no encuentra nada</h4>
+
+  <pre><code>texto.indexOf("Java");</code></pre>
+
+  <p>Devuelve:</p>
+
+  <pre><code>-1</code></pre>
+
+  <p>
+    Por eso podemos comprobar si algo existe:
+  </p>
+
+  <pre><code>if (texto.indexOf("Java") != -1) {
+    // Existe
+}</code></pre>
+
+  <p>
+    Aunque para simplemente comprobar si existe algo es más sencillo:
+  </p>
+
+  <pre><code>if (texto.contains("Java")) {
+    // Existe
+}</code></pre>
+
+
+  <!-- ================================================== -->
+  <!-- 5. LASTINDEXOF -->
+  <!-- ================================================== -->
+
+  <h3>6.5 Buscar desde el final</h3>
+
+  <h4><code>lastIndexOf()</code></h4>
+
+  <p>
+    Busca la última aparición de un carácter o texto.
+  </p>
+
+  <pre><code>String texto = "banana";
+
+int posicion = texto.lastIndexOf("a");</code></pre>
+
+  <p>Resultado:</p>
+
+  <pre><code>5</code></pre>
+
+  <pre><code>b   a   n   a   n   a
+0   1   2   3   4   5
+                    ↑</code></pre>
+
+
+  <!-- ================================================== -->
+  <!-- 6. SUBSTRING -->
+  <!-- ================================================== -->
+
+  <h3>6.6 Obtener una parte del String</h3>
+
+  <h4><code>substring()</code></h4>
+
+  <p>
+    Permite sacar una parte de un String.
+  </p>
+
+  <h4>Desde una posición hasta el final</h4>
+
+  <pre><code>String texto = "Hola mundo";
+
+String resultado = texto.substring(5);</code></pre>
+
+  <p>Resultado:</p>
+
+  <pre><code>"mundo"</code></pre>
+
+  <h4>Desde una posición hasta otra</h4>
+
+  <pre><code>String texto = "Hola mundo";
+
+String resultado = texto.substring(0, 4);</code></pre>
+
+  <p>Resultado:</p>
+
+  <pre><code>"Hola"</code></pre>
+
+  <div class="note">
+    <div class="note-title">Regla importante</div>
+
+    <p>
+      La posición inicial se incluye.
+      La posición final <strong>NO se incluye</strong>.
+    </p>
+
+    <pre><code>substring(inicio, final)
+          ↑       ↑
+       incluido  NO incluido</code></pre>
+  </div>
+
+
+  <!-- ================================================== -->
+  <!-- 7. ELIMINAR -->
+  <!-- ================================================== -->
+
+  <h3>6.7 Eliminar un carácter</h3>
+
+  <p>
+    Un <code>String</code> no se modifica directamente.
+    Normalmente creamos un nuevo String.
+  </p>
+
+  <p>
+    Por ejemplo, si tenemos:
+  </p>
+
+  <pre><code>"Hola"</code></pre>
+
+  <p>
+    y queremos eliminar la <code>o</code>:
+  </p>
+
+  <pre><code>"Hla"</code></pre>
+
+  <p>
+    Podemos recorrer el String:
+  </p>
+
+  <pre><code>public String eliminar(String str, int n) {
+
+    String resultado = "";
+
+    for (int i = 0; i &lt; str.length(); i++) {
+
+        if (i != n) {
+            resultado = resultado + str.charAt(i);
+        }
+    }
+
+    return resultado;
+}</code></pre>
+
+  <h4>¿Cómo funciona?</h4>
+
+  <pre><code>str = "Hola"
+n = 1</code></pre>
+
+  <pre><code>H   o   l   a
+0   1   2   3
+    X</code></pre>
+
+  <p>
+    La condición:
+  </p>
+
+  <pre><code>if (i != n)</code></pre>
+
+  <p>
+    significa que si la posición <strong>NO</strong> es la que queremos
+    eliminar, añadimos el carácter.
+  </p>
+
+  <pre><code>"Hla"</code></pre>
+
+
+  <!-- ================================================== -->
+  <!-- 8. SUSTITUIR -->
+  <!-- ================================================== -->
+
+  <h3>6.8 Sustituir caracteres</h3>
+
+  <p>
+    También podemos recorrer el String y cambiar determinados caracteres.
+  </p>
+
+  <p>
+    Por ejemplo, queremos cambiar:
+  </p>
+
+  <pre><code>"Hola"</code></pre>
+
+  <p>por:</p>
+
+  <pre><code>"Hala"</code></pre>
+
+  <pre><code>String resultado = "";
+
+for (int i = 0; i &lt; str.length(); i++) {
+
+    if (str.charAt(i) == 'o') {
+        resultado = resultado + 'a';
+    }
+    else {
+        resultado = resultado + str.charAt(i);
+    }
+}</code></pre>
+
+  <div class="note">
+    <div class="note-title">Idea</div>
+
+    <p>
+      Si encuentro <code>'o'</code>, pongo <code>'a'</code>.
+      Si no, mantengo el carácter original.
+    </p>
+  </div>
+
+
+  <!-- ================================================== -->
+  <!-- 9. FRONTBACK -->
+  <!-- ================================================== -->
+
+  <h3>6.9 Ejemplo: FrontBack</h3>
+
+  <p>
+    Podemos utilizar un recorrido para <strong>sustituir posiciones</strong>.
+  </p>
+
+  <p>
+    Queremos cambiar el primer carácter por el último y el último por el primero.
+  </p>
+
+  <pre><code>public String frontBack(String str) {
+
+    String resultat = "";
+
+    if (str.length() == 1) {
+        return str;
+    }
+
+    char primer = str.charAt(0);
+    char ultim = str.charAt(str.length() - 1);
+
+    for (int i = 0; i &lt; str.length(); i++) {
+
+        if (i == 0) {
+            resultat = resultat + ultim;
+        }
+        else if (i == str.length() - 1) {
+            resultat = resultat + primer;
+        }
+        else {
+            resultat = resultat + str.charAt(i);
+        }
+    }
+
+    return resultat;
+}</code></pre>
+
+  <p>Si tenemos:</p>
+
+  <pre><code>"code"</code></pre>
+
+  <pre><code>c   o   d   e
+0   1   2   3</code></pre>
+
+  <p>Guardamos:</p>
+
+  <pre><code>primer = 'c';
+ultim = 'e';</code></pre>
+
+  <p>Y construimos:</p>
+
+  <pre><code>e   o   d   c</code></pre>
+
+  <p>Resultado:</p>
+
+  <pre><code>"edoc"</code></pre>
+
+
+  <!-- ================================================== -->
+  <!-- 10. AÑADIR -->
+  <!-- ================================================== -->
+
+  <h3>6.10 Añadir caracteres</h3>
+
+  <p>
+    Podemos construir un String utilizando:
+  </p>
+
+  <pre><code>resultado = resultado + caracter;</code></pre>
+
+  <p>Ejemplo:</p>
+
+  <pre><code>String resultado = "";
+
+resultado = resultado + "H";
+resultado = resultado + "o";
+resultado = resultado + "l";
+resultado = resultado + "a";</code></pre>
+
+  <p>Resultado:</p>
+
+  <pre><code>"Hola"</code></pre>
+
+  <p>
+    También podemos hacerlo recorriendo otro String:
+  </p>
+
+  <pre><code>String resultado = "";
+
+for (int i = 0; i &lt; str.length(); i++) {
+    resultado = resultado + str.charAt(i);
+}</code></pre>
+
+
+  <!-- ================================================== -->
+  <!-- 11. STRINGBUILDER -->
+  <!-- ================================================== -->
+
+  <h3>6.11 StringBuilder</h3>
+
+  <p>
+    Cuando tenemos que construir un String muchas veces,
+    <code>StringBuilder</code> es una herramienta muy útil.
+  </p>
+
+  <pre><code>StringBuilder resultado = new StringBuilder();
+
+resultado.append(caracter);</code></pre>
+
+  <p>Al final:</p>
+
+  <pre><code>return resultado.toString();</code></pre>
+
+  <h4>Ejemplo</h4>
+
+  <pre><code>StringBuilder resultado = new StringBuilder();
+
+resultado.append("H");
+resultado.append("o");
+resultado.append("l");
+resultado.append("a");
+
+String texto = resultado.toString();</code></pre>
+
+  <p>Resultado:</p>
+
+  <pre><code>"Hola"</code></pre>
+
+  <div class="note">
+    <div class="note-title">¿Por qué es útil?</div>
+
+    <p>
+      Especialmente cuando hacemos muchas operaciones de añadir texto.
+      <code>StringBuilder</code> está pensado para construir texto
+      de forma más eficiente.
+    </p>
+  </div>
+
+
+  <!-- ================================================== -->
+  <!-- 12. REPLACE -->
+  <!-- ================================================== -->
+
+  <h3>6.12 Reemplazar texto</h3>
+
+  <h4><code>replace()</code></h4>
+
+  <p>
+    Permite sustituir caracteres o texto.
+  </p>
+
+  <pre><code>String texto = "Hola mundo";
+
+String resultado = texto.replace("mundo", "Java");</code></pre>
+
+  <p>Resultado:</p>
+
+  <pre><code>"Hola Java"</code></pre>
+
+  <p>
+    También podemos cambiar caracteres:
+  </p>
+
+  <pre><code>String texto = "banana";
+
+String resultado = texto.replace('a', 'o');</code></pre>
+
+  <p>Resultado:</p>
+
+  <pre><code>"bonono"</code></pre>
+
+
+  <!-- ================================================== -->
+  <!-- 13. REPLACEFIRST -->
+  <!-- ================================================== -->
+
+  <h3>6.13 Reemplazar solo la primera aparición</h3>
+
+  <h4><code>replaceFirst()</code></h4>
+
+  <pre><code>String texto = "banana";
+
+String resultado = texto.replaceFirst("a", "o");</code></pre>
+
+  <p>Resultado:</p>
+
+  <pre><code>"bonana"</code></pre>
+
+  <p>
+    Solo cambia la primera <code>a</code>.
+  </p>
+
+
+  <!-- ================================================== -->
+  <!-- 14. EQUALS -->
+  <!-- ================================================== -->
+
+  <h3>6.14 Comparar Strings</h3>
+
+  <h4><code>equals()</code></h4>
+
+  <p>
+    Para comprobar si dos Strings tienen exactamente el mismo contenido:
+  </p>
+
+  <pre><code>String a = "Hola";
+String b = "Hola";
+
+if (a.equals(b)) {
+    System.out.println("Son iguales");
+}</code></pre>
+
+  <p>Resultado:</p>
+
+  <pre><code>Son iguales</code></pre>
+
+  <div class="note danger">
+    <div class="note-title">Importante</div>
+
+    <p>
+      Para Strings utiliza:
+    </p>
+
+    <pre><code>equals()</code></pre>
+
+    <p>
+      No utilices:
+    </p>
+
+    <pre><code>==</code></pre>
+  </div>
+
+
+  <!-- ================================================== -->
+  <!-- 15. EQUALSIGNORECASE -->
+  <!-- ================================================== -->
+
+  <h3>6.15 Ignorar mayúsculas y minúsculas</h3>
+
+  <h4><code>equalsIgnoreCase()</code></h4>
+
+  <pre><code>String a = "Hola";
+String b = "hola";
+
+a.equalsIgnoreCase(b);</code></pre>
+
+  <p>Resultado:</p>
+
+  <pre><code>true</code></pre>
+
+  <p>
+    Porque ignora la diferencia entre mayúsculas y minúsculas.
+  </p>
+
+
+  <!-- ================================================== -->
+  <!-- 16. ISEMPTY -->
+  <!-- ================================================== -->
+
+  <h3>6.16 Comprobar si está vacío</h3>
+
+  <h4><code>isEmpty()</code></h4>
+
+  <p>
+    Comprueba si el String tiene <strong>0 caracteres</strong>.
+  </p>
+
+  <pre><code>String texto = "";
+
+texto.isEmpty();</code></pre>
+
+  <p>Resultado:</p>
+
+  <pre><code>true</code></pre>
+
+
+  <!-- ================================================== -->
+  <!-- 17. ISBLANK -->
+  <!-- ================================================== -->
+
+  <h3>6.17 Comprobar si está vacío o solo tiene espacios</h3>
+
+  <h4><code>isBlank()</code></h4>
+
+  <pre><code>String texto = "   ";
+
+texto.isBlank();</code></pre>
+
+  <p>Resultado:</p>
+
+  <pre><code>true</code></pre>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Método</th>
+        <th>Significado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>isEmpty()</code></td>
+        <td>No tiene ningún carácter</td>
+      </tr>
+      <tr>
+        <td><code>isBlank()</code></td>
+        <td>Está vacío o solo contiene espacios</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <!-- ================================================== -->
+  <!-- 18. UPPERCASE -->
+  <!-- ================================================== -->
+
+  <h3>6.18 Pasar a mayúsculas</h3>
+
+  <h4><code>toUpperCase()</code></h4>
+
+  <pre><code>String texto = "hola";
+
+String resultado = texto.toUpperCase();</code></pre>
+
+  <p>Resultado:</p>
+
+  <pre><code>"HOLA"</code></pre>
+
+
+  <!-- ================================================== -->
+  <!-- 19. LOWERCASE -->
+  <!-- ================================================== -->
+
+  <h3>6.19 Pasar a minúsculas</h3>
+
+  <h4><code>toLowerCase()</code></h4>
+
+  <pre><code>String texto = "HOLA";
+
+String resultado = texto.toLowerCase();</code></pre>
+
+  <p>Resultado:</p>
+
+  <pre><code>"hola"</code></pre>
+
+
+  <!-- ================================================== -->
+  <!-- 20. TRIM -->
+  <!-- ================================================== -->
+
+  <h3>6.20 Quitar espacios del principio y final</h3>
+
+  <h4><code>trim()</code></h4>
+
+  <p>
+    Elimina espacios al principio y al final.
+  </p>
+
+  <pre><code>String texto = "   Hola   ";
+
+String resultado = texto.trim();</code></pre>
+
+  <p>Resultado:</p>
+
+  <pre><code>"Hola"</code></pre>
+
+  <p>
+    No elimina los espacios que están en medio:
+  </p>
+
+  <pre><code>"   Hola mundo   "
+       ↓
+"Hola mundo"</code></pre>
+
+
+  <!-- ================================================== -->
+  <!-- 21. STARTSWITH -->
+  <!-- ================================================== -->
+
+  <h3>6.21 Comprobar si empieza por algo</h3>
+
+  <h4><code>startsWith()</code></h4>
+
+  <pre><code>String texto = "Hola mundo";
+
+texto.startsWith("Hola");</code></pre>
+
+  <p>Resultado:</p>
+
+  <pre><code>true</code></pre>
+
+  <p>Ejemplo:</p>
+
+  <pre><code>if (texto.startsWith("http")) {
+    // Es una URL
+}</code></pre>
+
+
+  <!-- ================================================== -->
+  <!-- 22. ENDSWITH -->
+  <!-- ================================================== -->
+
+  <h3>6.22 Comprobar si termina por algo</h3>
+
+  <h4><code>endsWith()</code></h4>
+
+  <pre><code>String archivo = "foto.jpg";
+
+archivo.endsWith(".jpg");</code></pre>
+
+  <p>Resultado:</p>
+
+  <pre><code>true</code></pre>
+
+  <p>
+    Muy útil para comprobar extensiones:
+  </p>
+
+  <pre><code>.jpg
+.png
+.txt
+.pdf</code></pre>
+
+
+  <!-- ================================================== -->
+  <!-- 23. TABLA RESUMEN -->
+  <!-- ================================================== -->
+
+  <h3>6.23 Tabla de funciones importantes</h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Función</th>
+        <th>¿Para qué sirve?</th>
+        <th>Ejemplo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>length()</code></td>
+        <td>Saber la cantidad de caracteres</td>
+        <td><code>str.length()</code></td>
+      </tr>
+      <tr>
+        <td><code>charAt()</code></td>
+        <td>Obtener un carácter</td>
+        <td><code>str.charAt(0)</code></td>
+      </tr>
+      <tr>
+        <td><code>substring()</code></td>
+        <td>Obtener una parte</td>
+        <td><code>str.substring(2, 5)</code></td>
+      </tr>
+      <tr>
+        <td><code>contains()</code></td>
+        <td>Comprobar si contiene algo</td>
+        <td><code>str.contains("a")</code></td>
+      </tr>
+      <tr>
+        <td><code>indexOf()</code></td>
+        <td>Buscar la posición</td>
+        <td><code>str.indexOf("a")</code></td>
+      </tr>
+      <tr>
+        <td><code>lastIndexOf()</code></td>
+        <td>Buscar la última posición</td>
+        <td><code>str.lastIndexOf("a")</code></td>
+      </tr>
+      <tr>
+        <td><code>replace()</code></td>
+        <td>Sustituir texto o caracteres</td>
+        <td><code>str.replace('a','o')</code></td>
+      </tr>
+      <tr>
+        <td><code>replaceFirst()</code></td>
+        <td>Sustituir la primera aparición</td>
+        <td><code>str.replaceFirst("a","o")</code></td>
+      </tr>
+      <tr>
+        <td><code>equals()</code></td>
+        <td>Comparar Strings</td>
+        <td><code>a.equals(b)</code></td>
+      </tr>
+      <tr>
+        <td><code>equalsIgnoreCase()</code></td>
+        <td>Comparar ignorando mayúsculas</td>
+        <td><code>a.equalsIgnoreCase(b)</code></td>
+      </tr>
+      <tr>
+        <td><code>isEmpty()</code></td>
+        <td>Comprobar si está vacío</td>
+        <td><code>str.isEmpty()</code></td>
+      </tr>
+      <tr>
+        <td><code>isBlank()</code></td>
+        <td>Vacío o espacios</td>
+        <td><code>str.isBlank()</code></td>
+      </tr>
+      <tr>
+        <td><code>toUpperCase()</code></td>
+        <td>Convertir a mayúsculas</td>
+        <td><code>str.toUpperCase()</code></td>
+      </tr>
+      <tr>
+        <td><code>toLowerCase()</code></td>
+        <td>Convertir a minúsculas</td>
+        <td><code>str.toLowerCase()</code></td>
+      </tr>
+      <tr>
+        <td><code>trim()</code></td>
+        <td>Quitar espacios de los extremos</td>
+        <td><code>str.trim()</code></td>
+      </tr>
+      <tr>
+        <td><code>startsWith()</code></td>
+        <td>Comprobar cómo empieza</td>
+        <td><code>str.startsWith("A")</code></td>
+      </tr>
+      <tr>
+        <td><code>endsWith()</code></td>
+        <td>Comprobar cómo termina</td>
+        <td><code>str.endsWith(".txt")</code></td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <!-- ================================================== -->
+  <!-- LAS MÁS IMPORTANTES -->
+  <!-- ================================================== -->
+
+  <h3>Las más importantes para programar</h3>
+
+  <p>
+    Si estás empezando con Java, intenta dominar primero estas:
+  </p>
+
+  <pre><code>                    STRING
+                       |
+        ┌───────────────┼───────────────┐
+        ↓               ↓               ↓
+     OBTENER          BUSCAR          CREAR
+        |               |               |
+    charAt()        contains()      resultado + ...
+    length()        indexOf()       StringBuilder
+    substring()     lastIndexOf()
+        |
+        ↓
+    MODIFICAR
+        |
+    replace()
+    eliminar → construir otro String
+    sustituir → construir otro String</code></pre>
+
+  <h4>Las 5 que más vas a utilizar</h4>
+
+  <div class="note">
+    <div class="note-title"><code>length()</code></div>
+    <p>¿Cuántos caracteres hay?</p>
+    <pre><code>str.length()</code></pre>
+  </div>
+
+  <div class="note">
+    <div class="note-title"><code>charAt()</code></div>
+    <p>¿Qué carácter hay en esta posición?</p>
+    <pre><code>str.charAt(i)</code></pre>
+  </div>
+
+  <div class="note">
+    <div class="note-title"><code>substring()</code></div>
+    <p>¿Qué parte del String quiero?</p>
+    <pre><code>str.substring(inicio, final)</code></pre>
+  </div>
+
+  <div class="note">
+    <div class="note-title"><code>contains()</code></div>
+    <p>¿El String contiene esto?</p>
+    <pre><code>str.contains("hola")</code></pre>
+  </div>
+
+  <div class="note">
+    <div class="note-title"><code>indexOf()</code></div>
+    <p>¿En qué posición está?</p>
+    <pre><code>str.indexOf("hola")</code></pre>
+  </div>
+
+
+  <!-- ================================================== -->
+  <!-- STRING ES INMUTABLE -->
+  <!-- ================================================== -->
+
+  <h3>Idea clave: String es inmutable</h3>
+
+  <p>
+    Un <code>String</code> <strong>no cambia directamente</strong>.
+  </p>
+
+  <pre><code>String texto = "Hola";
+
+texto.replace("Hola", "Adiós");</code></pre>
+
+  <p>
+    Esto no cambia <code>texto</code> por sí solo.
+    Hay que guardar el resultado:
+  </p>
+
+  <pre><code>texto = texto.replace("Hola", "Adiós");</code></pre>
+
+  <p>Ahora:</p>
+
+  <pre><code>texto → "Adiós"</code></pre>
+
+  <div class="note">
+    <div class="note-title">Idea importante</div>
+
+    <p>
+      Cuando hacemos ejercicios como eliminar o sustituir caracteres,
+      normalmente seguimos este proceso:
+    </p>
+
+    <pre><code>STRING ORIGINAL
+       ↓
+recorremos / buscamos
+       ↓
+creamos RESULTADO
+       ↓
+nuevo STRING</code></pre>
+  </div>
+
+  <div class="note warning">
+    <div class="note-title">Recuerda</div>
+
+    <p>
+      Esta idea es muy importante para los ejercicios de
+      <code>String</code> de Java.
+    </p>
+  </div>
+
+</section>
+
+      <!-- ================================================== -->
       <!-- ============ 7. POO ============ -->
       <!-- ================================================== -->
       <section id="poo">

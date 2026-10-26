@@ -1306,21 +1306,391 @@ System.out.println("Hola " + nombre + ", tienes " + edad + " años");</code></pr
 
         <p>Son las que deciden <em>qué se ejecuta</em> y <em>cuántas veces</em>.</p>
 
-        <h3 id="if">3.1 if / else</h3>
-        <p>Ejecuta código solo si una condición es verdadera.</p>
+        <h3 id="if">3.1 Estructuras condicionales: <code>if / else</code></h3>
 
-<pre><code>if (edad &lt; 18) {
-    System.out.println("Menor de edad");
-} else if (edad &lt; 65) {
-    System.out.println("Adulto");
-} else {
-    System.out.println("Mayor");
+        <h4 id="if-que-es">¿Qué es un <code>if</code>?</h4>
+
+        <p>
+          El <code>if</code> sirve para ejecutar un bloque de código solo si una
+          condición es verdadera (<code>true</code>).
+        </p>
+
+        <p>
+          La condición debe dar un resultado booleano: <code>true</code> o
+          <code>false</code>.
+        </p>
+
+<pre><code>int edat = 20;
+
+if (edat &gt;= 18) {
+    System.out.println("Ets major d'edat");
 }</code></pre>
+
+        <ul>
+          <li>
+            Si la condición es <code>true</code>, se ejecuta el código del
+            <code>if</code>.
+          </li>
+          <li>
+            Si la condición es <code>false</code>, se salta el bloque y el
+            programa continúa con las instrucciones siguientes.
+          </li>
+        </ul>
+
+        <h4 id="if-solo"><code>if</code> solo</h4>
+
+        <p>
+          Se utiliza cuando queremos ejecutar una acción únicamente si se
+          cumple una condición.
+        </p>
+
+<pre><code>int num = 10;
+
+if (num &gt; 0) {
+    System.out.println("El nombre és positiu");
+}</code></pre>
+
+        <p>
+          Si <code>num</code> es mayor que <code>0</code>, muestra el mensaje.
+          Si no lo es, no hace nada dentro del <code>if</code>.
+        </p>
+
+        <p>
+          <strong>Importante:</strong> el <code>if</code> no necesita
+          obligatoriamente un <code>else</code>. Podemos utilizarlo solo.
+        </p>
+
+        <h4 id="if-else"><code>if / else</code></h4>
+
+        <p>
+          Se utiliza cuando queremos ejecutar una acción si se cumple una
+          condición y otra acción diferente si no se cumple.
+        </p>
+
+<pre><code>int edat = 16;
+
+if (edat &gt;= 18) {
+    System.out.println("Ets major d'edat");
+} else {
+    System.out.println("Ets menor d'edat");
+}</code></pre>
+
+        <ul>
+          <li>
+            <code>if</code>: se ejecuta si la condición es verdadera.
+          </li>
+          <li>
+            <code>else</code>: se ejecuta si la condición es falsa.
+          </li>
+        </ul>
+
+        <p>
+          El programa ejecuta uno de los dos bloques, nunca ambos.
+        </p>
+
+        <p>
+          <strong>Importante:</strong> el <code>else</code> es opcional. Solo
+          lo ponemos cuando queremos indicar qué debe hacer el programa si no
+          se cumple la condición.
+        </p>
+
+        <h4 id="if-else-if"><code>if / else if</code></h4>
+
+        <p>
+          Se utiliza cuando queremos comprobar varias condiciones diferentes.
+        </p>
+
+<pre><code>int nota = 7;
+
+if (nota &gt;= 9) {
+    System.out.println("Excel·lent");
+} else if (nota &gt;= 5) {
+    System.out.println("Aprovat");
+}</code></pre>
+
+        <ul>
+          <li>
+            Si la nota es igual o superior a <code>9</code>, muestra
+            <code>Excel·lent</code>.
+          </li>
+          <li>
+            Si la primera condición es falsa, comprueba si la nota es igual o
+            superior a <code>5</code>.
+          </li>
+          <li>
+            Si ninguna condición se cumple, no se ejecuta ninguno de los
+            bloques.
+          </li>
+        </ul>
+
+        <p>
+          Podemos añadir tantos <code>else if</code> como necesitemos.
+        </p>
+
+        <h4 id="if-else-if-else"><code>if / else if / else</code></h4>
+
+        <p>
+          Se utiliza cuando tenemos varias condiciones y queremos establecer
+          una acción final si ninguna se cumple.
+        </p>
+
+<pre><code>int nota = 3;
+
+if (nota &gt;= 9) {
+    System.out.println("Excel·lent");
+} else if (nota &gt;= 5) {
+    System.out.println("Aprovat");
+} else {
+    System.out.println("Suspès");
+}</code></pre>
+
+        <p>
+          En este caso, muestra <code>Suspès</code> porque la nota no cumple
+          ninguna de las dos primeras condiciones.
+        </p>
+
+        <p>
+          El <code>else</code> final recoge todos los casos en los que no se
+          cumple ninguna condición anterior.
+        </p>
+
+        <div class="note">
+          <div class="note-title">Recuerda</div>
+          <p>
+            En una misma estructura <code>if / else if / else</code>, cuando se
+            cumple una condición, se ejecuta su bloque y se saltan las demás
+            alternativas.
+          </p>
+        </div>
+
+        <h4 id="if-varios">Varios <code>if</code> independientes</h4>
+
+        <p>
+          Podemos poner varios <code>if</code> seguidos cuando queremos
+          comprobar diferentes condiciones que pueden cumplirse al mismo tiempo.
+        </p>
+
+<pre><code>double compra = 120;
+boolean esSocio = true;
+
+if (compra &gt;= 50) {
+    System.out.println("Enviament gratuït");
+}
+
+if (compra &gt;= 100) {
+    System.out.println("Descompte de 10 euros");
+}
+
+if (esSocio) {
+    System.out.println("Descompte per ser soci");
+}</code></pre>
+
+        <p><strong>Resultado:</strong></p>
+
+<pre><code>Enviament gratuït
+Descompte de 10 euros
+Descompte per ser soci</code></pre>
+
+        <p>
+          Se muestran los tres mensajes porque las tres condiciones son
+          verdaderas.
+        </p>
+
+        <p><strong>¿Por qué utilizamos varios <code>if</code>?</strong></p>
+
+        <p>
+          Porque queremos comprobar cada condición de manera independiente.
+          Aunque se cumpla el primer <code>if</code>, el programa continúa
+          comprobando los siguientes.
+        </p>
+
+        <p>
+          Si utilizáramos <code>else if</code>, solo se ejecutaría el primer
+          bloque cuya condición fuera verdadera, y los demás se saltarían.
+        </p>
+
+        <h4 id="if-diferencia">Diferencia entre <code>if</code> independientes y <code>else if</code></h4>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Estructura</th>
+              <th>Funcionamiento</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Varios <code>if</code> independientes</td>
+              <td>
+                Comprueba todas las condiciones y puede ejecutar varios
+                bloques.
+              </td>
+            </tr>
+            <tr>
+              <td><code>if / else if</code></td>
+              <td>
+                Comprueba las condiciones en orden y ejecuta como máximo uno
+                de los bloques.
+              </td>
+            </tr>
+            <tr>
+              <td><code>if / else if / else</code></td>
+              <td>
+                Igual que el anterior, pero incluye una alternativa final si
+                ninguna condición se cumple.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p><strong>Ejemplo para recordar la diferencia:</strong></p>
+
+<pre><code>int num = 10;
+
+if (num &gt; 0) {
+    System.out.println("Positiu");
+}
+
+if (num &gt;= 10) {
+    System.out.println("Gran o igual a 10");
+}</code></pre>
+
+        <p>
+          Los dos mensajes se muestran porque son dos <code>if</code>
+          independientes.
+        </p>
+
+        <p>En cambio:</p>
+
+<pre><code>int num = 10;
+
+if (num &gt; 0) {
+    System.out.println("Positiu");
+} else if (num &gt;= 10) {
+    System.out.println("Gran o igual a 10");
+}</code></pre>
+
+        <p>
+          Solo se muestra <code>Positiu</code>, porque la primera condición ya
+          se cumple y se salta el <code>else if</code>.
+        </p>
+
+        <h4 id="if-combinaciones">Todas las combinaciones</h4>
+
+        <p><strong>1. Solo <code>if</code></strong></p>
+
+<pre><code>if (condicio) {
+    // Codi
+}</code></pre>
+
+        <p><strong>2. <code>if / else</code></strong></p>
+
+<pre><code>if (condicio) {
+    // Si és true
+} else {
+    // Si és false
+}</code></pre>
+
+        <p><strong>3. <code>if / else if</code></strong></p>
+
+<pre><code>if (condicio1) {
+    // Codi 1
+} else if (condicio2) {
+    // Codi 2
+}</code></pre>
+
+        <p><strong>4. <code>if / else if / else</code></strong></p>
+
+<pre><code>if (condicio1) {
+    // Codi 1
+} else if (condicio2) {
+    // Codi 2
+} else {
+    // Si cap condició es compleix
+}</code></pre>
+
+        <p><strong>5. Varios <code>if</code> independientes</strong></p>
+
+<pre><code>if (condicio1) {
+    // Codi 1
+}
+
+if (condicio2) {
+    // Codi 2
+}
+
+if (condicio3) {
+    // Codi 3
+}</code></pre>
+
+        <p>Cada condición se comprueba por separado.</p>
+
+        <div class="note">
+          <div class="note-title">Reglas importantes</div>
+          <ul>
+            <li>
+              La condición del <code>if</code> debe estar entre paréntesis
+              <code>()</code>.
+            </li>
+            <li>
+              Las llaves <code>{}</code> delimitan el bloque de código que se
+              ejecuta cuando se cumple la condición.
+            </li>
+            <li>
+              El <code>else</code> no lleva condición ni paréntesis.
+            </li>
+            <li>
+              El <code>else if</code> sí lleva una condición entre paréntesis.
+            </li>
+            <li>No es obligatorio utilizar <code>else</code>.</li>
+            <li>
+              Podemos utilizar tantos <code>else if</code> como necesitemos.
+            </li>
+            <li>Podemos poner varios <code>if</code> independientes seguidos.</li>
+            <li>
+              Si queremos que se puedan ejecutar varias acciones, cada una
+              según su propia condición, utilizamos varios <code>if</code>
+              independientes.
+            </li>
+            <li>
+              Si queremos elegir una sola alternativa entre varias,
+              utilizamos <code>if / else if / else</code>.
+            </li>
+          </ul>
+        </div>
+
+        <div class="note">
+          <div class="note-title">Resumen para memorizar</div>
+          <ul>
+            <li>
+              <code>if</code>: si se cumple la condición, ejecuta el código.
+            </li>
+            <li>
+              <code>else</code>: si no se cumple la condición del
+              <code>if</code>, ejecuta otra acción.
+            </li>
+            <li>
+              <code>else if</code>: si la condición anterior no se cumple,
+              comprueba otra condición.
+            </li>
+            <li>
+              <code>if / else if / else</code>: permite elegir entre varias
+              alternativas.
+            </li>
+            <li>
+              Varios <code>if</code>: permiten comprobar condiciones
+              independientes y ejecutar varias acciones si se cumplen sus
+              condiciones.
+            </li>
+          </ul>
+        </div>
 
         <div class="note">
           <div class="note-title">Operador ternario</div>
-          <p>Para un <code>if/else</code> simple que asigna un valor, queda más limpio
-            con el ternario:</p>
+          <p>
+            Para un <code>if/else</code> simple que asigna un valor, queda más
+            limpio con el ternario:
+          </p>
 <pre><code>String tipo = (edad &lt; 18) ? "Menor" : "Adulto";</code></pre>
         </div>
 

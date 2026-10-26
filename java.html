@@ -56,9 +56,14 @@
         <li><a href="#tipos">2. Tipos de datos</a></li>
         <li class="sub"><a href="#primitivos">2.1 Primitivos</a></li>
         <li class="sub"><a href="#referencia">2.2 Por referencia</a></li>
-        <li class="sub"><a href="#expressions">2.3 Expressions i operadors</a></li>
-        <li class="sub"><a href="#comparacio">Operadors de comparació</a></li>
-        <li class="sub"><a href="#operadores">Resum d'operadors</a></li>
+        <li class="sub"><a href="#operadores">2.3 Operadors</a></li>
+        <li class="sub"><a href="#aritmetics">2.3.1 Aritmètics</a></li>
+        <li class="sub"><a href="#comparacio">2.3.2 Relacionals</a></li>
+        <li class="sub"><a href="#logics">2.3.3 Lògics</a></li>
+        <li class="sub"><a href="#assignacio">2.3.4 Assignació</a></li>
+        <li class="sub"><a href="#increment">2.3.5 Increment</a></li>
+        <li class="sub"><a href="#ternari">2.3.6 Ternari</a></li>
+        <li class="sub"><a href="#precedencia">2.3.7 Precedència</a></li>
         <li class="sub"><a href="#io">2.4 Entrada / Salida</a></li>
 
         <li><a href="#control">3. Control de flujo</a></li>
@@ -203,33 +208,79 @@ Scanner sc = new Scanner(System.in);  // objeto Scanner</code></pre>
         </table>
 
                 <!-- ================================================== -->
-        <!-- ============ 2.3 EXPRESSIONS ============ -->
+        <!-- ============ 2.3 OPERADORS ============ -->
         <!-- ================================================== -->
-        <h3 id="expressions">2.3 Expressions</h3>
+        <a id="expressions"></a>
+        <h3 id="operadores">2.3 Operadors</h3>
 
         <p>
           Una <strong>expressió</strong> és una combinació de
           <strong>variables</strong>, <strong>constants</strong> i
-          <strong>operadors</strong> que, en ser avaluada pel processador,
-          produeix un <strong>únic valor</strong> com a resultat.
+          <strong>operadors</strong> que, en ser avaluada, produeix un
+          <strong>únic valor</strong>.
         </p>
+
+        <p>
+          Els <strong>operadors</strong> són els símbols que indiquen quina
+          operació es fa entre els valors. Segons la seva funció es
+          classifiquen en aquestes categories:
+        </p>
+
+        <table>
+          <thead>
+            <tr><th>Categoria</th><th>Operadors</th><th>Secció</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Aritmètics</strong></td>
+              <td><code>+</code> <code>-</code> <code>*</code> <code>/</code> <code>%</code></td>
+              <td><a href="#aritmetics">2.3.1</a></td>
+            </tr>
+            <tr>
+              <td><strong>Relacionals</strong></td>
+              <td><code>==</code> <code>!=</code> <code>&lt;</code> <code>&gt;</code> <code>&lt;=</code> <code>&gt;=</code></td>
+              <td><a href="#comparacio">2.3.2</a></td>
+            </tr>
+            <tr>
+              <td><strong>Lògics</strong></td>
+              <td><code>&amp;&amp;</code> (AND) · <code>||</code> (OR) · <code>!</code> (NOT) · <code>^</code> (XOR)</td>
+              <td><a href="#logics">2.3.3</a></td>
+            </tr>
+            <tr>
+              <td><strong>Assignació</strong></td>
+              <td><code>=</code> <code>+=</code> <code>-=</code> <code>*=</code> <code>/=</code> <code>%=</code></td>
+              <td><a href="#assignacio">2.3.4</a></td>
+            </tr>
+            <tr>
+              <td><strong>Increment / decrement</strong></td>
+              <td><code>++</code> <code>--</code></td>
+              <td><a href="#increment">2.3.5</a></td>
+            </tr>
+            <tr>
+              <td><strong>Ternari</strong></td>
+              <td><code>condició ? valorSi : valorNo</code></td>
+              <td><a href="#ternari">2.3.6</a></td>
+            </tr>
+          </tbody>
+        </table>
 
         <div class="note">
           <div class="note-title">Idea clau</div>
           <p>
             Una expressió es calcula i sempre produeix un únic resultat.
+            L'operador indica quina operació s'aplica i el tipus del resultat
+            depèn dels operands.
           </p>
         </div>
 
 
-        <!-- ============ EXPRESSIONS NUMÈRIQUES ============ -->
+        <!-- ============ OPERADORS ARITMÈTICS ============ -->
 
-        <h4>Expressions numèriques</h4>
+        <h4 id="aritmetics">2.3.1 Operadors aritmètics</h4>
 
         <p>
-          Són expressions que operen amb dades de tipus
-          <code>int</code> o <code>double</code>. Serveixen per realitzar
-          <strong>càlculs matemàtics</strong> i transformacions de dades.
+          Serveixen per realitzar <strong>càlculs matemàtics</strong> amb
+          valors de tipus <code>int</code> o <code>double</code>.
         </p>
 
         <table>
@@ -573,104 +624,20 @@ double mitjana = (double) totalPunts / jugadors;
         </p>
 
 
-        <!-- ============ PRECEDÈNCIA ============ -->
+        <!-- ============ COMPARACIÓ ============ -->
 
-        <h4>Ordre de precedència</h4>
-
-        <p>
-          Java segueix un ordre de precedència quan calcula una expressió.
-          No sempre calcula les operacions simplement d'esquerra a dreta.
-        </p>
-
-        <table>
-          <thead>
-            <tr>
-              <th>Prioritat</th>
-              <th>Operadors</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td><code>()</code> Parèntesis</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td><code>*</code> <code>/</code> <code>%</code></td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td><code>+</code> <code>-</code></td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div class="note">
-          <div class="note-title">Regla ràpida</div>
-<pre><code>()
- ↓
-*  /  %
- ↓
-+  -</code></pre>
-        </div>
-
-        <p><strong>Exemple sense parèntesis:</strong></p>
-
-<pre><code>int a = 10;
-int b = 5;
-int c = 2;
-
-int resultat = a + b * c;
-
-// 1. 5 * 2 = 10
-// 2. 10 + 10 = 20
-
-// resultat = 20</code></pre>
-
-        <p><strong>Exemple amb parèntesis:</strong></p>
-
-<pre><code>int resultat = (a + b) * c;
-
-// 1. 10 + 5 = 15
-// 2. 15 * 2 = 30
-
-// resultat = 30</code></pre>
-
-
-        <!-- ============ EXPRESSIONS BOOLEANES ============ -->
-
-        <h4>Expressions booleanes</h4>
+        <h4 id="comparacio">2.3.2 Operadors de relació o comparació</h4>
 
         <p>
           Una <strong>expressió booleana</strong> és una expressió que només
-          pot produir un dels dos valors:
-        </p>
-
-        <div class="example">
-          <h4>Els dos possibles resultats</h4>
-<pre><code>true
-false</code></pre>
-        </div>
-
-        <p>
-          S'utilitzen principalment per prendre decisions amb estructures
+          pot produir un dels dos valors: <code>true</code> o
+          <code>false</code>. S'utilitzen per prendre decisions amb estructures
           com <code>if</code> i per controlar bucles.
         </p>
 
-<pre><code>10 > 5
-// true
-
-10 < 5
-// false</code></pre>
-
-
-        <!-- ============ COMPARACIÓ ============ -->
-
-        <h4 id="comparacio">Operadors de relació o comparació</h4>
-
         <p>
-          Serveixen per comparar <strong>dos valors</strong> i obtenir un
-          resultat booleà: <code>true</code> o <code>false</code>.
+          Els <strong>operadors de comparació</strong> serveixen per comparar
+          <strong>dos valors</strong> i obtenir un resultat booleà.
         </p>
 
         <div class="note">
@@ -806,7 +773,7 @@ System.out.println(edat &gt;= 18 &amp;&amp; edat &lt;= 65); // true</code></pre>
 
         <!-- ============ OPERADORS LÒGICS ============ -->
 
-        <h4>Expressions booleanes amb operadors lògics</h4>
+        <h4 id="logics">2.3.3 Operadors lògics</h4>
 
         <p>
           Els operadors lògics permeten combinar diverses expressions
@@ -1042,30 +1009,232 @@ System.out.println(edat &gt;= 18 &amp;&amp; edat &lt;= 65); // true</code></pre>
 <pre><code>true || algunaCosa</code></pre>
         </div>
 
-        <h4 id="operadores">Resum d'operadors</h4>
+        <!-- ============ ASSIGNACIÓ ============ -->
+
+        <h4 id="assignacio">2.3.4 Operadors d'assignació</h4>
 
         <p>
-          Taula resum de les categories d'operadors que hem vist:
+          Serveixen per <strong>guardar un valor</strong> dins d'una variable.
+          L'operador bàsic és <code>=</code>; les formes compostes fan una
+          operació i assignen el resultat a la mateixa variable.
         </p>
 
         <table>
-          <thead><tr><th>Categoría</th><th>Operadores</th></tr></thead>
+          <thead>
+            <tr>
+              <th>Operador</th>
+              <th>Significat</th>
+              <th>Equival a</th>
+              <th>Exemple</th>
+            </tr>
+          </thead>
           <tbody>
-            <tr><td><strong>Aritméticos</strong></td><td><code>+ &nbsp; - &nbsp; * &nbsp; / &nbsp; %</code></td></tr>
-            <tr><td><strong>Relacionales</strong></td><td><code>== &nbsp; != &nbsp; &lt; &nbsp; &gt; &nbsp; &lt;= &nbsp; &gt;=</code></td></tr>
-            <tr><td><strong>Lógicos</strong></td><td><code>&amp;&amp;</code> (AND) · <code>||</code> (OR) · <code>!</code> (NOT)</td></tr>
-            <tr><td><strong>Asignación</strong></td><td><code>= &nbsp; += &nbsp; -= &nbsp; *= &nbsp; /=</code></td></tr>
-            <tr><td><strong>Incremento</strong></td><td><code>++</code> &nbsp; <code>--</code></td></tr>
-            <tr><td><strong>Ternario</strong></td><td><code>condición ? valorSi : valorNo</code></td></tr>
+            <tr><td><code>=</code></td><td>Assigna un valor</td><td>—</td><td><code>edat = 20</code></td></tr>
+            <tr><td><code>+=</code></td><td>Suma i assigna</td><td><code>edat = edat + 5</code></td><td><code>edat += 5</code></td></tr>
+            <tr><td><code>-=</code></td><td>Resta i assigna</td><td><code>edat = edat - 5</code></td><td><code>edat -= 5</code></td></tr>
+            <tr><td><code>*=</code></td><td>Multiplica i assigna</td><td><code>preu = preu * 2</code></td><td><code>preu *= 2</code></td></tr>
+            <tr><td><code>/=</code></td><td>Divideix i assigna</td><td><code>preu = preu / 2</code></td><td><code>preu /= 2</code></td></tr>
+            <tr><td><code>%=</code></td><td>Mòdul i assigna</td><td><code>n = n % 3</code></td><td><code>n %= 3</code></td></tr>
           </tbody>
         </table>
 
-<pre><code>int a = 10, b = 3;
-int suma   = a + b;     // 13
-int resto  = a % b;     // 1  (el % es el módulo, el resto de la división)
-boolean ok = (a > b);   // true
+<pre><code>int edat = 20;   // assignació simple
+edat += 5;       // edat = 20 + 5 = 25
+edat -= 10;      // edat = 25 - 10 = 15
+edat *= 2;       // edat = 15 * 2 = 30
+edat /= 3;       // edat = 30 / 3 = 10</code></pre>
 
-int max = (a > b) ? a : b;  // operador ternario → 10</code></pre>
+        <div class="note warning">
+          <div class="note-title">No confonguis <code>=</code> amb <code>==</code></div>
+          <p>
+            <code>=</code> assigna un valor; <code>==</code> compara dos
+            valors i retorna <code>true</code> o <code>false</code>.
+          </p>
+        </div>
+
+
+        <!-- ============ INCREMENT I DECREMENT ============ -->
+
+        <h4 id="increment">2.3.5 Operadors d'increment i decrement</h4>
+
+        <p>
+          <code>++</code> suma <code>1</code> a una variable i <code>--</code>
+          li resta <code>1</code>. Són molt habituals en els bucles.
+        </p>
+
+<pre><code>int i = 5;
+
+i++;            // i passa a 6
+i--;            // i torna a 5
+
+for (int j = 0; j &lt; 3; j++) {
+    System.out.println(j);  // 0, 1, 2
+}</code></pre>
+
+        <p>
+          Es poden escriure abans o després de la variable. La diferència es
+          nota quan s'utilitza el valor dins d'una altra expressió:
+        </p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Forma</th>
+              <th>Nom</th>
+              <th>Què fa</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>++a</code></td>
+              <td>Prefix</td>
+              <td>Incrementa primer i després utilitza el valor</td>
+            </tr>
+            <tr>
+              <td><code>a++</code></td>
+              <td>Postfix</td>
+              <td>Utilitza el valor i després l'incrementa</td>
+            </tr>
+          </tbody>
+        </table>
+
+<pre><code>int a = 5;
+System.out.println(a++);  // mostra 5, després a val 6
+System.out.println(a);    // 6
+
+int b = 5;
+System.out.println(++b);  // b passa a 6 i mostra 6</code></pre>
+
+
+        <!-- ============ TERNARI ============ -->
+
+        <h4 id="ternari">2.3.6 Operador ternari</h4>
+
+        <p>
+          És una forma curta d'escollir entre dos valors segons una condició.
+          Té tres parts: <code>condició ? valorSiCert : valorSiFals</code>.
+        </p>
+
+<pre><code>int edat = 20;
+String tipus = (edat &gt;= 18) ? "Adult" : "Menor";
+System.out.println(tipus);  // Adult</code></pre>
+
+        <p>
+          És equivalent a un <code>if / else</code> que assigna un valor:
+        </p>
+
+<pre><code>int a = 10;
+int b = 3;
+int max = (a &gt; b) ? a : b;  // 10</code></pre>
+
+        <div class="note">
+          <div class="note-title">Quan utilitzar-lo</div>
+          <p>
+            Quan les dues opcions són curtes i el resultat s'assigna a una
+            variable. Si la lògica és més complexa, és més clar un
+            <code>if / else</code>.
+          </p>
+        </div>
+
+
+        <!-- ============ PRECEDÈNCIA ============ -->
+
+        <h4 id="precedencia">2.3.7 Ordre de precedència</h4>
+
+        <p>
+          Java segueix un ordre de precedència quan calcula una expressió.
+          No sempre calcula les operacions simplement d'esquerra a dreta.
+        </p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Prioritat</th>
+              <th>Operadors</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td><code>()</code> Parèntesis</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td><code>++</code> <code>--</code> <code>!</code> <code>*</code> <code>/</code> <code>%</code></td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td><code>+</code> <code>-</code></td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td><code>&lt;</code> <code>&gt;</code> <code>&lt;=</code> <code>&gt;=</code></td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td><code>==</code> <code>!=</code></td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td><code>&amp;&amp;</code></td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td><code>||</code></td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td><code>? :</code> Ternari</td>
+            </tr>
+            <tr>
+              <td>9</td>
+              <td><code>=</code> <code>+=</code> <code>-=</code> <code>*=</code> <code>/=</code></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="note">
+          <div class="note-title">Regla ràpida</div>
+<pre><code>()
+ ↓
+++  --  !
+ ↓
+*  /  %
+ ↓
++  -
+ ↓
+&lt;  &gt;  &lt;=  &gt;=  ==  !=
+ ↓
+&amp;&amp;
+ ↓
+||
+ ↓
+? :
+ ↓
+=  +=  -=  *=  /=</code></pre>
+        </div>
+
+        <p><strong>Exemple sense parèntesis:</strong></p>
+
+<pre><code>int a = 10;
+int b = 5;
+int c = 2;
+
+int resultat = a + b * c;
+
+// 1. 5 * 2 = 10
+// 2. 10 + 10 = 20
+
+// resultat = 20</code></pre>
+
+        <p><strong>Exemple amb parèntesis:</strong></p>
+
+<pre><code>int resultat = (a + b) * c;
+
+// 1. 10 + 5 = 15
+// 2. 15 * 2 = 30
+
+// resultat = 30</code></pre>
 
         <h3 id="io">2.4 Entrada y salida básica</h3>
 

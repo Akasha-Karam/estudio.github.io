@@ -57,6 +57,7 @@
         <li class="sub"><a href="#primitivos">2.1 Primitivos</a></li>
         <li class="sub"><a href="#referencia">2.2 Por referencia</a></li>
         <li class="sub"><a href="#operadores">2.3 Operadores</a></li>
+        <li class="sub"><a href="#comparacio">Operadors de comparació</a></li>
         <li class="sub"><a href="#io">2.4 Entrada / Salida</a></li>
 
         <li><a href="#control">3. Control de flujo</a></li>
@@ -664,11 +665,37 @@ false</code></pre>
 
         <!-- ============ COMPARACIÓ ============ -->
 
-        <h4>Operadors de relació o comparació</h4>
+        <h4 id="comparacio">Operadors de relació o comparació</h4>
 
         <p>
-          Serveixen per comparar dos valors i obtenir un resultat booleà.
+          Serveixen per comparar <strong>dos valors</strong> i obtenir un
+          resultat booleà: <code>true</code> o <code>false</code>.
         </p>
+
+        <div class="note">
+          <div class="note-title">Regles importants</div>
+          <ul>
+            <li>
+              Cada operador de comparació compara
+              <strong>dos valors alhora</strong>.
+            </li>
+            <li>
+              En les comparacions numèriques (<code>&lt;</code>,
+              <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code>) es
+              poden comparar valors de tipus diferents, com
+              <code>int</code> i <code>double</code>.
+            </li>
+            <li>
+              No es poden comparar tres valors alhora amb una sola expressió
+              de comparació. Per comparar més valors o establir diverses
+              condicions, s'utilitzen els operadors lògics
+              (<code>&amp;&amp;</code>, <code>||</code>, etc.).
+            </li>
+            <li>
+              Els valors han de ser compatibles amb l'operador utilitzat.
+            </li>
+          </ul>
+        </div>
 
         <table>
           <thead>
@@ -690,27 +717,89 @@ false</code></pre>
               <td><code>edat != 18</code></td>
             </tr>
             <tr>
-              <td><code>></code></td>
+              <td><code>&gt;</code></td>
               <td>Major que</td>
-              <td><code>preu > 50</code></td>
+              <td><code>preu &gt; 50</code></td>
             </tr>
             <tr>
-              <td><code><</code></td>
+              <td><code>&lt;</code></td>
               <td>Menor que</td>
-              <td><code>puntuacio < 0</code></td>
+              <td><code>puntuacio &lt; 0</code></td>
             </tr>
             <tr>
-              <td><code>>=</code></td>
+              <td><code>&gt;=</code></td>
               <td>Major o igual</td>
-              <td><code>stock >= 1</code></td>
+              <td><code>stock &gt;= 1</code></td>
             </tr>
             <tr>
-              <td><code><=</code></td>
+              <td><code>&lt;=</code></td>
               <td>Menor o igual</td>
-              <td><code>temperatura <= 36.5</code></td>
+              <td><code>temperatura &lt;= 36.5</code></td>
             </tr>
           </tbody>
         </table>
+
+        <p><strong>Exemples de comparacions</strong></p>
+
+<pre><code>int a = 5;
+double b = 10.5;
+
+System.out.println(a &lt; b);   // true
+System.out.println(a == b);  // false</code></pre>
+
+        <p>
+          Es poden comparar valors numèrics de tipus diferents, com
+          <code>int</code> i <code>double</code>.
+        </p>
+
+        <p><strong>Comparar més de dos valors</strong></p>
+
+        <p>
+          No es pot escriure una comparació com aquesta en Java:
+        </p>
+
+<pre><code>// Incorrecte
+a &lt; b &lt; 20</code></pre>
+
+        <div class="note warning">
+          <div class="note-title">Per què no funciona?</div>
+          <p>
+            Java avalua primer <code>a &lt; b</code>, que ja retorna un
+            <code>boolean</code>. Després intenta comparar aquest
+            <code>boolean</code> amb <code>20</code>, i això no és permès.
+          </p>
+        </div>
+
+        <p>
+          Si volem comprovar diverses condicions, hem d'utilitzar operadors
+          lògics:
+        </p>
+
+<pre><code>int edat = 20;
+
+System.out.println(edat &gt;= 18 &amp;&amp; edat &lt;= 65); // true</code></pre>
+
+        <p>En aquest cas, es fan dues comparacions:</p>
+
+        <ul>
+          <li><code>edat &gt;= 18</code> → <code>true</code></li>
+          <li><code>edat &lt;= 65</code> → <code>true</code></li>
+        </ul>
+
+        <p>
+          Com que les dues condicions són certes, el resultat final és
+          <code>true</code>.
+        </p>
+
+        <div class="note">
+          <div class="note-title">Idea clau</div>
+          <p>
+            Els operadors de comparació comparen dos valors cada vegada. Si
+            necessitem comprovar diverses condicions, podem combinar les
+            comparacions amb operadors lògics com
+            <code>&amp;&amp;</code> (AND) i <code>||</code> (OR).
+          </p>
+        </div>
 
 
         <!-- ============ OPERADORS LÒGICS ============ -->

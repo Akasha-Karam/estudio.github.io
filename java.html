@@ -56,8 +56,8 @@
         <li><a href="#tipos">2. Tipos de datos</a></li>
         <li class="sub"><a href="#primitivos">2.1 Primitivos</a></li>
         <li class="sub"><a href="#referencia">2.2 Por referencia</a></li>
-        <li class="sub"><a href="#operadores">2.3 Operadors</a></li>
-        <li class="sub"><a href="#aritmetics">2.3.1 Aritmètics</a></li>
+        <li class="sub"><a href="#expressions">2.3 Expressions</a></li>
+        <li class="sub"><a href="#aritmetics">2.3.1 Expressions numèriques</a></li>
         <li class="sub"><a href="#comparacio">2.3.2 Relacionals</a></li>
         <li class="sub"><a href="#logics">2.3.3 Lògics</a></li>
         <li class="sub"><a href="#assignacio">2.3.4 Assignació</a></li>
@@ -208,10 +208,10 @@ Scanner sc = new Scanner(System.in);  // objeto Scanner</code></pre>
         </table>
 
                 <!-- ================================================== -->
-        <!-- ============ 2.3 OPERADORS ============ -->
+        <!-- ============ 2.3 EXPRESSIONS ============ -->
         <!-- ================================================== -->
-        <a id="expressions"></a>
-        <h3 id="operadores">2.3 Operadors</h3>
+        <a id="operadores"></a>
+        <h3 id="expressions">2.3 Expressions</h3>
 
         <p>
           Una <strong>expressió</strong> és una combinació de
@@ -274,13 +274,14 @@ Scanner sc = new Scanner(System.in);  // objeto Scanner</code></pre>
         </div>
 
 
-        <!-- ============ OPERADORS ARITMÈTICS ============ -->
+        <!-- ============ EXPRESSIONS NUMÈRIQUES ============ -->
 
-        <h4 id="aritmetics">2.3.1 Operadors aritmètics</h4>
+        <h4 id="aritmetics">2.3.1 Expressions numèriques</h4>
 
         <p>
-          Serveixen per realitzar <strong>càlculs matemàtics</strong> amb
-          valors de tipus <code>int</code> o <code>double</code>.
+          Són expressions que operen amb dades de tipus
+          <code>int</code> o <code>double</code>. Serveixen per realitzar
+          <strong>càlculs matemàtics</strong> i transformacions de dades.
         </p>
 
         <table>
@@ -708,7 +709,22 @@ double mitjana = (double) totalPunts / jugadors;
           </tbody>
         </table>
 
-        <p><strong>Exemples de comparacions</strong></p>
+        <p><strong>Exemples amb valors concrets</strong></p>
+
+<pre><code>int edat = 20;
+double preu = 50.0;
+double temperatura = 36.5;
+
+System.out.println(edat == 18);           // false
+System.out.println(edat != 18);           // true
+System.out.println(preu &gt; 50);            // false
+System.out.println(preu &gt;= 50);           // true
+System.out.println(temperatura &lt;= 36.5);  // true</code></pre>
+
+        <p>
+          També es poden comparar valors numèrics de tipus diferents, com
+          <code>int</code> i <code>double</code>:
+        </p>
 
 <pre><code>int a = 5;
 double b = 10.5;
@@ -716,10 +732,23 @@ double b = 10.5;
 System.out.println(a &lt; b);   // true
 System.out.println(a == b);  // false</code></pre>
 
-        <p>
-          Es poden comparar valors numèrics de tipus diferents, com
-          <code>int</code> i <code>double</code>.
-        </p>
+        <div class="note warning">
+          <div class="note-title">Atenció: <code>=</code> no és <code>==</code></div>
+          <p>
+            <code>=</code> assigna un valor a una variable; <code>==</code>
+            compara dos valors i retorna <code>true</code> o <code>false</code>.
+            Escriure <code>if (edat = 18)</code> és un error.
+          </p>
+        </div>
+
+        <div class="note">
+          <div class="note-title">Comparar textos</div>
+          <p>
+            Per comparar dos <code>String</code> no es fa servir
+            <code>==</code>. Cal utilitzar <code>text1.equals(text2)</code>.
+            Ho veurem amb més detall a l'apartat de Strings.
+          </p>
+        </div>
 
         <p><strong>Comparar més de dos valors</strong></p>
 
@@ -760,6 +789,19 @@ System.out.println(edat &gt;= 18 &amp;&amp; edat &lt;= 65); // true</code></pre>
           <code>true</code>.
         </p>
 
+        <p>
+          El resultat d'una comparació es pot utilitzar directament en un
+          <code>if</code>:
+        </p>
+
+<pre><code>int nota = 7;
+
+if (nota &gt;= 5) {
+    System.out.println("Aprovat");
+} else {
+    System.out.println("Suspès");
+}</code></pre>
+
         <div class="note">
           <div class="note-title">Idea clau</div>
           <p>
@@ -773,7 +815,7 @@ System.out.println(edat &gt;= 18 &amp;&amp; edat &lt;= 65); // true</code></pre>
 
         <!-- ============ OPERADORS LÒGICS ============ -->
 
-        <h4 id="logics">2.3.3 Operadors lògics</h4>
+        <h4 id="logics">2.3.3 Expressions booleanes amb operadors lògics</h4>
 
         <p>
           Els operadors lògics permeten combinar diverses expressions

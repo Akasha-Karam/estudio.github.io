@@ -744,9 +744,20 @@ System.out.println(a == b);  // false</code></pre>
         <div class="note">
           <div class="note-title">Comparar textos</div>
           <p>
-            Per comparar dos <code>String</code> no es fa servir
-            <code>==</code>. Cal utilitzar <code>text1.equals(text2)</code>.
-            Ho veurem amb més detall a l'apartat de Strings.
+            Per comparar dos <code>String</code> <strong>no</strong> s'ha
+            d'utilitzar <code>==</code>. Cal utilitzar
+            <code>text1.equals(text2)</code>.
+          </p>
+          <p>
+            Això passa perquè <code>String</code> és un tipus per referència:
+            <code>==</code> compara la <strong>direcció de memòria</strong>
+            on està guardat l'objecte, no el seu <strong>contingut</strong>.
+            En canvi, <code>equals()</code> compara caràcter a caràcter el
+            text de les dues cadenes.
+          </p>
+          <p>
+            Per saber-ho amb més detall, consulta
+            <a href="#strings">6. Strings (cadenes de text)</a>.
           </p>
         </div>
 
@@ -1941,13 +1952,32 @@ for (int i = 0; i &lt; tablero.length; i++) {
         </table>
 
         <div class="note danger">
-          <div class="note-title">¡Nunca compares Strings con ==!</div>
-          <p><code>==</code> compara referencias en memoria, no contenido. Usa
-            siempre <code>.equals()</code>:</p>
+          <div class="note-title">No comparis <code>String</code> amb <code>==</code></div>
+          <p>
+            <code>String</code> és un <strong>tipus per referència</strong>.
+            Quan creem un objecte <code>String</code>, Java guarda aquest
+            objecte a la memòria. <code>==</code> compara la
+            <strong>referència</strong> (l'adreça de memòria), no el
+            <strong>contingut</strong> de la cadena.
+          </p>
+          <p>
+            Per comparar si dos textos són iguals, cal utilitzar
+            <code>equals()</code>, ja que aquest mètode compara
+            <strong>caràcter a caràcter</strong> el contingut dels dos
+            <code>String</code>.
+          </p>
 <pre><code>String a = "hola";
 String b = "hola";
-a == b           // puede dar true o false según JVM
-a.equals(b)      // siempre da true ✓</code></pre>
+String c = new String("hola");
+
+System.out.println(a == b);      // pot ser true (pool de Strings)
+System.out.println(a == c);      // false (objectes diferents a memòria)
+System.out.println(a.equals(c)); // true (mateix contingut)</code></pre>
+          <p>
+            <strong>Regla pràctica:</strong> per comparar textos,
+            <strong>sempre</strong> utilitza <code>equals()</code>, mai
+            <code>==</code>.
+          </p>
         </div>
 
         <h3>StringBuilder (para concatenar mucho)</h3>

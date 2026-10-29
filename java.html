@@ -67,9 +67,10 @@
 
         <li><a href="#control">3. Control de flujo</a></li>
         <li class="sub"><a href="#if">3.1 if / else</a></li>
-        <li class="sub"><a href="#switch">3.2 switch</a></li>
-        <li class="sub"><a href="#while">3.3 while</a></li>
-        <li class="sub"><a href="#for">3.4 for / for-each</a></li>
+        <li class="sub"><a href="#ternari">3.2 Operador ternari</a></li>
+        <li class="sub"><a href="#switch">3.3 switch</a></li>
+        <li class="sub"><a href="#while">3.4 while</a></li>
+        <li class="sub"><a href="#for">3.5 for / for-each</a></li>
 
         <li><a href="#metodos">4. Métodos</a></li>
 
@@ -1653,7 +1654,147 @@ if (condicio3) {
           </ul>
         </div>
 
-        <h3 id="switch">3.2 switch</h3>
+        <!-- ============ TERNARI ============ -->
+
+        <h3 id="ternari">3.2 Operador ternari</h3>
+
+        <p>
+          L'operador ternari <code>? :</code> és una forma compacta d'escollir
+          entre dos valors segons una condició. Es diu <em>ternari</em> perquè
+          treballa amb tres operands: una condició i dos valors possibles.
+        </p>
+
+        <h4>Sintaxi</h4>
+
+<pre><code>condició ? valorSiCert : valorSiFals</code></pre>
+
+        <p>
+          El resultat de l'expressió és un valor, no una instrucció. Per això
+          normalment s'utilitza per assignar-lo a una variable, per passar-lo
+          com a argument o per retornar-lo:
+        </p>
+
+<pre><code>int edat = 20;
+String tipus = (edat &gt;= 18) ? "Adult" : "Menor";
+System.out.println(tipus);  // Adult</code></pre>
+
+        <h4>Com funciona</h4>
+
+        <ol>
+          <li>
+            Es calcula la <strong>condició</strong>, que ha de donar
+            <code>true</code> o <code>false</code>.
+          </li>
+          <li>
+            Si és <code>true</code>, l'expressió pren el valor de
+            <code>valorSiCert</code>.
+          </li>
+          <li>
+            Si és <code>false</code>, l'expressió pren el valor de
+            <code>valorSiFals</code>.
+          </li>
+        </ol>
+
+        <p>
+          Només s'avalua un dels dos valors; l'altre no s'executa. A més, els
+          dos valors han de ser compatibles amb el tipus on es guarda el
+          resultat (per exemple, tots dos <code>int</code> o tots dos
+          <code>String</code>).
+        </p>
+
+        <h4>D'if / else a ternari en una línia</h4>
+
+        <p>
+          Qualsevol <code>if / else</code> simple que només assigna un valor es
+          pot convertir en un ternari. Aquest és el cas habitual:
+        </p>
+
+<pre><code>if (edat &gt;= 18) {
+    tipus = "Adult";
+} else {
+    tipus = "Menor";
+}</code></pre>
+
+        <p>
+          Com que els dos blocs fan la mateixa acció (assignar a
+          <code>tipus</code>), es poden reduir a una sola línia:
+        </p>
+
+<pre><code>tipus = (edat &gt;= 18) ? "Adult" : "Menor";</code></pre>
+
+        <table>
+          <thead>
+            <tr>
+              <th><code>if / else</code></th>
+              <th>Ternari</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>if (condició)</code></td>
+              <td><code>condició ?</code></td>
+            </tr>
+            <tr>
+              <td>valor assignat si és cert</td>
+              <td><code>valorSiCert</code></td>
+            </tr>
+            <tr>
+              <td><code>else</code></td>
+              <td><code>:</code></td>
+            </tr>
+            <tr>
+              <td>valor assignat si és fals</td>
+              <td><code>valorSiFals</code></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="note">
+          <div class="note-title">Regla pràctica</div>
+          <p>
+            Converteix a ternari només quan el <code>if / else</code> assigna un
+            valor i les dues opcions són curtes. Si hi ha diverses
+            instruccions, bucles o lògica complexa, deixa el
+            <code>if / else</code>: és més llegible.
+          </p>
+        </div>
+
+        <h4>Més exemples</h4>
+
+        <p><strong>Valor més gran entre dos enters:</strong></p>
+<pre><code>int a = 10;
+int b = 3;
+int max = (a &gt; b) ? a : b;  // 10</code></pre>
+
+        <p><strong>Valor absolut d'un nombre:</strong></p>
+<pre><code>int num = -15;
+int absValue = (num &lt; 0) ? -num : num;  // 15</code></pre>
+
+        <p><strong>Directament dins d'un <code>println</code>:</strong></p>
+<pre><code>int option = 10;
+System.out.println(option &gt; 0 ? "Positiu" : "No positiu");</code></pre>
+
+        <h4>Precedència</h4>
+
+        <p>
+          L'operador ternari té menys precedència que els operadors aritmètics
+          i de comparació, però més que l'assignació. Per això
+          <code>int max = a &gt; b ? a : b;</code> funciona sense parèntesis.
+          Els parèntesis són opcionals, però ajuden a llegir el codi. Consulta
+          <a href="#precedencia">2.3.6 Ordre de precedència</a>.
+        </p>
+
+        <p>
+          <strong>Compost:</strong> un ternari pot contenir un altre ternari.
+          S'usa per escollir entre més de dos valors, però no convé abusar-ne:
+        </p>
+
+<pre><code>int nota = 7;
+String resultat = (nota &gt;= 9) ? "Excel·lent"
+                 : (nota &gt;= 5) ? "Aprovat"
+                 : "Suspès";</code></pre>
+
+        <h3 id="switch">3.3 switch</h3>
         <p>Útil cuando comparas una variable contra muchos valores fijos.</p>
 
 <pre><code>switch (dia) {
@@ -1671,7 +1812,7 @@ if (condicio3) {
     default -&gt; "Otro día";
 };</code></pre>
 
-        <h3 id="while">3.3 while / do-while</h3>
+        <h3 id="while">3.4 while / do-while</h3>
         <p><strong>while</strong>: repite mientras se cumpla la condición.</p>
 <pre><code>int i = 0;
 while (i &lt; 5) {
@@ -1687,7 +1828,7 @@ do {
     n = sc.nextInt();
 } while (n &lt; 1 || n &gt; 10);</code></pre>
 
-        <h3 id="for">3.4 for / for-each</h3>
+        <h3 id="for">3.5 for / for-each</h3>
         <p>El <strong>for clásico</strong> tiene tres partes: inicialización, condición,
           incremento.</p>
 

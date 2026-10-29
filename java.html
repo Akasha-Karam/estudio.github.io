@@ -1278,41 +1278,6 @@ int resultat = a + b * c;
 
         <h3 id="if">3.1 Estructuras condicionales: <code>if / else</code></h3>
 
-        <div class="note warning">
-          <div class="note-title">La importància de l'ordre</div>
-          <p>
-            En un <code>if / else if / else</code>, Java avalua les condicions
-            <strong>d'adalt a baix</strong> i executa només el primer bloc que
-            es compleix; la resta se salta. Per això les condicions més
-            específiques (les més restrictives) han d'anar
-            <strong>primer</strong> i les més generals al final.
-          </p>
-<pre><code>int nota = 10;
-
-// CORRECTE: de la condició més restrictiva a la més general
-if (nota == 10) {
-    System.out.println("Perfecte");
-} else if (nota &gt;= 9) {
-    System.out.println("Excel·lent");
-} else if (nota &gt;= 5) {
-    System.out.println("Aprovat");
-} else {
-    System.out.println("Suspès");
-}
-
-// INCORRECTE: la condició general tapa les altres
-if (nota &gt;= 5) {
-    System.out.println("Aprovat");    // sempre entra ací
-} else if (nota == 10) {
-    System.out.println("Perfecte");   // no s'executa mai
-}</code></pre>
-          <p>
-            Amb diversos <code>if</code> independents l'ordre no impedeix que
-            s'executin diversos blocs, però continua sent important per
-            entendre el codi.
-          </p>
-        </div>
-
         <h4 id="if-que-es">¿Qué es un <code>if</code>?</h4>
 
         <p>
@@ -1662,6 +1627,41 @@ if (condicio3) {
               utilizamos <code>if / else if / else</code>.
             </li>
           </ul>
+        </div>
+
+        <div class="note warning">
+          <div class="note-title">La importància de l'ordre</div>
+          <p>
+            En un <code>if / else if / else</code>, Java avalua les condicions
+            <strong>d'adalt a baix</strong> i executa només el primer bloc que
+            es compleix; la resta se salta. Per això les condicions més
+            específiques (les més restrictives) han d'anar
+            <strong>primer</strong> i les més generals al final.
+          </p>
+<pre><code>int nota = 10;
+
+// CORRECTE: de la condició més restrictiva a la més general
+if (nota == 10) {
+    System.out.println("Perfecte");
+} else if (nota &gt;= 9) {
+    System.out.println("Excel·lent");
+} else if (nota &gt;= 5) {
+    System.out.println("Aprovat");
+} else {
+    System.out.println("Suspès");
+}
+
+// INCORRECTE: la condició general tapa les altres
+if (nota &gt;= 5) {
+    System.out.println("Aprovat");    // sempre entra ací
+} else if (nota == 10) {
+    System.out.println("Perfecte");   // no s'executa mai
+}</code></pre>
+          <p>
+            Amb diversos <code>if</code> independents l'ordre no impedeix que
+            s'executin diversos blocs, però continua sent important per
+            entendre el codi.
+          </p>
         </div>
 
         <div class="note">

@@ -67,6 +67,7 @@
 
         <li><a href="#control">3. Control de flujo</a></li>
         <li class="sub"><a href="#if">3.1 if / else</a></li>
+        <li class="sub"><a href="#if-exercicis">3.1.1 Exercicis resolts</a></li>
         <li class="sub"><a href="#ternari">3.2 Operador ternari</a></li>
         <li class="sub"><a href="#switch">3.3 switch</a></li>
         <li class="sub"><a href="#while">3.4 while</a></li>
@@ -1277,6 +1278,41 @@ int resultat = a + b * c;
 
         <h3 id="if">3.1 Estructuras condicionales: <code>if / else</code></h3>
 
+        <div class="note warning">
+          <div class="note-title">La importància de l'ordre</div>
+          <p>
+            En un <code>if / else if / else</code>, Java avalua les condicions
+            <strong>d'adalt a baix</strong> i executa només el primer bloc que
+            es compleix; la resta se salta. Per això les condicions més
+            específiques (les més restrictives) han d'anar
+            <strong>primer</strong> i les més generals al final.
+          </p>
+<pre><code>int nota = 10;
+
+// CORRECTE: de la condició més restrictiva a la més general
+if (nota == 10) {
+    System.out.println("Perfecte");
+} else if (nota &gt;= 9) {
+    System.out.println("Excel·lent");
+} else if (nota &gt;= 5) {
+    System.out.println("Aprovat");
+} else {
+    System.out.println("Suspès");
+}
+
+// INCORRECTE: la condició general tapa les altres
+if (nota &gt;= 5) {
+    System.out.println("Aprovat");    // sempre entra ací
+} else if (nota == 10) {
+    System.out.println("Perfecte");   // no s'executa mai
+}</code></pre>
+          <p>
+            Amb diversos <code>if</code> independents l'ordre no impedeix que
+            s'executin diversos blocs, però continua sent important per
+            entendre el codi.
+          </p>
+        </div>
+
         <h4 id="if-que-es">¿Qué es un <code>if</code>?</h4>
 
         <p>
@@ -1652,6 +1688,109 @@ if (condicio3) {
               condiciones.
             </li>
           </ul>
+        </div>
+
+        <h4 id="if-exercicis">Exercicis resolts</h4>
+
+        <div class="example">
+          <h4>Exercici 1 · Parell o imparell</h4>
+          <p>
+            Comprovem el residu de dividir entre 2 amb l'operador
+            <code>%</code>.
+          </p>
+<pre><code>int num = 7;
+
+if (num % 2 == 0) {
+    System.out.println("Parell");
+} else {
+    System.out.println("Imparell");
+}
+
+// Sortida: Imparell</code></pre>
+        </div>
+
+        <div class="example">
+          <h4>Exercici 2 · Positiu, negatiu o zero</h4>
+          <p>
+            Hi ha tres casos possibles, per això fem servir
+            <code>else if</code>.
+          </p>
+<pre><code>int num = -5;
+
+if (num &gt; 0) {
+    System.out.println("Positiu");
+} else if (num &lt; 0) {
+    System.out.println("Negatiu");
+} else {
+    System.out.println("Zero");
+}
+
+// Sortida: Negatiu</code></pre>
+        </div>
+
+        <div class="example">
+          <h4>Exercici 3 · El màxim comparant el primer valor amb tots</h4>
+          <p>
+            Guardem el primer valor com a màxim provisional i el comparem amb
+            la resta amb <code>if</code> independents. Si algun valor és més
+            gran, actualitzem el màxim.
+          </p>
+<pre><code>int a = 8, b = 15, c = 3, d = 12;
+
+int max = a;           // partim del primer valor
+
+if (b &gt; max) max = b;   // 15 &gt; 8  → max = 15
+if (c &gt; max) max = c;   // 3 &gt; 15  → no canvia
+if (d &gt; max) max = d;   // 12 &gt; 15 → no canvia
+
+System.out.println("El màxim és " + max);
+
+// Sortida: El màxim és 15</code></pre>
+        </div>
+
+        <div class="example">
+          <h4>Exercici 4 · Mitjana de les notes</h4>
+          <p>
+            Sumem les notes i dividim entre la quantitat. Cal usar
+            <code>3.0</code> (o un càsting) per obtenir decimals.
+          </p>
+<pre><code>int nota1 = 7;
+int nota2 = 8;
+int nota3 = 6;
+
+double mitjana = (nota1 + nota2 + nota3) / 3.0;
+
+System.out.println("Mitjana = " + mitjana);
+
+// Sortida: Mitjana = 7.0</code></pre>
+        </div>
+
+        <div class="example">
+          <h4>Exercici 5 · Classificació d'una nota (String)</h4>
+          <p>
+            Guardem el resultat en un <code>String</code>. Fixa't que l'ordre
+            és fonamental: primer comprovem la nota més alta (<code>100</code>)
+            i després baixem. Si poséssim <code>nota &gt;= 50</code> al
+            principi, totes les notes entrarien ahí.
+          </p>
+<pre><code>int nota = 100;
+String resultat;
+
+if (nota == 100) {
+    resultat = "Excel·lent";
+} else if (nota &gt;= 90) {
+    resultat = "Molt bé";
+} else if (nota &gt;= 70) {
+    resultat = "Bé";
+} else if (nota &gt;= 50) {
+    resultat = "Aprovat";
+} else {
+    resultat = "Suspès";
+}
+
+System.out.println(resultat);
+
+// Sortida: Excel·lent</code></pre>
         </div>
 
         <!-- ============ TERNARI ============ -->

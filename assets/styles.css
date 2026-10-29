@@ -357,13 +357,6 @@ img {
   font-weight: 600;
 }
 
-.content h5 {
-  color: var(--azul-medio);
-  font-size: 0.95rem;
-  margin: 20px 0 8px;
-  font-weight: 600;
-}
-
 .content p {
   margin-bottom: 12px;
 }

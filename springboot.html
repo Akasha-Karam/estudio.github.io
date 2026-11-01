@@ -53,8 +53,13 @@
         <li class="sub"><a href="#que-es">1.1 ¿Qué es?</a></li>
         <li class="sub"><a href="#crear-proyecto">1.2 Crear el proyecto</a></li>
         <li class="sub"><a href="#funcionamiento">1.3 Funcionamiento de Spring Boot</a></li>
-        <li class="sub"><a href="#capas">1.4 Capas</a></li>
-        <li class="sub"><a href="#properties">1.5 application.properties</a></li>
+        <li class="sub"><a href="#capas-paquetes">1.4 Paquetes y clases</a></li>
+        <li class="sub"><a href="#capas-funcionamiento">1.5 Funcionamiento de las capas</a></li>
+        <li class="sub"><a href="#capas-model">1.6 Model</a></li>
+        <li class="sub"><a href="#capas-repository">1.7 Repository</a></li>
+        <li class="sub"><a href="#capas-service">1.8 Service</a></li>
+        <li class="sub"><a href="#capas-controller">1.9 Controller</a></li>
+        <li class="sub"><a href="#properties">1.10 application.properties</a></li>
 
         <li><a href="#spring-jdbc">2. Spring JDBC</a></li>
 
@@ -304,9 +309,7 @@
           <p><code>Petición web → Controller → Repositorio → Base de datos</code></p>
         </div>
 
-        <h3 id="capas">1.4 Capas</h3>
-
-        <p><strong>1. Paquetes y clases: cómo se nombran</strong></p>
+        <h3 id="capas-paquetes">1.4 Paquetes y clases: cómo se nombran</h3>
         <p>Cada capa va en su propio paquete, y todos cuelgan del paquete base del
           proyecto:</p>
 <pre><code>com.example.gestionestudiantes
@@ -344,7 +347,7 @@
           <code>Estudiante</code>, <code>EstudianteRepository</code>,
           <code>EstudianteService</code>, <code>EstudianteController</code>.</p>
 
-        <p><strong>2. Cómo funcionan las capas</strong></p>
+        <h3 id="capas-funcionamiento">1.5 Cómo funcionan las capas</h3>
         <p>Cada capa tiene una sola responsabilidad, y cada una solo habla con la
           siguiente:</p>
 <pre><code>Cliente (navegador/Postman) → Controller → Service → Repository → Base de datos</code></pre>
@@ -380,7 +383,7 @@
         <p>El controller nunca habla directamente con la BD. Eso mantiene el código
           ordenado y fácil de cambiar.</p>
 
-        <p><strong>3. Model: la clase Estudiante</strong></p>
+        <h3 id="capas-model">1.6 Model: la clase Estudiante</h3>
         <p>La clase model se corresponde con una tabla de la base de datos.</p>
 
         <div class="code-header">model/Estudiante.java</div>
@@ -440,7 +443,7 @@ public class Estudiante {
           <code>length</code> (longitud), <code>precision</code> y <code>scale</code>
           (para <code>DECIMAL</code>).</p>
 
-        <p><strong>4. Repository: EstudianteRepository</strong></p>
+        <h3 id="capas-repository">1.7 Repository: EstudianteRepository</h3>
         <p>Es una interfaz (no una clase). Spring genera la implementación
           automáticamente.</p>
 
@@ -492,7 +495,7 @@ public interface EstudianteRepository extends CrudRepository&lt;Estudiante, Inte
           de la clase, <code>And</code> = los dos deben coincidir:</p>
 <pre><code>SELECT * FROM estudiantes WHERE nombre = ? AND apellido = ?</code></pre>
 
-        <p><strong>5. Service: EstudianteService</strong></p>
+        <h3 id="capas-service">1.8 Service: EstudianteService</h3>
 
         <div class="code-header">service/EstudianteService.java</div>
 <pre><code>package com.example.gestionestudiantes.service;
@@ -545,7 +548,7 @@ public class EstudianteService {
             objeto con <code>new</code>; Spring lo crea y lo entrega.</li>
         </ul>
 
-        <p><strong>6. Controller: EstudianteController</strong></p>
+        <h3 id="capas-controller">1.9 Controller: EstudianteController</h3>
 
         <div class="code-header">controller/EstudianteController.java</div>
 <pre><code>package com.example.gestionestudiantes.controller;
@@ -706,7 +709,7 @@ public class EstudianteController {
           unas veces devolvemos un <code>Estudiante</code> y otras un mensaje de error
           (<code>String</code>).</p>
 
-        <h3 id="properties">1.5 application.properties</h3>
+        <h3 id="properties">1.10 application.properties</h3>
         <p>Es el fichero de configuración. Aquí decimos a Spring Boot cómo conectarse a la BD:</p>
 
         <div class="code-header">src/main/resources/application.properties</div>

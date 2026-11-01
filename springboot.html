@@ -139,6 +139,46 @@
           <li>Pulsa <strong>Generate</strong>, descomprime el <code>.zip</code> y ábrelo en IntelliJ o VS Code.</li>
         </ol>
 
+        <h4>Crear el proyecto desde Visual Studio Code</h4>
+        <p>Si prefieres no salir del editor, VS Code puede generar el proyecto por ti
+          con la extensión <strong>Spring Boot Extension Pack</strong>.</p>
+
+        <ol>
+          <li>Instala <strong>VS Code</strong> y, en el panel de extensiones
+            (<code>Ctrl+Shift+X</code>), añade:
+            <ul>
+              <li><strong>Extension Pack for Java</strong> — soporte de Java y Maven.</li>
+              <li><strong>Spring Boot Extension Pack</strong> — incluye Spring Initializr
+                y Spring Boot Dashboard.</li>
+            </ul>
+          </li>
+          <li>Abre la paleta de comandos con <code>Ctrl+Shift+P</code>
+            (<code>Cmd+Shift+P</code> en macOS).</li>
+          <li>Escribe y selecciona <code>Spring Initializr: Create a Maven Project...</code>.</li>
+          <li>Elige <strong>Spring Boot 3.2.x</strong>, <strong>Java 17</strong>,
+            <strong>Group</strong> <code>com.estudio</code> y <strong>Artifact</strong>
+            <code>demo</code>.</li>
+          <li>Marca las mismas dependencias del apartado anterior
+            (Spring Web, Spring Data JPA, MySQL Driver, Spring Security, Lombok y
+            Validation).</li>
+          <li>Selecciona la carpeta donde guardar el proyecto. VS Code lo abrirá
+            automáticamente con la estructura <code>src/main/java</code> y
+            <code>src/main/resources</code>.</li>
+        </ol>
+
+        <div class="note">
+          <div class="note-title">Ejecutar sin salir de VS Code</div>
+          <p>Con la extensión instalada, abre el panel <strong>Spring Boot Dashboard</strong>
+            y pulsa el botón <strong>Run</strong> sobre tu aplicación. También puedes usar la
+            terminal integrada:</p>
+<pre><code>./mvnw spring-boot:run        # macOS / Linux
+mvnw.cmd spring-boot:run      # Windows</code></pre>
+        </div>
+
+        <p>Si ya descargaste el <code>.zip</code> desde Spring Initializr, basta con
+          descomprimirlo, abrir VS Code, ir a <strong>File → Open Folder...</strong> y
+          seleccionar la carpeta del proyecto.</p>
+
         <h3 id="properties">1.3 application.properties</h3>
         <p>Es el fichero de configuración. Aquí decimos a Spring Boot cómo conectarse a la BD:</p>
 

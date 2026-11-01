@@ -1598,38 +1598,40 @@ if (condicio3) {
         <div class="note warning">
           <div class="note-title">La importància de l'ordre</div>
 
-          <p><strong>1. Com avalua Java les condicions?</strong></p>
+          <p><strong>1. ¿Cómo evalúa Java las condiciones?</strong></p>
           <p>
-            Java avalua les condicions <strong>d'adalt a baix</strong>, seguint
-            l'ordre en què estan escrites.
+            Java evalúa las condiciones de arriba hacia abajo, siguiendo el
+            orden en el que están escritas.
           </p>
           <ul>
             <li>
-              Si una condició és <code>true</code>, executa el seu bloc de codi.
+              Si una condición es <code>true</code>, ejecuta su bloque de código.
             </li>
             <li>
-              Quan troba una condició verdadera, <strong>se salta les altres</strong>
-              condicions del mateix <code>if / else if / else</code>.
+              Cuando encuentra una condición verdadera, se salta las demás
+              condiciones del mismo <code>if / else if / else</code>.
             </li>
             <li>
-              Si cap condició és verdadera, executa el bloc <code>else</code>
-              (si existeix).
+              Si ninguna condición es verdadera, ejecuta el bloque
+              <code>else</code> (si existe).
             </li>
           </ul>
 
-          <p><strong>2. Per què és important l'ordre?</strong></p>
+          <p><strong>2. ¿Por qué es importante el orden?</strong></p>
           <p>
-            Hem de col·locar primer les condicions <strong>més específiques</strong>
-            i després les <strong>més generals</strong>.
+            Debemos colocar primero las condiciones más específicas y después
+            las más generales.
           </p>
           <ul>
             <li>
-              <strong>Condició específica:</strong> comprova un cas concret.
+              <strong>Condición específica:</strong> comprueba un caso concreto.
             </li>
             <li>
-              <strong>Condició general:</strong> inclou molts valors diferents.
+              <strong>Condición general:</strong> incluye muchos valores
+              diferentes.
             </li>
           </ul>
+          <p><strong>Ejemplo:</strong></p>
 <pre><code>int nota = 10;
 
 if (nota == 10) {
@@ -1642,12 +1644,12 @@ if (nota == 10) {
     System.out.println("Suspès");
 }</code></pre>
           <p>
-            En aquest cas l'ordre és correcte perquè comencem pel valor més
-            específic (<code>nota == 10</code>) i acabem pel més general
-            (<code>else</code>).
+            En este caso, el orden es correcto porque empezamos comprobando el
+            valor más específico (<code>nota == 10</code>) y terminamos con el
+            más general (<code>else</code>).
           </p>
 
-          <p><strong>Què passaria si canviem l'ordre?</strong></p>
+          <p><strong>¿Qué pasaría si cambiamos el orden?</strong></p>
 <pre><code>int nota = 10;
 
 if (nota &gt;= 5) {
@@ -1656,43 +1658,39 @@ if (nota &gt;= 5) {
     System.out.println("Perfecte");
 }</code></pre>
           <p>
-            El resultat serà <code>Aprovat</code>, perquè la primera condició ja
-            és verdadera i Java no comprova la següent.
+            El resultado será <code>Aprovat</code>, porque la primera condición
+            ya es verdadera y Java no comprueba la siguiente.
           </p>
           <p>
-            <strong>Important:</strong> encara que la nota sigui 10, també
-            compleix <code>nota &gt;= 5</code>. Per això, si posem primer la
-            condició general, pot impedir que s'executin les condicions més
-            específiques.
+            <strong>Importante:</strong> aunque la nota sea 10, también cumple
+            <code>nota &gt;= 5</code>. Por eso, si ponemos primero la condición
+            general, puede impedir que se ejecuten las condiciones más
+            específicas.
           </p>
 
           <p>
-            <strong>3. Diferència entre <code>if / else if</code> i diversos
+            <strong>3. Diferencia entre <code>if / else if</code> y varios
             <code>if</code></strong>
           </p>
           <p>
-            <strong>A) <code>if / else if / else</code>:</strong> només
-            s'executa el primer bloc la condició del qual sigui verdadera.
+            <strong>A) <code>if / else if / else</code></strong>
           </p>
-<pre><code>int edat = 20;
+          <p>
+            Solo se ejecuta el primer bloque cuya condición sea verdadera.
+          </p>
+<pre><code>int edad = 20;
 
-if (edat &gt;= 18) {
-    System.out.println("Adult");
-} else if (edat == 20) {
-    System.out.println("Té 20 anys");
+if (edad &gt;= 18) {
+    System.out.println("Adulto");
+} else if (edad == 20) {
+    System.out.println("Tiene 20 años");
 } else {
     System.out.println("Menor");
-}
-
-// Sortida: Adult</code></pre>
+}</code></pre>
+          <p><strong>Resultado:</strong> <code>Adulto</code></p>
           <p>
-            Encara que les dues primeres condicions són verdaderes, Java només
-            executa la primera.
-          </p>
-          <p>
-            <strong>B) Diversos <code>if</code> independents:</strong> l'ordre no
-            impedeix que s'executin diversos blocs, però continua sent
-            important per entendre el codi.
+            Aunque las dos primeras condiciones son verdaderas, Java solo
+            ejecuta la primera.
           </p>
         </div>
 

@@ -53,7 +53,8 @@
         <li class="sub"><a href="#que-es">1.1 ¿Qué es?</a></li>
         <li class="sub"><a href="#crear-proyecto">1.2 Crear el proyecto</a></li>
         <li class="sub"><a href="#funcionamiento">1.3 Funcionamiento de Spring Boot</a></li>
-        <li class="sub"><a href="#properties">1.4 application.properties</a></li>
+        <li class="sub"><a href="#capas">1.4 Capas</a></li>
+        <li class="sub"><a href="#properties">1.5 application.properties</a></li>
 
         <li><a href="#spring-jdbc">2. Spring JDBC</a></li>
 
@@ -303,7 +304,409 @@
           <p><code>Petición web → Controller → Repositorio → Base de datos</code></p>
         </div>
 
-        <h3 id="properties">1.4 application.properties</h3>
+        <h3 id="capas">1.4 Capas</h3>
+
+        <p><strong>1. Paquetes y clases: cómo se nombran</strong></p>
+        <p>Cada capa va en su propio paquete, y todos cuelgan del paquete base del
+          proyecto:</p>
+<pre><code>com.example.gestionestudiantes
+ ├── GestionEstudiantesApplication.java   (clase main)
+ ├── model/            → Estudiante.java
+ ├── repository/       → EstudianteRepository.java
+ ├── service/          → EstudianteService.java
+ └── controller/       → EstudianteController.java</code></pre>
+
+        <p>Sobre el camelCase, hay tres reglas distintas:</p>
+        <table>
+          <thead>
+            <tr><th>Qué</th><th>Convención</th><th>Ejemplo</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Paquetes</td>
+              <td>todo en minúsculas, sin guiones ni mayúsculas</td>
+              <td><code>model</code>, <code>repository</code>, <code>gestionestudiantes</code></td>
+            </tr>
+            <tr>
+              <td>Clases e interfaces</td>
+              <td>UpperCamelCase (cada palabra empieza en mayúscula)</td>
+              <td><code>Estudiante</code>, <code>EstudianteRepository</code></td>
+            </tr>
+            <tr>
+              <td>Atributos y métodos</td>
+              <td>lowerCamelCase (primera letra en minúscula)</td>
+              <td><code>fechaNacimiento</code>, <code>findByEmail()</code></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>Las clases se nombran con el patrón <strong>Entidad + Capa</strong>:
+          <code>Estudiante</code>, <code>EstudianteRepository</code>,
+          <code>EstudianteService</code>, <code>EstudianteController</code>.</p>
+
+        <p><strong>2. Cómo funcionan las capas</strong></p>
+        <p>Cada capa tiene una sola responsabilidad, y cada una solo habla con la
+          siguiente:</p>
+<pre><code>Cliente (navegador/Postman) → Controller → Service → Repository → Base de datos</code></pre>
+
+        <table>
+          <thead>
+            <tr><th>Capa</th><th>Qué hace</th><th>Ejemplo</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Model</td>
+              <td>Representa una tabla de la BD como clase Java</td>
+              <td><code>Estudiante</code> ↔ tabla <code>estudiante</code></td>
+            </tr>
+            <tr>
+              <td>Repository (DAO)</td>
+              <td>Accede a la BD: guardar, buscar, borrar</td>
+              <td><code>EstudianteRepository</code></td>
+            </tr>
+            <tr>
+              <td>Service</td>
+              <td>Lógica de la aplicación. Intermediario entre controller y repository</td>
+              <td><code>EstudianteService</code></td>
+            </tr>
+            <tr>
+              <td>Controller</td>
+              <td>Recibe las peticiones HTTP y devuelve la respuesta</td>
+              <td><code>EstudianteController</code></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>El controller nunca habla directamente con la BD. Eso mantiene el código
+          ordenado y fácil de cambiar.</p>
+
+        <p><strong>3. Model: la clase Estudiante</strong></p>
+        <p>La clase model se corresponde con una tabla de la base de datos.</p>
+
+        <div class="code-header">model/Estudiante.java</div>
+<pre><code>package com.example.gestionestudiantes.model;
+
+import java.time.LocalDate;
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "estudiantes") // Solo necesario si la tabla se llama distinto a la clase
+public class Estudiante {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Column(nullable = false, length = 50)
+    private String nombre;
+
+    @Column(nullable = false, length = 50)
+    private String apellido;
+
+    @Column(nullable = false, unique = true, length = 100)
+    private String email;
+
+    private LocalDate fechaNacimiento;
+
+    public Estudiante() { } // Constructor vacío obligatorio para JPA
+
+    // getters y setters (generarlos con el IDE)
+}</code></pre>
+
+        <p><strong>Anotaciones del model:</strong></p>
+        <table>
+          <thead>
+            <tr><th>Anotación</th><th>Qué hace</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>@Entity</code></td><td>Indica que la clase es una tabla de la BD</td></tr>
+            <tr><td><code>@Table(name = "...")</code></td><td>Nombre de la tabla. Se puede omitir si se llama igual que la clase (en minúsculas)</td></tr>
+            <tr><td><code>@Id</code></td><td>Marca la clave primaria</td></tr>
+            <tr><td><code>@GeneratedValue</code></td><td>Define cómo se genera la clave primaria</td></tr>
+            <tr><td><code>@Column</code></td><td>Configura la columna. Sin ella, se crea como <code>VARCHAR(255)</code> y <code>nullable = true</code></td></tr>
+          </tbody>
+        </table>
+
+        <p><strong>Estrategias de <code>@GeneratedValue</code>:</strong></p>
+        <ul>
+          <li><strong>IDENTITY</strong>: auto-increment de la BD (MySQL/PostgreSQL). La más usada.</li>
+          <li><strong>SEQUENCE</strong>: usa una secuencia (como Oracle).</li>
+          <li><strong>TABLE</strong>: usa una tabla auxiliar para los IDs (casi no se usa).</li>
+          <li><strong>AUTO</strong>: Hibernate elige la mejor.</li>
+        </ul>
+        <p>Opciones de <code>@Column</code>: <code>nullable</code> (si admite null),
+          <code>name</code> (nombre de la columna), <code>insertable/updatable</code>
+          (si se puede insertar o modificar), <code>unique</code> (valor no repetido),
+          <code>length</code> (longitud), <code>precision</code> y <code>scale</code>
+          (para <code>DECIMAL</code>).</p>
+
+        <p><strong>4. Repository: EstudianteRepository</strong></p>
+        <p>Es una interfaz (no una clase). Spring genera la implementación
+          automáticamente.</p>
+
+        <div class="code-header">repository/EstudianteRepository.java</div>
+<pre><code>package com.example.gestionestudiantes.repository;
+
+import java.util.List;
+import java.util.Optional;
+import org.springframework.data.repository.CrudRepository;
+import com.example.gestionestudiantes.model.Estudiante;
+
+public interface EstudianteRepository extends CrudRepository&lt;Estudiante, Integer&gt; {
+
+    // Busca un estudiante por email (único → Optional)
+    Optional&lt;Estudiante&gt; findByEmail(String email);
+
+    // Busca estudiantes por nombre y apellido
+    List&lt;Estudiante&gt; findByNombreAndApellido(String nombre, String apellido);
+}</code></pre>
+
+        <p>Los dos tipos entre <code>&lt; &gt;</code> son la entidad
+          (<code>Estudiante</code>) y el tipo de su clave primaria
+          (<code>Integer</code>).</p>
+
+        <p><strong>Métodos que ya vienen con <code>CrudRepository</code></strong> (no
+          hay que programarlos):</p>
+        <table>
+          <thead>
+            <tr><th>Método</th><th>Qué hace</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>save(entity)</code></td><td>Crea o actualiza</td></tr>
+            <tr><td><code>findById(id)</code></td><td>Busca por ID (devuelve <code>Optional</code>)</td></tr>
+            <tr><td><code>existsById(id)</code></td><td>Comprueba si existe</td></tr>
+            <tr><td><code>findAll()</code></td><td>Devuelve todos</td></tr>
+            <tr><td><code>count()</code></td><td>Cuenta cuántos hay</td></tr>
+            <tr><td><code>deleteById(id)</code></td><td>Borra por ID</td></tr>
+            <tr><td><code>delete(entity)</code></td><td>Borra una entidad concreta</td></tr>
+            <tr><td><code>deleteAll()</code></td><td>Borra todos</td></tr>
+          </tbody>
+        </table>
+
+        <p><code>JpaRepository</code> hereda de <code>CrudRepository</code> y añade
+          paginación, ordenación y más métodos de JPA.</p>
+
+        <p><strong>¿Cómo "adivina" Spring la consulta?</strong> Lee el nombre del
+          método: <code>findByNombreAndApellido</code> → <code>findBy</code> =
+          <code>SELECT</code>, <code>Nombre</code> y <code>Apellido</code> = atributos
+          de la clase, <code>And</code> = los dos deben coincidir:</p>
+<pre><code>SELECT * FROM estudiantes WHERE nombre = ? AND apellido = ?</code></pre>
+
+        <p><strong>5. Service: EstudianteService</strong></p>
+
+        <div class="code-header">service/EstudianteService.java</div>
+<pre><code>package com.example.gestionestudiantes.service;
+
+import java.util.List;
+import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.example.gestionestudiantes.model.Estudiante;
+import com.example.gestionestudiantes.repository.EstudianteRepository;
+
+@Service
+public class EstudianteService {
+
+    private final EstudianteRepository estudianteRepository;
+
+    @Autowired
+    public EstudianteService(EstudianteRepository estudianteRepository) {
+        this.estudianteRepository = estudianteRepository;
+    }
+
+    public Iterable&lt;Estudiante&gt; findAll() { return estudianteRepository.findAll(); }
+
+    public Optional&lt;Estudiante&gt; findById(Integer id) { return estudianteRepository.findById(id); }
+
+    public Estudiante save(Estudiante estudiante) { return estudianteRepository.save(estudiante); }
+
+    public boolean existsById(Integer id) { return estudianteRepository.existsById(id); }
+
+    public void deleteById(Integer id) { estudianteRepository.deleteById(id); }
+
+    public long count() { return estudianteRepository.count(); }
+
+    // Métodos personalizados
+    public Optional&lt;Estudiante&gt; findByEmail(String email) {
+        return estudianteRepository.findByEmail(email);
+    }
+
+    public List&lt;Estudiante&gt; findByNombreAndApellido(String nombre, String apellido) {
+        return estudianteRepository.findByNombreAndApellido(nombre, apellido);
+    }
+}</code></pre>
+
+        <p><strong>Anotaciones del service:</strong></p>
+        <ul>
+          <li><code>@Service</code>: marca la clase como componente de servicio
+            gestionado por Spring.</li>
+          <li><code>@Autowired</code>: Spring inyecta automáticamente el
+            <code>EstudianteRepository</code> en el constructor. No hace falta crear el
+            objeto con <code>new</code>; Spring lo crea y lo entrega.</li>
+        </ul>
+
+        <p><strong>6. Controller: EstudianteController</strong></p>
+
+        <div class="code-header">controller/EstudianteController.java</div>
+<pre><code>package com.example.gestionestudiantes.controller;
+
+import java.util.List;
+import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import com.example.gestionestudiantes.model.Estudiante;
+import com.example.gestionestudiantes.service.EstudianteService;
+
+@RestController
+@RequestMapping("/estudiantes")
+public class EstudianteController {
+
+    private final EstudianteService estudianteService;
+
+    @Autowired
+    public EstudianteController(EstudianteService estudianteService) {
+        this.estudianteService = estudianteService;
+    }
+
+    // GET /estudiantes → lista todos
+    @GetMapping
+    public ResponseEntity&lt;Iterable&lt;Estudiante&gt;&gt; findAll() {
+        return ResponseEntity.ok(estudianteService.findAll());
+    }
+
+    // GET /estudiantes/{id} → busca por ID
+    // 200 = OK | 404 = NOT FOUND
+    @GetMapping("/{id}")
+    public ResponseEntity&lt;?&gt; findById(@PathVariable Integer id) {
+        Optional&lt;Estudiante&gt; estudiante = estudianteService.findById(id);
+        if (estudiante.isPresent()) {
+            return ResponseEntity.ok(estudiante.get());
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Estudiante no encontrado");
+    }
+
+    // POST /estudiantes → crea un estudiante (JSON en el body)
+    // 200 = OK | 500 = INTERNAL SERVER ERROR
+    @PostMapping
+    public ResponseEntity&lt;?&gt; save(@RequestBody Estudiante estudiante) {
+        try {
+            return ResponseEntity.ok(estudianteService.save(estudiante));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error inesperado: " + e.getMessage());
+        }
+    }
+
+    // PUT /estudiantes/{id} → actualiza un estudiante
+    // 200 = OK | 404 = NOT FOUND
+    @PutMapping("/{id}")
+    public ResponseEntity&lt;?&gt; update(@PathVariable int id, @RequestBody Estudiante estudiante) {
+        if (!estudianteService.existsById(id)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Estudiante no encontrado");
+        }
+        estudiante.setId(id); // Nos aseguramos de que el ID sea el correcto
+        estudianteService.save(estudiante); // save() actualiza si el ID ya existe
+        return ResponseEntity.ok("Estudiante actualizado");
+    }
+
+    // DELETE /estudiantes/{id} → borra por ID
+    // 204 = NO CONTENT | 404 = NOT FOUND
+    @DeleteMapping("/{id}")
+    public ResponseEntity&lt;?&gt; deleteById(@PathVariable Integer id) {
+        if (!estudianteService.existsById(id)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Estudiante no encontrado");
+        }
+        estudianteService.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    // GET /estudiantes/count → cuenta los estudiantes
+    @GetMapping("/count")
+    public ResponseEntity&lt;Long&gt; count() {
+        return ResponseEntity.ok(estudianteService.count());
+    }
+
+    // GET /estudiantes/email/{email} → busca por email
+    @GetMapping("/email/{email}")
+    public ResponseEntity&lt;?&gt; findByEmail(@PathVariable String email) {
+        Optional&lt;Estudiante&gt; estudiante = estudianteService.findByEmail(email);
+        if (estudiante.isPresent()) {
+            return ResponseEntity.ok(estudiante.get());
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("No existe un estudiante con el email '" + email + "'");
+    }
+
+    // GET /estudiantes/nombre?nombre=Joan&amp;apellido=Puig → busca por nombre y apellido
+    @GetMapping("/nombre")
+    public ResponseEntity&lt;?&gt; findByNombreAndApellido(@RequestParam String nombre,
+                                                     @RequestParam String apellido) {
+        List&lt;Estudiante&gt; estudiantes = estudianteService.findByNombreAndApellido(nombre, apellido);
+        if (estudiantes.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se han encontrado estudiantes");
+        }
+        return ResponseEntity.ok(estudiantes);
+    }
+}</code></pre>
+
+        <p><strong>Endpoints REST:</strong></p>
+        <table>
+          <thead>
+            <tr><th>Método HTTP</th><th>URL</th><th>Para qué sirve</th><th>CRUD</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>GET</td><td><code>/estudiantes</code></td><td>Listar todos los estudiantes</td><td>Read</td></tr>
+            <tr><td>GET</td><td><code>/estudiantes/{id}</code></td><td>Buscar un estudiante por ID</td><td>Read</td></tr>
+            <tr><td>POST</td><td><code>/estudiantes</code></td><td>Crear un estudiante nuevo (con JSON)</td><td>Create</td></tr>
+            <tr><td>PUT</td><td><code>/estudiantes/{id}</code></td><td>Actualizar un estudiante existente</td><td>Update</td></tr>
+            <tr><td>DELETE</td><td><code>/estudiantes/{id}</code></td><td>Borrar un estudiante</td><td>Delete</td></tr>
+            <tr><td>GET</td><td><code>/estudiantes/count</code></td><td>Contar estudiantes</td><td>Read</td></tr>
+            <tr><td>GET</td><td><code>/estudiantes/email/{email}</code></td><td>Buscar por email</td><td>Read</td></tr>
+            <tr><td>GET</td><td><code>/estudiantes/nombre?nombre=..&amp;apellido=..</code></td><td>Buscar por nombre y apellido</td><td>Read</td></tr>
+          </tbody>
+        </table>
+
+        <p><strong>Anotaciones del controller:</strong></p>
+        <table>
+          <thead>
+            <tr><th>Anotación</th><th>Qué hace</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>@RestController</code></td><td>Marca la clase como controlador REST; devuelve datos (JSON)</td></tr>
+            <tr><td><code>@RequestMapping("/estudiantes")</code></td><td>Ruta base de todos los endpoints de la clase</td></tr>
+            <tr><td><code>@GetMapping</code></td><td>Asocia el método a una petición GET (consultar)</td></tr>
+            <tr><td><code>@PostMapping</code></td><td>Asocia el método a una petición POST (crear)</td></tr>
+            <tr><td><code>@PutMapping</code></td><td>Asocia el método a una petición PUT (actualizar)</td></tr>
+            <tr><td><code>@DeleteMapping</code></td><td>Asocia el método a una petición DELETE (borrar)</td></tr>
+            <tr><td><code>@PathVariable</code></td><td>Coge un valor del path: <code>/estudiantes/5</code> → <code>id = 5</code></td></tr>
+            <tr><td><code>@RequestParam</code></td><td>Coge un parámetro de la URL: <code>?nombre=Joan</code> → <code>nombre = "Joan"</code></td></tr>
+            <tr><td><code>@RequestBody</code></td><td>Convierte el JSON del cuerpo de la petición en un objeto Java</td></tr>
+            <tr><td><code>ResponseEntity&lt;T&gt;</code></td><td>Representa toda la respuesta HTTP: cuerpo + código de estado</td></tr>
+          </tbody>
+        </table>
+
+        <p><strong>Códigos de estado usados:</strong></p>
+        <table>
+          <thead>
+            <tr><th>Código</th><th>Significado</th><th>Cómo se devuelve</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>200</td><td>OK</td><td><code>ResponseEntity.ok(body)</code></td></tr>
+            <tr><td>204</td><td>No Content (sin cuerpo, ideal para delete)</td><td><code>ResponseEntity.noContent().build()</code></td></tr>
+            <tr><td>400</td><td>Bad Request</td><td><code>ResponseEntity.badRequest().body(msg)</code></td></tr>
+            <tr><td>404</td><td>Not Found</td><td><code>ResponseEntity.status(HttpStatus.NOT_FOUND).body(msg)</code></td></tr>
+            <tr><td>500</td><td>Internal Server Error</td><td><code>ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(msg)</code></td></tr>
+          </tbody>
+        </table>
+
+        <p><code>ResponseEntity&lt;?&gt;</code> significa "una respuesta HTTP con
+          cualquier tipo de cuerpo". El <code>?</code> es un comodín de Java, porque
+          unas veces devolvemos un <code>Estudiante</code> y otras un mensaje de error
+          (<code>String</code>).</p>
+
+        <h3 id="properties">1.5 application.properties</h3>
         <p>Es el fichero de configuración. Aquí decimos a Spring Boot cómo conectarse a la BD:</p>
 
         <div class="code-header">src/main/resources/application.properties</div>

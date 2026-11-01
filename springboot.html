@@ -298,6 +298,21 @@
           <li><strong>Crear el repositorio.</strong> Es la capa que accede a la base de
             datos y permite hacer las consultas sobre los alumnos (buscar, guardar,
             borrar...).</li>
+          <li><strong>Crear el servicio (Service).</strong> Es la capa que contiene la
+            lógica de negocio de la aplicación. Se encarga de comprobar los datos y
+            aplicar las reglas antes de realizar una operación.
+            <p>Por ejemplo:</p>
+            <ul>
+              <li>Comprobar que un alumno no tenga un correo electrónico duplicado.</li>
+              <li>Verificar que los datos introducidos sean correctos.</li>
+              <li>Comprobar que haya suficiente stock antes de crear un pedido.</li>
+            </ul>
+            <p>Además, el Service puede trabajar con tareas en segundo plano utilizando
+              <code>@Async</code>. Esto permite ejecutar operaciones pesadas, como subir
+              imágenes o procesar archivos, sin bloquear el hilo principal que atiende
+              las peticiones de la web. Así, el usuario no tiene que esperar a que
+              termine esa operación para seguir utilizando la aplicación.</p>
+          </li>
           <li><strong>Crear el controller.</strong> Es la capa que recibe las peticiones
             web y ofrece las operaciones CRUD (Create, Read, Update, Delete): crear
             alumnos, consultarlos, modificarlos y eliminarlos.</li>

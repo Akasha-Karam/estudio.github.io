@@ -144,63 +144,126 @@
           <li>Pulsa <strong>Generate</strong>, descomprime el <code>.zip</code> y ábrelo en IntelliJ o VS Code.</li>
         </ol>
 
-        <h4>Crear el proyecto desde Visual Studio Code</h4>
-        <p>Si prefieres no salir del editor, VS Code puede generar el proyecto por ti
-          con la extensión <strong>Spring Boot Extension Pack</strong>.</p>
+        <h4>Crear un proyecto Spring Boot desde Visual Studio Code</h4>
 
-        <div class="note warning">
-          <div class="note-title">Antes de empezar: comprueba tu versión de Java</div>
-          <p>Si no sabes qué versión de Java tienes instalada, abre una terminal y ejecuta:</p>
-<pre><code>java --version</code></pre>
-          <p>La salida mostrará algo parecido a <code>openjdk 22.0.2</code>. Debes
-            elegir <strong>esa misma versión</strong> al crear el proyecto. Por
-            ejemplo, si te muestra <code>openjdk 22</code>, selecciona
-            <strong>Java 22</strong>:</p>
-          <ul>
-            <li><strong>Java 17, 21 o 22:</strong> compatible con Spring Boot 3.2.x.</li>
-            <li><strong>Java 8 u 11:</strong> Spring Boot 3.2 no funciona con estas
-              versiones; instala un JDK 17, 21 o 22 antes de continuar.</li>
-          </ul>
-          <p>Si el comando no existe o da error, significa que Java no está instalado
-            o no está en el <code>PATH</code>.</p>
-        </div>
+        <p><strong>1. Instalar las extensiones necesarias</strong></p>
+        <p>Abre Visual Studio Code y entra en el panel de extensiones con
+          <code>Ctrl + Shift + X</code>.</p>
+        <p>Instala las siguientes extensiones:</p>
+        <ul>
+          <li><strong>Extension Pack for Java</strong>: proporciona soporte para
+            programar en Java, ejecutar código, depurar y trabajar con Maven.</li>
+          <li><strong>Spring Boot Extension Pack</strong>: incluye herramientas para
+            crear, gestionar y ejecutar proyectos Spring Boot, como Spring Initializr
+            y Spring Boot Dashboard.</li>
+        </ul>
 
+        <p><strong>2. Crear el proyecto</strong></p>
         <ol>
-          <li>Instala <strong>VS Code</strong> y, en el panel de extensiones
-            (<code>Ctrl+Shift+X</code>), añade:
-            <ul>
-              <li><strong>Extension Pack for Java</strong> — soporte de Java y Maven.</li>
-              <li><strong>Spring Boot Extension Pack</strong> — incluye Spring Initializr
-                y Spring Boot Dashboard.</li>
-            </ul>
+          <li>Abre la paleta de comandos con <code>Ctrl + Shift + P</code>
+            (en macOS: <code>Cmd + Shift + P</code>).</li>
+          <li>Escribe y selecciona
+            <code>Spring Initializr: Create a Maven Project...</code>.</li>
+          <li>Selecciona las siguientes configuraciones:
+            <table>
+              <thead>
+                <tr><th>Campo</th><th>Qué debes seleccionar o escribir</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Project</td><td>Maven</td></tr>
+                <tr><td>Language</td><td>Java</td></tr>
+                <tr><td>Spring Boot</td><td>4.1.2 (si aparece como versión estable)</td></tr>
+                <tr><td>Group</td><td><code>com.estudio</code></td></tr>
+                <tr><td>Artifact</td><td><code>demo</code></td></tr>
+                <tr><td>Packaging</td><td>Jar</td></tr>
+                <tr><td>Java</td><td>21 (recomendado) o una versión compatible que tengas instalada</td></tr>
+              </tbody>
+            </table>
           </li>
-          <li>Abre la paleta de comandos con <code>Ctrl+Shift+P</code>
-            (<code>Cmd+Shift+P</code> en macOS).</li>
-          <li>Escribe y selecciona <code>Spring Initializr: Create a Maven Project...</code>.</li>
-          <li>Elige <strong>Spring Boot 3.2.x</strong>, la <strong>versión de Java</strong>
-            que te mostró <code>java --version</code> (por ejemplo, si tienes la 22,
-            selecciona <strong>Java 22</strong>), <strong>Group</strong>
-            <code>com.estudio</code> y <strong>Artifact</strong> <code>demo</code>.</li>
-          <li>Marca las mismas dependencias del apartado anterior
-            (Spring Web, Spring Data JPA, MySQL Driver, Spring Security, Lombok y
-            Validation).</li>
-          <li>Selecciona la carpeta donde guardar el proyecto. VS Code lo abrirá
-            automáticamente con la estructura <code>src/main/java</code> y
-            <code>src/main/resources</code>.</li>
         </ol>
 
-        <div class="note">
-          <div class="note-title">Ejecutar sin salir de VS Code</div>
-          <p>Con la extensión instalada, abre el panel <strong>Spring Boot Dashboard</strong>
-            y pulsa el botón <strong>Run</strong> sobre tu aplicación. También puedes usar la
-            terminal integrada:</p>
-<pre><code>./mvnw spring-boot:run        # macOS / Linux
-mvnw.cmd spring-boot:run      # Windows</code></pre>
+        <p><strong>¿Qué significa cada campo?</strong></p>
+        <ul>
+          <li><strong>Group:</strong> identifica el grupo o dominio del proyecto. En
+            este caso, <code>com.estudio</code>.</li>
+          <li><strong>Artifact:</strong> es el nombre del proyecto. En este caso,
+            <code>demo</code>.</li>
+          <li><strong>Packaging:</strong> indica cómo se empaquetará la aplicación.
+            Seleccionamos <code>Jar</code>, que permite ejecutar la aplicación como un
+            archivo Java.</li>
+          <li><strong>Java:</strong> indica la versión del JDK que utilizará el
+            proyecto.</li>
+        </ul>
+        <p>Cuando pongas Group y Artifact, Spring Initializr generará automáticamente
+          el nombre del proyecto y el paquete base, que será
+          <code>com.estudio.demo</code>.</p>
+
+        <p><strong>3. Comprobar la versión de Java</strong></p>
+        <p>Si no sabes qué versión de Java tienes instalada, abre una terminal y
+          ejecuta:</p>
+<pre><code>java --version</code></pre>
+        <p>La salida mostrará algo parecido a:</p>
+<pre><code>openjdk 21.0.8</code></pre>
+        <p>En ese caso, selecciona <strong>Java 21</strong> al crear el proyecto.</p>
+
+        <div class="note warning">
+          <div class="note-title">Importante</div>
+          <ul>
+            <li>Spring Boot 4.1.2 necesita Java 17 como mínimo.</li>
+            <li>Es recomendable utilizar Java 21, ya que es una versión LTS.</li>
+            <li>No tienes que instalar exactamente la misma versión que aparece en el
+              ejemplo, sino elegir una versión compatible con Spring Boot.</li>
+          </ul>
+          <p>Si el comando no funciona, puede significar que Java no está instalado o
+            que no está configurado en el <code>PATH</code>.</p>
         </div>
 
-        <p>Si ya descargaste el <code>.zip</code> desde Spring Initializr, basta con
-          descomprimirlo, abrir VS Code, ir a <strong>File → Open Folder...</strong> y
-          seleccionar la carpeta del proyecto.</p>
+        <p><strong>4. Añadir las dependencias</strong></p>
+        <p>Las dependencias son bibliotecas que incorporan funcionalidades a nuestro
+          proyecto sin tener que programarlas desde cero.</p>
+        <p>Para empezar, selecciona las siguientes:</p>
+        <table>
+          <thead>
+            <tr><th>Dependencia</th><th>Función</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Spring Web</td>
+              <td>Permite crear API REST y controladores para gestionar peticiones HTTP
+                (GET, POST, PUT y DELETE).</td>
+            </tr>
+            <tr>
+              <td>Spring Data JPA</td>
+              <td>Facilita la comunicación con bases de datos mediante entidades y
+                repositorios.</td>
+            </tr>
+            <tr>
+              <td>MySQL Driver</td>
+              <td>Permite conectar Spring Boot con una base de datos MySQL.</td>
+            </tr>
+            <tr>
+              <td>Spring Boot DevTools</td>
+              <td>Facilita el desarrollo, permitiendo reiniciar automáticamente la
+                aplicación cuando realizamos cambios.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="note">
+          <div class="note-title">Nota</div>
+          <p>Si vas a trabajar con PostgreSQL en lugar de MySQL, selecciona
+            <strong>PostgreSQL Driver</strong> en vez de MySQL Driver.</p>
+        </div>
+
+        <p><strong>5. Generar el proyecto</strong></p>
+        <p>Una vez hayas seleccionado todas las dependencias:</p>
+        <ol>
+          <li>Pulsa <strong>Enter</strong> para continuar.</li>
+          <li>Selecciona la carpeta donde quieres guardar el proyecto.</li>
+          <li>Espera a que Spring Initializr genere los archivos.</li>
+          <li>Selecciona <strong>Open</strong> para abrir el proyecto en VS Code.</li>
+        </ol>
+        <p>Tu proyecto ya estará creado y preparado para empezar a programar.</p>
 
         <h3 id="funcionamiento">1.3 Funcionamiento de Spring Boot</h3>
 

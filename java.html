@@ -1597,16 +1597,41 @@ if (condicio3) {
 
         <div class="note warning">
           <div class="note-title">La importància de l'ordre</div>
+
+          <p><strong>1. Com avalua Java les condicions?</strong></p>
           <p>
-            En un <code>if / else if / else</code>, Java avalua les condicions
-            <strong>d'adalt a baix</strong> i executa només el primer bloc que
-            es compleix; la resta se salta. Per això les condicions més
-            específiques (les més restrictives) han d'anar
-            <strong>primer</strong> i les més generals al final.
+            Java avalua les condicions <strong>d'adalt a baix</strong>, seguint
+            l'ordre en què estan escrites.
           </p>
+          <ul>
+            <li>
+              Si una condició és <code>true</code>, executa el seu bloc de codi.
+            </li>
+            <li>
+              Quan troba una condició verdadera, <strong>se salta les altres</strong>
+              condicions del mateix <code>if / else if / else</code>.
+            </li>
+            <li>
+              Si cap condició és verdadera, executa el bloc <code>else</code>
+              (si existeix).
+            </li>
+          </ul>
+
+          <p><strong>2. Per què és important l'ordre?</strong></p>
+          <p>
+            Hem de col·locar primer les condicions <strong>més específiques</strong>
+            i després les <strong>més generals</strong>.
+          </p>
+          <ul>
+            <li>
+              <strong>Condició específica:</strong> comprova un cas concret.
+            </li>
+            <li>
+              <strong>Condició general:</strong> inclou molts valors diferents.
+            </li>
+          </ul>
 <pre><code>int nota = 10;
 
-// CORRECTE: de la condició més restrictiva a la més general
 if (nota == 10) {
     System.out.println("Perfecte");
 } else if (nota &gt;= 9) {
@@ -1615,18 +1640,59 @@ if (nota == 10) {
     System.out.println("Aprovat");
 } else {
     System.out.println("Suspès");
-}
-
-// INCORRECTE: la condició general tapa les altres
-if (nota &gt;= 5) {
-    System.out.println("Aprovat");    // sempre entra ací
-} else if (nota == 10) {
-    System.out.println("Perfecte");   // no s'executa mai
 }</code></pre>
           <p>
-            Amb diversos <code>if</code> independents l'ordre no impedeix que
-            s'executin diversos blocs, però continua sent important per
-            entendre el codi.
+            En aquest cas l'ordre és correcte perquè comencem pel valor més
+            específic (<code>nota == 10</code>) i acabem pel més general
+            (<code>else</code>).
+          </p>
+
+          <p><strong>Què passaria si canviem l'ordre?</strong></p>
+<pre><code>int nota = 10;
+
+if (nota &gt;= 5) {
+    System.out.println("Aprovat");
+} else if (nota == 10) {
+    System.out.println("Perfecte");
+}</code></pre>
+          <p>
+            El resultat serà <code>Aprovat</code>, perquè la primera condició ja
+            és verdadera i Java no comprova la següent.
+          </p>
+          <p>
+            <strong>Important:</strong> encara que la nota sigui 10, també
+            compleix <code>nota &gt;= 5</code>. Per això, si posem primer la
+            condició general, pot impedir que s'executin les condicions més
+            específiques.
+          </p>
+
+          <p>
+            <strong>3. Diferència entre <code>if / else if</code> i diversos
+            <code>if</code></strong>
+          </p>
+          <p>
+            <strong>A) <code>if / else if / else</code>:</strong> només
+            s'executa el primer bloc la condició del qual sigui verdadera.
+          </p>
+<pre><code>int edat = 20;
+
+if (edat &gt;= 18) {
+    System.out.println("Adult");
+} else if (edat == 20) {
+    System.out.println("Té 20 anys");
+} else {
+    System.out.println("Menor");
+}
+
+// Sortida: Adult</code></pre>
+          <p>
+            Encara que les dues primeres condicions són verdaderes, Java només
+            executa la primera.
+          </p>
+          <p>
+            <strong>B) Diversos <code>if</code> independents:</strong> l'ordre no
+            impedeix que s'executin diversos blocs, però continua sent
+            important per entendre el codi.
           </p>
         </div>
 

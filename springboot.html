@@ -52,7 +52,8 @@
         <li><a href="#spring-boot">1. Spring Boot</a></li>
         <li class="sub"><a href="#que-es">1.1 ¿Qué es?</a></li>
         <li class="sub"><a href="#crear-proyecto">1.2 Crear el proyecto</a></li>
-        <li class="sub"><a href="#properties">1.3 application.properties</a></li>
+        <li class="sub"><a href="#funcionamiento">1.3 Funcionamiento de Spring Boot</a></li>
+        <li class="sub"><a href="#properties">1.4 application.properties</a></li>
 
         <li><a href="#spring-jdbc">2. Spring JDBC</a></li>
 
@@ -201,7 +202,45 @@ mvnw.cmd spring-boot:run      # Windows</code></pre>
           descomprimirlo, abrir VS Code, ir a <strong>File → Open Folder...</strong> y
           seleccionar la carpeta del proyecto.</p>
 
-        <h3 id="properties">1.3 application.properties</h3>
+        <h3 id="funcionamiento">1.3 Funcionamiento de Spring Boot</h3>
+
+        <p><strong>Caso práctico:</strong> cada año el colegio Sant Jordi incorpora
+          nuevos alumnos y los profesores necesitan una web para registrarlos y
+          consultarlos sin depender de papeles o Excel.</p>
+
+        <p>Spring Boot es un framework que permite crear esa aplicación web de forma
+          rápida, con el servidor ya integrado. Los pasos son los siguientes:</p>
+
+        <ol>
+          <li><strong>Definir los datos del alumno.</strong> Hay que decidir qué se
+            guarda de cada estudiante: un <code>id</code> (clave primaria que lo
+            identifica de forma única), nombre, apellido y edad.</li>
+          <li><strong>Crear el <code>schema.sql</code>.</strong> Este archivo contiene
+            la sentencia SQL que crea la tabla <code>alumno</code> en la base de datos
+            al arrancar la aplicación.</li>
+          <li><strong>Configurar <code>application.properties</code>.</strong> Aquí se
+            indica la conexión a la base de datos, para que los alumnos queden
+            guardados, y el puerto del servidor. Se puede usar el puerto 80, el
+            estándar de HTTP, para acceder sin escribir el puerto en la URL. Si está
+            ocupado, se usa el 81. (Por defecto, Spring Boot usa el 8080.)</li>
+          <li><strong>Crear el modelo.</strong> Spring Boot no trabaja directamente con
+            la tabla del <code>schema.sql</code>, sino con una clase Java
+            (<code>Alumno</code>) cuyos atributos se corresponden con las columnas de
+            la tabla.</li>
+          <li><strong>Crear el repositorio.</strong> Es la capa que accede a la base de
+            datos y permite hacer las consultas sobre los alumnos (buscar, guardar,
+            borrar...).</li>
+          <li><strong>Crear el controller.</strong> Es la capa que recibe las peticiones
+            web y ofrece las operaciones CRUD (Create, Read, Update, Delete): crear
+            alumnos, consultarlos, modificarlos y eliminarlos.</li>
+        </ol>
+
+        <div class="note">
+          <div class="note-title">Flujo de una petición</div>
+          <p><code>Petición web → Controller → Repositorio → Base de datos</code></p>
+        </div>
+
+        <h3 id="properties">1.4 application.properties</h3>
         <p>Es el fichero de configuración. Aquí decimos a Spring Boot cómo conectarse a la BD:</p>
 
         <div class="code-header">src/main/resources/application.properties</div>

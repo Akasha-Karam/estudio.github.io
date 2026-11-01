@@ -143,6 +143,22 @@
         <p>Si prefieres no salir del editor, VS Code puede generar el proyecto por ti
           con la extensión <strong>Spring Boot Extension Pack</strong>.</p>
 
+        <div class="note warning">
+          <div class="note-title">Antes de empezar: comprueba tu versión de Java</div>
+          <p>Si no sabes qué versión de Java tienes instalada, abre una terminal y ejecuta:</p>
+<pre><code>java --version</code></pre>
+          <p>La salida mostrará algo parecido a <code>openjdk 17.0.10</code>. Debes
+            elegir <strong>esa misma versión</strong> (o una compatible) al crear el
+            proyecto:</p>
+          <ul>
+            <li><strong>Java 17 o 21:</strong> perfecto para Spring Boot 3.2.x.</li>
+            <li><strong>Java 8 u 11:</strong> Spring Boot 3.2 no funciona con estas
+              versiones; instala un JDK 17 o 21 antes de continuar.</li>
+          </ul>
+          <p>Si el comando no existe o da error, significa que Java no está instalado
+            o no está en el <code>PATH</code>.</p>
+        </div>
+
         <ol>
           <li>Instala <strong>VS Code</strong> y, en el panel de extensiones
             (<code>Ctrl+Shift+X</code>), añade:
@@ -155,7 +171,8 @@
           <li>Abre la paleta de comandos con <code>Ctrl+Shift+P</code>
             (<code>Cmd+Shift+P</code> en macOS).</li>
           <li>Escribe y selecciona <code>Spring Initializr: Create a Maven Project...</code>.</li>
-          <li>Elige <strong>Spring Boot 3.2.x</strong>, <strong>Java 17</strong>,
+          <li>Elige <strong>Spring Boot 3.2.x</strong>, la <strong>versión de Java</strong>
+            que comprobaste con <code>java --version</code> (17 o 21),
             <strong>Group</strong> <code>com.estudio</code> y <strong>Artifact</strong>
             <code>demo</code>.</li>
           <li>Marca las mismas dependencias del apartado anterior

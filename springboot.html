@@ -124,7 +124,11 @@
 
         <ol>
           <li>Entra en <code>start.spring.io</code>.</li>
-          <li>Selecciona: <strong>Maven</strong>, <strong>Java 17</strong>, <strong>Spring Boot 3.2.x</strong>.</li>
+          <li>Selecciona <strong>Maven</strong> y <strong>Spring Boot 3.2.x</strong>. En
+            <strong>Java</strong> debes elegir la versión que tengas instalada:
+            compruébala antes en la terminal con <code>java --version</code>. Por
+            ejemplo, si te muestra <code>openjdk 22</code>, selecciona
+            <strong>Java 22</strong>.</li>
           <li>Group: <code>com.estudio</code>, Artifact: <code>demo</code>.</li>
           <li>Añade dependencias:
             <ul>
@@ -147,13 +151,14 @@
           <div class="note-title">Antes de empezar: comprueba tu versión de Java</div>
           <p>Si no sabes qué versión de Java tienes instalada, abre una terminal y ejecuta:</p>
 <pre><code>java --version</code></pre>
-          <p>La salida mostrará algo parecido a <code>openjdk 17.0.10</code>. Debes
-            elegir <strong>esa misma versión</strong> (o una compatible) al crear el
-            proyecto:</p>
+          <p>La salida mostrará algo parecido a <code>openjdk 22.0.2</code>. Debes
+            elegir <strong>esa misma versión</strong> al crear el proyecto. Por
+            ejemplo, si te muestra <code>openjdk 22</code>, selecciona
+            <strong>Java 22</strong>:</p>
           <ul>
-            <li><strong>Java 17 o 21:</strong> perfecto para Spring Boot 3.2.x.</li>
+            <li><strong>Java 17, 21 o 22:</strong> compatible con Spring Boot 3.2.x.</li>
             <li><strong>Java 8 u 11:</strong> Spring Boot 3.2 no funciona con estas
-              versiones; instala un JDK 17 o 21 antes de continuar.</li>
+              versiones; instala un JDK 17, 21 o 22 antes de continuar.</li>
           </ul>
           <p>Si el comando no existe o da error, significa que Java no está instalado
             o no está en el <code>PATH</code>.</p>
@@ -172,9 +177,9 @@
             (<code>Cmd+Shift+P</code> en macOS).</li>
           <li>Escribe y selecciona <code>Spring Initializr: Create a Maven Project...</code>.</li>
           <li>Elige <strong>Spring Boot 3.2.x</strong>, la <strong>versión de Java</strong>
-            que comprobaste con <code>java --version</code> (17 o 21),
-            <strong>Group</strong> <code>com.estudio</code> y <strong>Artifact</strong>
-            <code>demo</code>.</li>
+            que te mostró <code>java --version</code> (por ejemplo, si tienes la 22,
+            selecciona <strong>Java 22</strong>), <strong>Group</strong>
+            <code>com.estudio</code> y <strong>Artifact</strong> <code>demo</code>.</li>
           <li>Marca las mismas dependencias del apartado anterior
             (Spring Web, Spring Data JPA, MySQL Driver, Spring Security, Lombok y
             Validation).</li>

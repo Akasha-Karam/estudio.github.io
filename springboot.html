@@ -53,12 +53,13 @@
         <li class="sub"><a href="#que-es">1.1 ¿Qué es?</a></li>
         <li class="sub"><a href="#crear-proyecto">1.2 Crear el proyecto</a></li>
         <li class="sub"><a href="#funcionamiento">1.3 Funcionamiento de Spring Boot</a></li>
-        <li class="sub"><a href="#capas-paquetes">1.4 Paquetes y clases</a></li>
-        <li class="sub"><a href="#capas-funcionamiento">1.5 Funcionamiento de las capas</a></li>
-        <li class="sub"><a href="#capas-model">1.6 Model</a></li>
-        <li class="sub"><a href="#capas-repository">1.7 Repository</a></li>
-        <li class="sub"><a href="#capas-service">1.8 Service</a></li>
-        <li class="sub"><a href="#capas-controller">1.9 Controller</a></li>
+        <li class="sub"><a href="#recursos">1.4 Ficheros de recursos</a></li>
+        <li class="sub"><a href="#capas-paquetes">1.5 Paquetes y clases</a></li>
+        <li class="sub"><a href="#capas-funcionamiento">1.6 Funcionamiento de las capas</a></li>
+        <li class="sub"><a href="#capas-model">1.7 Model</a></li>
+        <li class="sub"><a href="#capas-repository">1.8 Repository</a></li>
+        <li class="sub"><a href="#capas-service">1.9 Service</a></li>
+        <li class="sub"><a href="#capas-controller">1.10 Controller</a></li>
 
         <li><a href="#spring-jdbc">2. Spring JDBC</a></li>
 
@@ -323,7 +324,140 @@
           <p><code>Petición web → Controller → Repositorio → Base de datos</code></p>
         </div>
 
-        <h3 id="capas-paquetes">1.4 Paquetes y clases: cómo se nombran</h3>
+        <h3 id="recursos">1.4 Ficheros de recursos: schema.sql y application.properties</h3>
+        <p>Los dos están en <code>src/main/resources/</code>. El primero define cómo es
+          la tabla y el segundo cómo se conecta Spring Boot a la BD.</p>
+
+        <h4>1.4.1 schema.sql</h4>
+        <p>Es un script SQL que crea las tablas de la base de datos. Para la entidad
+          <code>Estudiante</code>:</p>
+
+        <div class="code-header">src/main/resources/schema.sql</div>
+<pre><code>CREATE TABLE IF NOT EXISTS estudiantes (
+    id               INT AUTO_INCREMENT PRIMARY KEY,
+    nombre           VARCHAR(50)  NOT NULL,
+    apellido         VARCHAR(50)  NOT NULL,
+    email            VARCHAR(100) NOT NULL UNIQUE,
+    fecha_nacimiento DATE
+);</code></pre>
+
+        <p>Para que coincida con el model:</p>
+        <table>
+          <thead>
+            <tr><th>Model (Estudiante)</th><th>Tabla (schema.sql)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>@Table(name = "estudiantes")</code></td><td><code>estudiantes</code></td></tr>
+            <tr><td><code>@Id</code> + <code>@GeneratedValue(IDENTITY)</code></td><td><code>INT AUTO_INCREMENT PRIMARY KEY</code></td></tr>
+            <tr><td><code>@Column(nullable = false, length = 50)</code></td><td><code>VARCHAR(50) NOT NULL</code></td></tr>
+            <tr><td><code>@Column(unique = true)</code></td><td><code>UNIQUE</code></td></tr>
+            <tr><td><code>fechaNacimiento</code> (camelCase)</td><td><code>fecha_nacimiento</code> (snake_case)</td></tr>
+          </tbody>
+        </table>
+
+        <p>Spring convierte automáticamente <code>fechaNacimiento</code> en
+          <code>fecha_nacimiento</code>.</p>
+
+        <div class="note">
+          <div class="note-title">Importante</div>
+          <p>El <code>schema.sql</code> solo crea la tabla en la BD. Spring Boot no
+            trabaja con él directamente, sino con la clase model.</p>
+        </div>
+
+        <h4>¿Hace falta el schema.sql?</h4>
+        <p>Depende de cómo crees las tablas:</p>
+        <table>
+          <thead>
+            <tr><th>Opción</th><th>Cómo funciona</th><th>Configuración</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Hibernate crea las tablas</td>
+              <td>Lee las <code>@Entity</code> y genera las tablas solo</td>
+              <td><code>spring.jpa.hibernate.ddl-auto=update</code> y sin <code>schema.sql</code></td>
+            </tr>
+            <tr>
+              <td>Tú las creas con <code>schema.sql</code></td>
+              <td>Spring ejecuta el script al arrancar</td>
+              <td><code>spring.jpa.hibernate.ddl-auto=none</code> y <code>spring.sql.init.mode=always</code></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="note warning">
+          <div class="note-title">No uses las dos a la vez</div>
+          <p>Pueden chocar. Con MySQL hay que poner
+            <code>spring.sql.init.mode=always</code>, porque por defecto Spring solo
+            ejecuta los scripts en BD embebidas (H2).</p>
+        </div>
+
+        <h4>1.4.2 application.properties</h4>
+        <p>Es el fichero de configuración. Aquí le decimos a Spring Boot cómo conectarse
+          a la BD.</p>
+
+        <div class="code-header">src/main/resources/application.properties</div>
+<pre><code># Puerto en el que arranca la aplicación
+server.port=8080
+
+# Conexión a MySQL
+spring.datasource.url=jdbc:mysql://localhost:3306/estudio?createDatabaseIfNotExist=true
+spring.datasource.username=root
+spring.datasource.password=root
+
+# JPA: crea/actualiza las tablas automáticamente al arrancar
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true</code></pre>
+
+        <p>Qué hace cada propiedad:</p>
+        <table>
+          <thead>
+            <tr><th>Propiedad</th><th>Qué hace</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>server.port</code></td><td>Puerto del servidor. Por defecto es 8080. Se puede usar el 80 (estándar HTTP), pero si está ocupado, otro como el 81</td></tr>
+            <tr><td><code>spring.datasource.url</code></td><td>Dirección de la BD: <code>jdbc:mysql://</code> (driver) + <code>localhost</code> (servidor) + <code>3306</code> (puerto de MySQL) + <code>estudio</code> (nombre de la BD)</td></tr>
+            <tr><td><code>createDatabaseIfNotExist=true</code></td><td>Si la BD <code>estudio</code> no existe, la crea al arrancar</td></tr>
+            <tr><td><code>spring.datasource.username</code></td><td>Usuario de la BD</td></tr>
+            <tr><td><code>spring.datasource.password</code></td><td>Contraseña de la BD</td></tr>
+            <tr><td><code>spring.jpa.hibernate.ddl-auto</code></td><td>Qué hace Hibernate con las tablas al arrancar (ver tabla siguiente)</td></tr>
+            <tr><td><code>spring.jpa.show-sql</code></td><td>Muestra en la consola las consultas SQL que se ejecutan. Útil para aprender y depurar</td></tr>
+          </tbody>
+        </table>
+
+        <p>Valores de <code>ddl-auto</code>:</p>
+        <table>
+          <thead>
+            <tr><th>Valor</th><th>Qué hace</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>none</code></td><td>No toca nada. Úsalo si creas las tablas con <code>schema.sql</code></td></tr>
+            <tr><td><code>validate</code></td><td>Comprueba que las tablas coinciden con las entidades, pero no cambia nada</td></tr>
+            <tr><td><code>update</code></td><td>Crea las tablas si no existen y añade columnas nuevas. No borra datos</td></tr>
+            <tr><td><code>create</code></td><td>Borra y vuelve a crear las tablas cada vez que arranca (pierdes los datos)</td></tr>
+            <tr><td><code>create-drop</code></td><td>Como <code>create</code>, y además borra las tablas al cerrar la aplicación</td></tr>
+          </tbody>
+        </table>
+
+        <div class="note warning">
+          <div class="note-title">En producción</div>
+          <p>Nunca dejes la contraseña escrita en el fichero de configuración. Usa
+            variables de entorno:</p>
+<pre><code>spring.datasource.username=${DB_USER}
+spring.datasource.password=${DB_PASSWORD}</code></pre>
+          <p>Y usa <code>ddl-auto=validate</code> o <code>none</code>, nunca
+            <code>create</code>.</p>
+        </div>
+
+        <h4>Flujo completo al arrancar la aplicación</h4>
+<pre><code>application.properties → conecta con MySQL
+        ↓
+schema.sql (o Hibernate con ddl-auto) → crea la tabla estudiantes
+        ↓
+Estudiante (model) → representa la tabla en Java
+        ↓
+Repository → Service → Controller → peticiones HTTP</code></pre>
+
+        <h3 id="capas-paquetes">1.5 Paquetes y clases: cómo se nombran</h3>
         <p>Cada capa va en su propio paquete, y todos cuelgan del paquete base del
           proyecto:</p>
 <pre><code>com.example.gestionestudiantes
@@ -361,7 +495,7 @@
           <code>Estudiante</code>, <code>EstudianteRepository</code>,
           <code>EstudianteService</code>, <code>EstudianteController</code>.</p>
 
-        <h3 id="capas-funcionamiento">1.5 Cómo funcionan las capas</h3>
+        <h3 id="capas-funcionamiento">1.6 Cómo funcionan las capas</h3>
         <p>Cada capa tiene una sola responsabilidad, y cada una solo habla con la
           siguiente:</p>
 <pre><code>Cliente (navegador/Postman) → Controller → Service → Repository → Base de datos</code></pre>
@@ -397,7 +531,7 @@
         <p>El controller nunca habla directamente con la BD. Eso mantiene el código
           ordenado y fácil de cambiar.</p>
 
-        <h3 id="capas-model">1.6 Model: la clase Estudiante</h3>
+        <h3 id="capas-model">1.7 Model: la clase Estudiante</h3>
         <p>La clase model se corresponde con una tabla de la base de datos.</p>
 
         <div class="code-header">model/Estudiante.java</div>
@@ -457,7 +591,7 @@ public class Estudiante {
           <code>length</code> (longitud), <code>precision</code> y <code>scale</code>
           (para <code>DECIMAL</code>).</p>
 
-        <h3 id="capas-repository">1.7 Repository: EstudianteRepository</h3>
+        <h3 id="capas-repository">1.8 Repository: EstudianteRepository</h3>
         <p>Es una interfaz (no una clase). Spring genera la implementación
           automáticamente.</p>
 
@@ -509,7 +643,7 @@ public interface EstudianteRepository extends CrudRepository&lt;Estudiante, Inte
           de la clase, <code>And</code> = los dos deben coincidir:</p>
 <pre><code>SELECT * FROM estudiantes WHERE nombre = ? AND apellido = ?</code></pre>
 
-        <h3 id="capas-service">1.8 Service: EstudianteService</h3>
+        <h3 id="capas-service">1.9 Service: EstudianteService</h3>
 
         <div class="code-header">service/EstudianteService.java</div>
 <pre><code>package com.example.gestionestudiantes.service;
@@ -562,7 +696,7 @@ public class EstudianteService {
             objeto con <code>new</code>; Spring lo crea y lo entrega.</li>
         </ul>
 
-        <h3 id="capas-controller">1.9 Controller: EstudianteController</h3>
+        <h3 id="capas-controller">1.10 Controller: EstudianteController</h3>
 
         <div class="code-header">controller/EstudianteController.java</div>
 <pre><code>package com.example.gestionestudiantes.controller;

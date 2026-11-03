@@ -637,11 +637,183 @@ public interface EstudianteRepository extends CrudRepository&lt;Estudiante, Inte
         <p><code>JpaRepository</code> hereda de <code>CrudRepository</code> y añade
           paginación, ordenación y más métodos de JPA.</p>
 
-        <p><strong>¿Cómo "adivina" Spring la consulta?</strong> Lee el nombre del
-          método: <code>findByNombreAndApellido</code> → <code>findBy</code> =
-          <code>SELECT</code>, <code>Nombre</code> y <code>Apellido</code> = atributos
-          de la clase, <code>And</code> = los dos deben coincidir:</p>
-<pre><code>SELECT * FROM estudiantes WHERE nombre = ? AND apellido = ?</code></pre>
+        <h4>Query Derivation: consultas a partir del nombre del método</h4>
+        <p>La <strong>query derivation</strong> (derivación de consultas) es la
+          funcionalidad de Spring Data JPA que genera una consulta automáticamente a
+          partir del nombre del método. Tú no escribes SQL: escribes un nombre siguiendo
+          una nomenclatura y Spring lo interpreta.</p>
+
+        <p><strong>Estructura del nombre:</strong></p>
+<pre><code>prefijo + PropiedadDeLaEntidad + [condición] + [orden]</code></pre>
+        <ul>
+          <li><strong>Prefijo</strong>: <code>findBy</code>, <code>readBy</code>,
+            <code>queryBy</code>, <code>getBy</code>, <code>countBy</code>,
+            <code>existsBy</code>, <code>deleteBy</code>…</li>
+          <li><strong>Propiedad</strong>: un atributo de la entidad Java, con la primera
+            letra en mayúscula (<code>Nombre</code>, <code>Email</code>,
+            <code>FechaNacimiento</code>).</li>
+          <li><strong>Condición</strong>: una palabra clave (<code>And</code>,
+            <code>Or</code>, <code>Between</code>, <code>LessThan</code>,
+            <code>GreaterThan</code>, <code>Like</code>, <code>StartingWith</code>,
+            <code>Containing</code>, <code>IsNull</code>, <code>In</code>…).</li>
+          <li><strong>Orden</strong>: <code>OrderByNombreAsc</code>,
+            <code>OrderByFechaNacimientoDesc</code>…</li>
+        </ul>
+
+        <p><strong>Ejemplos con la entidad <code>University</code>:</strong></p>
+        <table>
+          <thead>
+            <tr><th>Método que escribes</th><th>SQL equivalente que genera Spring</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>findByName(String name)</code></td><td><code>SELECT * FROM university WHERE name = ?</code></td></tr>
+            <tr><td><code>findByNameLike(String pattern)</code></td><td><code>SELECT * FROM university WHERE name LIKE ?</code></td></tr>
+            <tr><td><code>findByStudentsCountGreaterThan(int val)</code></td><td><code>SELECT * FROM university WHERE students_count &gt; ?</code></td></tr>
+            <tr><td><code>findByNameAndStudentsCount(String n, int c)</code></td><td><code>SELECT * FROM university WHERE name = ? AND students_count = ?</code></td></tr>
+            <tr><td><code>findByNameStartingWith(String prefix)</code></td><td><code>SELECT * FROM university WHERE name LIKE 'prefix%'</code></td></tr>
+            <tr><td><code>findByStudentsCountBetween(int min, int max)</code></td><td><code>SELECT * FROM university WHERE students_count BETWEEN ? AND ?</code></td></tr>
+            <tr><td><code>findByNameContainingIgnoreCase(String text)</code></td><td><code>SELECT * FROM university WHERE LOWER(name) LIKE LOWER(?)</code></td></tr>
+            <tr><td><code>findByCountryOrderByNameAsc(String country)</code></td><td><code>SELECT * FROM university WHERE country = ? ORDER BY name ASC</code></td></tr>
+            <tr><td><code>findTop3ByOrderByStudentsCountDesc()</code></td><td><code>SELECT * FROM university ORDER BY students_count DESC LIMIT 3</code></td></tr>
+            <tr><td><code>countByCountry(String country)</code></td><td><code>SELECT COUNT(*) FROM university WHERE country = ?</code></td></tr>
+            <tr><td><code>existsByEmail(String email)</code></td><td><code>SELECT COUNT(*) &gt; 0 FROM university WHERE email = ?</code></td></tr>
+            <tr><td><code>deleteByEmail(String email)</code></td><td><code>DELETE FROM university WHERE email = ?</code></td></tr>
+          </tbody>
+        </table>
+
+        <div class="code-header">repository/UniversityRepository.java</div>
+<pre><code>public interface UniversityRepository extends JpaRepository&lt;University, Long&gt; {
+
+    List&lt;University&gt; findByName(String name);
+
+    List&lt;University&gt; findByNameLike(String pattern);
+
+    List&lt;University&gt; findByStudentsCountGreaterThan(int value);
+
+    List&lt;University&gt; findByNameAndStudentsCount(String name, int count);
+
+    List&lt;University&gt; findByNameStartingWith(String prefix);
+
+    List&lt;University&gt; findByCountryOrderByNameAsc(String country);
+
+    Optional&lt;University&gt; findFirstByOrderByStudentsCountDesc();
+
+    long countByCountry(String country);
+
+    boolean existsByEmail(String email);
+}</code></pre>
+
+        <p>También se pueden recorrer relaciones con el nombre del método. Por ejemplo,
+          si <code>University</code> tiene una propiedad <code>address</code> con
+          <code>city</code>:</p>
+<pre><code>List&lt;University&gt; findByAddressCity(String city);
+// → SELECT * FROM university WHERE address_city = ? (según el mapeo)</code></pre>
+
+        <div class="note">
+          <div class="note-title">Cómo lo procesa Spring</div>
+          <p>Spring Data lee el nombre, extrae las propiedades y las condiciones, genera
+            una consulta JPQL y Hibernate la traduce al SQL del motor. Si el nombre no
+            coincide con ninguna propiedad de la entidad, la aplicación falla al
+            arrancar con <code>PropertyReferenceException</code>.</p>
+        </div>
+
+        <h4>JPQL: consultas sobre entidades, no sobre tablas</h4>
+        <p><strong>JPQL</strong> (Java Persistence Query Language) es el lenguaje de
+          consultas de JPA. Su sintaxis se parece a SQL, pero no consulta tablas ni
+          columnas: consulta <strong>entidades y atributos Java</strong>. En lugar de
+          hablar de registros y campos, habla de objetos y atributos.</p>
+
+        <table>
+          <thead>
+            <tr><th>SQL</th><th>JPQL</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>SELECT * FROM estudiantes</code></td><td><code>SELECT e FROM Estudiante e</code></td></tr>
+            <tr><td><code>SELECT nombre, email FROM estudiantes</code></td><td><code>SELECT e.nombre, e.email FROM Estudiante e</code></td></tr>
+            <tr><td><code>WHERE fecha_nacimiento &gt; ?</code></td><td><code>WHERE e.fechaNacimiento &gt; :fecha</code></td></tr>
+            <tr><td><code>JOIN cursos ... ON ...</code></td><td><code>JOIN e.cursos c</code></td></tr>
+            <tr><td><code>WHERE email = ?</code></td><td><code>WHERE e.email = :email</code></td></tr>
+          </tbody>
+        </table>
+
+        <p>Sus ventajas son que es portable entre bases de datos, usa los nombres de las
+          clases y atributos Java, y Hibernate se encarga de traducirlo al SQL concreto
+          del motor. De hecho, la query derivation genera JPQL internamente.</p>
+
+        <h4>@Query: JPQL dentro del repositorio</h4>
+        <p>Cuando la consulta es compleja, Spring no puede derivarla del nombre del
+          método. Entonces se escribe la consulta con <code>@Query</code> dentro del
+          repositorio:</p>
+
+        <div class="code-header">repository/UniversityRepository.java</div>
+<pre><code>public interface UniversityRepository extends JpaRepository&lt;University, Long&gt; {
+
+    // JPQL con parámetros con nombre
+    @Query("SELECT u FROM University u WHERE u.studentsCount &gt; :min AND u.country = :country")
+    List&lt;University&gt; findGrandesPorPais(@Param("min") int min,
+                                        @Param("country") String country);
+
+    // JPQL con parámetros posicionales
+    @Query("SELECT u FROM University u WHERE u.name LIKE %?1%")
+    List&lt;University&gt; buscarPorNombre(String texto);
+
+    // JPQL que modifica datos: necesita @Modifying y @Transactional
+    @Modifying
+    @Transactional
+    @Query("UPDATE University u SET u.studentsCount = u.studentsCount + 1 WHERE u.id = :id")
+    int incrementarAlumnos(@Param("id") Long id);
+
+    // Consulta nativa: SQL real del motor, no JPQL
+    @Query(value = "SELECT * FROM university WHERE country = ?1", nativeQuery = true)
+    List&lt;University&gt; findByCountryNative(String country);
+}</code></pre>
+
+        <p><strong>Reglas de JPQL:</strong></p>
+        <ul>
+          <li>Se consultan entidades (<code>University</code>), no tablas
+            (<code>university</code>).</li>
+          <li>Los atributos son los de Java (<code>studentsCount</code>), no las columnas
+            (<code>students_count</code>).</li>
+          <li>El alias del <code>FROM</code> es necesario: <code>FROM University u</code>.</li>
+          <li>Los parámetros se escriben <code>:nombre</code> (con nombre) o
+            <code>?1</code> (posicional).</li>
+          <li>No se usa <code>SELECT *</code>: se escribe <code>SELECT u</code>.</li>
+          <li>Las relaciones se navegan con punto: <code>u.direccion.ciudad</code>.</li>
+          <li>Para escribir SQL real hay que indicar <code>nativeQuery = true</code>.</li>
+        </ul>
+
+        <h4>Stream y conexión abierta</h4>
+        <p>Un repositorio puede devolver <code>Stream&lt;University&gt;</code> en lugar
+          de <code>List</code>:</p>
+<pre><code>@Query("SELECT u FROM University u")
+Stream&lt;University&gt; streamTodas();</code></pre>
+        <p>Con <code>Stream</code> se obtiene un flujo de datos que se procesa elemento
+          a elemento, sin cargar todas las universidades en memoria. Es muy útil si hay
+          miles de registros y se quieren procesar de uno en uno de forma eficiente.</p>
+
+        <div class="note warning">
+          <div class="note-title">Vigileu!</div>
+          <p>El uso de <code>Stream</code> en JPA hace que la conexión a la base de
+            datos se mantenga abierta hasta que el flujo se cierre. Por eso hay que usar
+            <code>@Transactional</code> en el service (o cerrar el <code>Stream</code>
+            con <code>try-with-resources</code>) para evitar fugas de memoria y de
+            conexiones mientras está abierta.</p>
+        </div>
+
+        <div class="code-header">service/UniversityService.java</div>
+<pre><code>@Service
+@RequiredArgsConstructor
+public class UniversityService {
+
+    private final UniversityRepository repository;
+
+    @Transactional(readOnly = true)
+    public List&lt;String&gt; nombresDeTodas() {
+        try (Stream&lt;University&gt; stream = repository.streamTodas()) {
+            return stream.map(University::getName).toList();
+        }
+    }
+}</code></pre>
 
         <h3 id="capas-service">1.9 Service: EstudianteService</h3>
 

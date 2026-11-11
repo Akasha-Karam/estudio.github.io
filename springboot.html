@@ -868,6 +868,221 @@ public class EstudianteService {
             objeto con <code>new</code>; Spring lo crea y lo entrega.</li>
         </ul>
 
+        <h4>Estructura de un método en Java (Spring Data JPA)</h4>
+
+        <p><strong>1. Estructura de un método</strong></p>
+        <p>Observa este ejemplo:</p>
+
+        <div class="code-header">java</div>
+<pre><code>public Optional&lt;Estudiante&gt; findById(Integer id) {
+    return estudianteRepository.findById(id);
+}</code></pre>
+
+        <p>Se divide en 5 partes:</p>
+        <table>
+          <thead>
+            <tr><th>Parte</th><th>Nombre</th><th>Qué hace</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>public</code></td><td>Modificador de acceso</td><td>Permite que otras clases puedan usar el método.</td></tr>
+            <tr><td><code>Optional&lt;Estudiante&gt;</code></td><td>Tipo de retorno</td><td>Indica qué devuelve el método: un <code>Estudiante</code> que puede existir o no.</td></tr>
+            <tr><td><code>findById</code></td><td>Nombre del método</td><td>Describe la operación: buscar un estudiante por su ID.</td></tr>
+            <tr><td><code>(Integer id)</code></td><td>Parámetros</td><td>Los datos que necesita el método para funcionar. Pueden ser varios o ninguno.</td></tr>
+            <tr><td><code>return estudianteRepository.findById(id);</code></td><td>Instrucción de retorno</td><td>Llama al repositorio y devuelve el resultado a quien llamó al método.</td></tr>
+          </tbody>
+        </table>
+
+        <p><strong>Plantilla general:</strong></p>
+        <div class="code-header">java</div>
+<pre><code>public TIPO_DE_RESULTADO nombreMetodo(PARAMETROS) {
+    return resultado;
+}</code></pre>
+
+        <div class="note">
+          <div class="note-title">Importante</div>
+          <p>El tipo de retorno y el valor del <code>return</code> deben coincidir. Si el método devuelve <code>Estudiante</code>, el <code>return</code> tiene que devolver un <code>Estudiante</code>.</p>
+        </div>
+
+        <p><strong>2. ¿Qué podemos poner después de public?</strong></p>
+        <p>Después de <code>public</code> va el tipo de dato que devuelve el método. Los más habituales:</p>
+        <table>
+          <thead>
+            <tr><th>Tipo</th><th>Qué devuelve</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>Estudiante</code></td><td>Un único objeto estudiante</td></tr>
+            <tr><td><code>Optional&lt;Estudiante&gt;</code></td><td>Un estudiante que puede existir o no</td></tr>
+            <tr><td><code>Iterable&lt;Estudiante&gt;</code></td><td>Una colección de estudiantes (recorrible)</td></tr>
+            <tr><td><code>List&lt;Estudiante&gt;</code></td><td>Una lista de estudiantes</td></tr>
+            <tr><td><code>boolean</code></td><td>Verdadero o falso</td></tr>
+            <tr><td><code>long</code></td><td>Un número entero largo</td></tr>
+            <tr><td><code>void</code></td><td>Nada</td></tr>
+          </tbody>
+        </table>
+
+        <p>Veamos cada uno.</p>
+
+        <p><strong>A. Estudiante: un único objeto</strong></p>
+        <div class="code-header">java</div>
+<pre><code>public Estudiante save(Estudiante estudiante) {
+    return estudianteRepository.save(estudiante);
+}</code></pre>
+
+        <p><strong>¿Qué significa?</strong> El método devuelve directamente un objeto de tipo <code>Estudiante</code>.</p>
+
+        <p>Ejemplo de uso:</p>
+        <div class="code-header">java</div>
+<pre><code>Estudiante estudiante = new Estudiante();
+estudiante.setNombre("Akasha");
+estudiante.setEdad(18);
+
+Estudiante guardado = estudianteService.save(estudiante);
+System.out.println(guardado.getId()); // el ID ya ha sido generado por la base de datos</code></pre>
+
+        <p>Spring Data JPA guarda el estudiante y devuelve el objeto guardado, ya con su ID asignado.</p>
+
+        <p><strong>¿Cuándo lo usamos?</strong> Cuando siempre esperamos obtener un único resultado, como al guardar o actualizar.</p>
+
+        <div class="note warning">
+          <div class="note-title">Ojo</div>
+          <p>Si usas <code>Estudiante</code> para buscar y no existe, el resultado puede ser <code>null</code> y provocar un <code>NullPointerException</code>. Para búsquedas es mejor <code>Optional</code>.</p>
+        </div>
+
+        <p><strong>B. Optional&lt;Estudiante&gt;: puede existir o no</strong></p>
+        <div class="code-header">java</div>
+<pre><code>public Optional&lt;Estudiante&gt; findById(Integer id) {
+    return estudianteRepository.findById(id);
+}</code></pre>
+
+        <p><strong>¿Qué significa?</strong> Es una “caja” que puede contener un estudiante o estar vacía. Obliga a pensar qué hacer si no se encuentra nada.</p>
+
+        <p>Ejemplos de uso:</p>
+        <div class="code-header">java</div>
+<pre><code>Optional&lt;Estudiante&gt; resultado = estudianteService.findById(5);
+
+// Comprobar si existe
+if (resultado.isPresent()) {
+    Estudiante e = resultado.get();
+    System.out.println(e.getNombre());
+} else {
+    System.out.println("No existe ese estudiante");
+}
+
+// Lanzar una excepción si no existe
+Estudiante e = estudianteService.findById(5)
+        .orElseThrow(() -&gt; new RuntimeException("Estudiante no encontrado"));
+
+// Devolver un valor por defecto
+Estudiante e2 = estudianteService.findById(5).orElse(null);</code></pre>
+
+        <p>Métodos útiles de <code>Optional</code>:</p>
+        <ul>
+          <li><code>isPresent()</code>: ¿hay valor?</li>
+          <li><code>isEmpty()</code>: ¿está vacío?</li>
+          <li><code>get()</code>: obtiene el valor (falla si está vacío).</li>
+          <li><code>orElse(x)</code>: devuelve el valor o <code>x</code> si está vacío.</li>
+          <li><code>orElseThrow()</code>: devuelve el valor o lanza una excepción.</li>
+        </ul>
+
+        <p><strong>¿Cuándo lo usamos?</strong> En búsquedas de un solo elemento que puede no existir (por ID, por email, por DNI...).</p>
+
+        <p><strong>C. Iterable&lt;Estudiante&gt;: colección recorrible</strong></p>
+        <div class="code-header">java</div>
+<pre><code>public Iterable&lt;Estudiante&gt; findAll() {
+    return estudianteRepository.findAll();
+}</code></pre>
+
+        <p><strong>¿Qué significa?</strong> Devuelve un conjunto de estudiantes que se puede recorrer, pero con pocas funciones.</p>
+
+        <p>Ejemplo de uso:</p>
+        <div class="code-header">java</div>
+<pre><code>for (Estudiante e : estudianteService.findAll()) {
+    System.out.println(e.getNombre());
+}</code></pre>
+
+        <p><strong>Limitaciones:</strong> no tiene <code>get(0)</code>, ni <code>size()</code>, ni <code>isEmpty()</code>. Solo se puede recorrer.</p>
+
+        <p><strong>¿Cuándo lo usamos?</strong> Cuando solo necesitamos recorrer los resultados. Es el tipo que devuelve <code>findAll()</code> en <code>CrudRepository</code>.</p>
+
+        <div class="note">
+          <div class="note-title">Nota</div>
+          <p>Si tu repositorio extiende <code>JpaRepository</code>, <code>findAll()</code> ya devuelve <code>List</code>, que es más cómodo.</p>
+        </div>
+
+        <p><strong>D. List&lt;Estudiante&gt;: lista de estudiantes</strong></p>
+        <div class="code-header">java</div>
+<pre><code>public List&lt;Estudiante&gt; findByEdad(Integer edad) {
+    return estudianteRepository.findByEdad(edad);
+}</code></pre>
+
+        <p><strong>¿Qué significa?</strong> Devuelve una lista ordenada de estudiantes, con acceso por posición y más métodos.</p>
+
+        <p>Ejemplo de uso:</p>
+        <div class="code-header">java</div>
+<pre><code>List&lt;Estudiante&gt; mayores = estudianteService.findByEdad(18);
+
+System.out.println(mayores.size());          // cuántos hay
+System.out.println(mayores.get(0).getNombre()); // el primero
+
+if (mayores.isEmpty()) {
+    System.out.println("No hay estudiantes con esa edad");
+}</code></pre>
+
+        <div class="note">
+          <div class="note-title">Importante</div>
+          <p>Si no hay resultados, devuelve una lista vacía, no <code>null</code>.</p>
+        </div>
+
+        <p><strong>¿Cuándo lo usamos?</strong> Cuando esperamos varios resultados (filtrar por edad, por curso, por nombre...).</p>
+
+        <p><strong>E. boolean: verdadero o falso</strong></p>
+        <div class="code-header">java</div>
+<pre><code>public boolean existsById(Integer id) {
+    return estudianteRepository.existsById(id);
+}</code></pre>
+
+        <p><strong>¿Qué significa?</strong> Responde a una pregunta de sí o no. Solo puede devolver <code>true</code> o <code>false</code>.</p>
+
+        <p>Ejemplo de uso:</p>
+        <div class="code-header">java</div>
+<pre><code>if (estudianteService.existsById(5)) {
+    System.out.println("El estudiante existe");
+} else {
+    System.out.println("El estudiante no existe");
+}</code></pre>
+
+        <p><strong>¿Cuándo lo usamos?</strong> Para comprobar algo sin necesitar los datos: si existe un registro, si un email ya está registrado, antes de borrar o actualizar...</p>
+
+        <p><strong>F. long: número entero largo</strong></p>
+        <div class="code-header">java</div>
+<pre><code>public long count() {
+    return estudianteRepository.count();
+}</code></pre>
+
+        <p><strong>¿Qué significa?</strong> Devuelve un número entero. <code>long</code> admite números mucho mayores que <code>int</code>, por eso Spring lo usa para contar registros.</p>
+
+        <p>Ejemplo de uso:</p>
+        <div class="code-header">java</div>
+<pre><code>long total = estudianteService.count();
+System.out.println("Hay " + total + " estudiantes");</code></pre>
+
+        <p><strong>¿Cuándo lo usamos?</strong> Para contar registros (total de estudiantes, cuántos tienen cierta edad...).</p>
+
+        <p><strong>G. void: no devuelve nada</strong></p>
+        <div class="code-header">java</div>
+<pre><code>public void deleteById(Integer id) {
+    estudianteRepository.deleteById(id);
+}</code></pre>
+
+        <p><strong>¿Qué significa?</strong> El método ejecuta una acción, pero no devuelve ningún resultado. Por eso no lleva <code>return</code> con valor.</p>
+
+        <p>Ejemplo de uso:</p>
+        <div class="code-header">java</div>
+<pre><code>estudianteService.deleteById(5);
+// No se puede hacer: Estudiante e = estudianteService.deleteById(5);  ❌</code></pre>
+
+        <p><strong>¿Cuándo lo usamos?</strong> Cuando solo importa que se realice la acción: borrar, enviar un email, mostrar algo por pantalla...</p>
+
         <h3 id="capas-controller">1.10 Controller: EstudianteController</h3>
 
         <div class="code-header">controller/EstudianteController.java</div>

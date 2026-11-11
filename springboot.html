@@ -56,10 +56,11 @@
         <li class="sub"><a href="#recursos">1.4 Ficheros de recursos</a></li>
         <li class="sub"><a href="#capas-paquetes">1.5 Paquetes y clases</a></li>
         <li class="sub"><a href="#capas-funcionamiento">1.6 Funcionamiento de las capas</a></li>
-        <li class="sub"><a href="#capas-model">1.7 Model</a></li>
-        <li class="sub"><a href="#capas-repository">1.8 Repository</a></li>
-        <li class="sub"><a href="#capas-service">1.9 Service</a></li>
-        <li class="sub"><a href="#capas-controller">1.10 Controller</a></li>
+        <li class="sub"><a href="#capas-inyeccion">1.7 Inyección de dependencias</a></li>
+        <li class="sub"><a href="#capas-model">1.8 Model</a></li>
+        <li class="sub"><a href="#capas-repository">1.9 Repository</a></li>
+        <li class="sub"><a href="#capas-service">1.10 Service</a></li>
+        <li class="sub"><a href="#capas-controller">1.11 Controller</a></li>
 
         <li><a href="#spring-jdbc">2. Spring JDBC</a></li>
 
@@ -531,7 +532,345 @@ Repository → Service → Controller → peticiones HTTP</code></pre>
         <p>El controller nunca habla directamente con la BD. Eso mantiene el código
           ordenado y fácil de cambiar.</p>
 
-        <h3 id="capas-model">1.7 Model: la clase Estudiante</h3>
+        <h3 id="capas-inyeccion">1.7 Inyección de dependencias y comunicación entre capas</h3>
+
+        <h4>0. Idea clave</h4>
+        <p>Cada capa necesita a otra, pero no la crea: Spring le entrega el objeto que
+          necesita.</p>
+<pre><code>Controller → necesita Service → necesita Repository → accede a la BD</code></pre>
+
+        <p>Este código aparece en casi todos los controladores y servicios:</p>
+        <div class="code-header">java</div>
+<pre><code>private final EstudianteService estudianteService;
+
+@Autowired
+public EstudianteController(EstudianteService estudianteService) {
+    this.estudianteService = estudianteService;
+}</code></pre>
+
+        <h4>1. Las clases del proyecto</h4>
+        <table>
+          <thead>
+            <tr><th>Clase</th><th>Capa</th><th>Responsabilidad</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>EstudianteController</code></td><td>Controller</td><td>Recibe las peticiones HTTP</td></tr>
+            <tr><td><code>EstudianteService</code></td><td>Service</td><td>Contiene la lógica de la aplicación</td></tr>
+            <tr><td><code>EstudianteRepository</code></td><td>Repository</td><td>Se comunica con la base de datos</td></tr>
+            <tr><td><code>Estudiante</code></td><td>Entidad</td><td>Representa los datos de un estudiante</td></tr>
+          </tbody>
+        </table>
+
+        <p>El controlador necesita al servicio para operar con estudiantes. De ahí el
+          código anterior.</p>
+
+        <h4>2. ¿Qué hace cada parte del código?</h4>
+
+        <p><strong>A. El atributo: <code>private final EstudianteService estudianteService;</code></strong></p>
+        <table>
+          <thead>
+            <tr><th>Parte</th><th>Significado</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>private</code></td><td>Solo se accede a él desde la propia clase</td></tr>
+            <tr><td><code>final</code></td><td>Una vez asignado, no se puede reasignar</td></tr>
+            <tr><td><code>EstudianteService</code></td><td>Tipo de objeto que necesitamos</td></tr>
+            <tr><td><code>estudianteService</code></td><td>Nombre del atributo</td></tr>
+          </tbody>
+        </table>
+
+        <p><strong>¿Para qué sirve?</strong> Para que el controlador pueda llamar a los
+          métodos del servicio:</p>
+        <div class="code-header">java</div>
+<pre><code>estudianteService.findAll();
+estudianteService.findById(1);
+estudianteService.save(estudiante);
+estudianteService.deleteById(1);</code></pre>
+
+        <p>Sin esta referencia, el controlador no tendría forma de llamarlos.</p>
+
+        <p><strong>B. La anotación: <code>@Autowired</code></strong></p>
+        <p>Le dice a Spring: “proporciona tú el objeto que este constructor necesita”.</p>
+        <p>Inyectar una dependencia significa que Spring entrega a una clase los objetos
+          que necesita para funcionar, en lugar de que ella los cree con
+          <code>new</code>.</p>
+
+        <div class="note">
+          <div class="note-title">Importante</div>
+          <p>Si la clase tiene un único constructor, <code>@Autowired</code> es opcional
+            (desde Spring 4.3). Spring inyecta igualmente. Puedes dejarlo para hacer
+            explícita la intención, pero en proyectos modernos lo habitual es omitirlo.</p>
+        </div>
+
+        <p><strong>C. El constructor</strong></p>
+        <div class="code-header">java</div>
+<pre><code>public EstudianteController(EstudianteService estudianteService) {
+    this.estudianteService = estudianteService;
+}</code></pre>
+
+        <p>Un constructor se ejecuta al crear el objeto. Aquí:</p>
+        <ul>
+          <li>Recibe un <code>EstudianteService</code> como parámetro (lo proporciona
+            Spring).</li>
+          <li>Lo guarda en el atributo de la clase con
+            <code>this.estudianteService = estudianteService;</code></li>
+        </ul>
+
+        <p><strong>¿Qué es <code>this</code>?</strong> Es el objeto actual.</p>
+        <ul>
+          <li><code>this.estudianteService</code> → el atributo de la clase.</li>
+          <li><code>estudianteService</code> → el parámetro del constructor.</li>
+        </ul>
+
+        <p><strong>Cómo funciona la inyección paso a paso</strong></p>
+        <ol>
+          <li>Spring arranca y crea <code>EstudianteService</code> (un bean).</li>
+          <li>Spring va a crear <code>EstudianteController</code>.</li>
+          <li>Ve que su constructor pide un <code>EstudianteService</code>.</li>
+          <li>Busca ese bean y se lo pasa al constructor.</li>
+          <li>El controlador lo guarda en su atributo y ya puede usarlo.</li>
+        </ol>
+
+        <h4>3. ¿Por qué necesitamos la inyección de dependencias?</h4>
+        <p>Ejemplo: mostrar todos los estudiantes de la base de datos.</p>
+<pre><code>Cliente
+   │  GET /estudiantes
+   ▼
+EstudianteController   → recibe la petición HTTP
+   │  llama a estudianteService.findAll()
+   ▼
+EstudianteService      → gestiona la operación
+   │  llama a estudianteRepository.findAll()
+   ▼
+EstudianteRepository   → hace la consulta
+   │
+   ▼
+Base de datos (PostgreSQL)</code></pre>
+
+        <p>Los resultados vuelven en sentido contrario:</p>
+<pre><code>Repository → Service → Controller → Cliente (JSON)</code></pre>
+
+        <p>Para que una capa use a la siguiente, necesita tener su objeto. La inyección
+          de dependencias se lo proporciona.</p>
+
+        <h4>4. La inyección en cada capa</h4>
+        <p><strong>Regla general:</strong> Controller necesita Service, y Service necesita
+          Repository. El Controller nunca habla directamente con la base de datos.</p>
+
+        <p><strong>A. Repository: acceso a datos</strong></p>
+        <div class="code-header">java</div>
+<pre><code>@Repository
+public interface EstudianteRepository extends JpaRepository&lt;Estudiante, Integer&gt; {
+
+}</code></pre>
+
+        <p>Se encarga de buscar, guardar, eliminar y contar registros.</p>
+        <p>No necesita inyectar nada: es la capa que accede a los datos. Spring Data JPA
+          genera automáticamente la implementación de la interfaz y la registra como
+          bean.</p>
+
+        <div class="note">
+          <div class="note-title">Nota</div>
+          <p><code>@Repository</code> es opcional en interfaces que extienden
+            <code>JpaRepository</code>: Spring Data ya las detecta. Es habitual dejarla
+            por claridad.</p>
+        </div>
+
+        <p><strong>B. Service: necesita Repository</strong></p>
+        <div class="code-header">java</div>
+<pre><code>@Service
+public class EstudianteService {
+
+    private final EstudianteRepository estudianteRepository;
+
+    @Autowired
+    public EstudianteService(EstudianteRepository estudianteRepository) {
+        this.estudianteRepository = estudianteRepository;
+    }
+
+    public List&lt;Estudiante&gt; findAll() {
+        return estudianteRepository.findAll();
+    }
+}</code></pre>
+
+        <p>Pasos:</p>
+        <ol>
+          <li>Declaramos el atributo <code>estudianteRepository</code>.</li>
+          <li>Creamos el constructor, que recibe el repositorio y lo guarda.</li>
+          <li>Usamos el repositorio en los métodos del servicio.</li>
+        </ol>
+
+        <p><code>JpaRepository.findAll()</code> devuelve <code>List</code>. Si extiendes
+          <code>CrudRepository</code>, devuelve <code>Iterable</code>.</p>
+
+        <p><strong>C. Controller: necesita Service</strong></p>
+        <div class="code-header">java</div>
+<pre><code>@RestController
+public class EstudianteController {
+
+    private final EstudianteService estudianteService;
+
+    @Autowired
+    public EstudianteController(EstudianteService estudianteService) {
+        this.estudianteService = estudianteService;
+    }
+
+    @GetMapping("/estudiantes")
+    public List&lt;Estudiante&gt; findAll() {
+        return estudianteService.findAll();
+    }
+}</code></pre>
+
+        <p>Cuando alguien hace <code>GET /estudiantes</code>:</p>
+        <ol>
+          <li>El Controller recibe la petición y llama a
+            <code>estudianteService.findAll()</code>.</li>
+          <li>El Service llama al Repository y obtiene los estudiantes.</li>
+          <li>El resultado vuelve al Controller y Spring lo convierte en JSON.</li>
+        </ol>
+
+        <h4>5. ¿Por qué no usamos new?</h4>
+        <p>En Java tradicional haríamos:</p>
+        <div class="code-header">java</div>
+<pre><code>EstudianteService estudianteService = new EstudianteService(); // ❌ no compila</code></pre>
+
+        <p>No compila porque <code>EstudianteService</code> exige un
+          <code>EstudianteRepository</code> en su constructor. Tendríamos que crearlo
+          nosotros:</p>
+        <div class="code-header">java</div>
+<pre><code>EstudianteService estudianteService = new EstudianteService(estudianteRepository);</code></pre>
+
+        <p>Y a su vez crear todas sus dependencias, y las de estas... Con muchas clases
+          se vuelve inmanejable.</p>
+
+        <p>Spring lo hace por nosotros mediante el contenedor IoC (Inversion of Control):</p>
+        <ul>
+          <li>Detecta las clases que debe gestionar.</li>
+          <li>Crea sus objetos.</li>
+          <li>Gestiona su ciclo de vida.</li>
+          <li>Entrega a cada clase lo que necesita (inyección de dependencias).</li>
+        </ul>
+
+        <p>A los objetos gestionados por Spring se les llama <strong>beans</strong>.</p>
+
+        <p><strong>Anotaciones que registran beans</strong></p>
+        <table>
+          <thead>
+            <tr><th>Anotación</th><th>Para qué sirve</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>@RestController</code></td><td>Clase que gestiona peticiones HTTP y devuelve respuestas (JSON)</td></tr>
+            <tr><td><code>@Service</code></td><td>Clase con la lógica de negocio</td></tr>
+            <tr><td><code>@Repository</code></td><td>Clase de acceso a datos</td></tr>
+            <tr><td><code>@Component</code></td><td>Bean genérico que no encaja en las anteriores</td></tr>
+            <tr><td><code>@Autowired</code></td><td>Spring debe proporcionar una dependencia</td></tr>
+          </tbody>
+        </table>
+
+        <p>Para que Spring las detecte, las clases deben estar en el mismo paquete que la
+          clase principal (<code>@SpringBootApplication</code>) o en uno de sus
+          subpaquetes.</p>
+
+        <h4>6. Esquema para recordar</h4>
+
+        <p><strong>Controller</strong></p>
+        <div class="code-header">java</div>
+<pre><code>@RestController
+public class EstudianteController {
+    private final EstudianteService estudianteService;
+
+    public EstudianteController(EstudianteService estudianteService) {
+        this.estudianteService = estudianteService;
+    }
+}</code></pre>
+
+        <p><strong>Service</strong></p>
+        <div class="code-header">java</div>
+<pre><code>@Service
+public class EstudianteService {
+    private final EstudianteRepository estudianteRepository;
+
+    public EstudianteService(EstudianteRepository estudianteRepository) {
+        this.estudianteRepository = estudianteRepository;
+    }
+}</code></pre>
+
+        <p><strong>Repository</strong></p>
+        <div class="code-header">java</div>
+<pre><code>public interface EstudianteRepository extends JpaRepository&lt;Estudiante, Integer&gt; {
+}</code></pre>
+
+        <table>
+          <thead>
+            <tr><th>Capa</th><th>Necesita</th><th>Inyección</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Controller</td><td>Service</td><td><code>EstudianteService</code></td></tr>
+            <tr><td>Service</td><td>Repository</td><td><code>EstudianteRepository</code></td></tr>
+            <tr><td>Repository</td><td>Ninguna capa de nuestro proyecto</td><td>Spring Data JPA genera la implementación</td></tr>
+          </tbody>
+        </table>
+
+        <h4>7. Ventajas de la inyección de dependencias</h4>
+        <ul>
+          <li>No creamos objetos manualmente. Spring los crea y los entrega.</li>
+          <li>Separación de responsabilidades. El Controller no sabe cómo funciona la
+            base de datos; solo llama al Service.</li>
+          <li>Bajo acoplamiento. Podemos cambiar cómo consulta el Repository sin tocar
+            el Controller.</li>
+          <li>Facilita las pruebas. Podemos sustituir una dependencia por un mock.</li>
+          <li>Código más organizado y reutilizable.</li>
+        </ul>
+
+        <h4>8. Errores típicos</h4>
+        <table>
+          <thead>
+            <tr><th>Error</th><th>Causa habitual</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>No qualifying bean of type 'EstudianteService'</td><td>Falta <code>@Service</code> o la clase está fuera del paquete escaneado</td></tr>
+            <tr><td><code>NullPointerException</code> al usar el servicio</td><td>Se creó con <code>new</code> en lugar de inyectarlo</td></tr>
+            <tr><td>El atributo no se puede reasignar</td><td>Es <code>final</code>: se asigna solo en el constructor</td></tr>
+          </tbody>
+        </table>
+
+        <h4>9. Resumen final</h4>
+        <p>Tres ideas:</p>
+        <ul>
+          <li><strong>Repository:</strong> accede a la base de datos (buscar, guardar,
+            actualizar, eliminar).</li>
+          <li><strong>Service:</strong> recibe el Repository por inyección y gestiona la
+            lógica.</li>
+          <li><strong>Controller:</strong> recibe el Service por inyección y responde a
+            las peticiones HTTP.</li>
+        </ul>
+
+        <p>Y recuerda:</p>
+        <ul>
+          <li><code>private final</code>: dependencia que no se reasigna.</li>
+          <li>Constructor: recibe el objeto y lo asigna con <code>this</code>.</li>
+          <li><code>@Autowired</code>: Spring proporciona la dependencia (opcional con
+            un único constructor).</li>
+          <li><code>@Service</code>, <code>@RestController</code>,
+            <code>@Repository</code>: Spring identifica y gestiona esas clases.</li>
+        </ul>
+
+        <div class="note">
+          <div class="note-title">Idea clave</div>
+          <p>No pienses que cada capa crea la siguiente. Cada capa necesita a otra y
+            Spring le entrega el objeto.</p>
+        </div>
+
+        <h4>Versión chuleta (1 minuto)</h4>
+<pre><code>Controller  →  necesita Service     →  constructor(EstudianteService)
+Service     →  necesita Repository  →  constructor(EstudianteRepository)
+Repository  →  interfaz que extiende JpaRepository (Spring la implementa)
+Spring crea y entrega los objetos (beans) → no usamos new.
+private final + constructor = inyección recomendada.
+@Autowired es opcional con un único constructor.
+Si falla: revisa @Service/@RestController y que estén en el paquete correcto.</code></pre>
+
+        <h3 id="capas-model">1.8 Model: la clase Estudiante</h3>
         <p>La clase model se corresponde con una tabla de la base de datos.</p>
 
         <div class="code-header">model/Estudiante.java</div>
@@ -591,7 +930,7 @@ public class Estudiante {
           <code>length</code> (longitud), <code>precision</code> y <code>scale</code>
           (para <code>DECIMAL</code>).</p>
 
-        <h3 id="capas-repository">1.8 Repository: EstudianteRepository</h3>
+        <h3 id="capas-repository">1.9 Repository: EstudianteRepository</h3>
         <p>Es una interfaz (no una clase). Spring genera la implementación
           automáticamente.</p>
 
@@ -815,7 +1154,7 @@ public class UniversityService {
     }
 }</code></pre>
 
-        <h3 id="capas-service">1.9 Service: EstudianteService</h3>
+        <h3 id="capas-service">1.10 Service: EstudianteService</h3>
 
         <div class="code-header">service/EstudianteService.java</div>
 <pre><code>package com.example.gestionestudiantes.service;
@@ -1083,7 +1422,23 @@ System.out.println("Hay " + total + " estudiantes");</code></pre>
 
         <p><strong>¿Cuándo lo usamos?</strong> Cuando solo importa que se realice la acción: borrar, enviar un email, mostrar algo por pantalla...</p>
 
-        <h3 id="capas-controller">1.10 Controller: EstudianteController</h3>
+        <h4>Resumen rápido</h4>
+        <table>
+          <thead>
+            <tr><th>Tipo de retorno</th><th>Devuelve</th><th>Ejemplo típico</th><th>Úsalo cuando...</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>Estudiante</code></td><td>1 objeto</td><td><code>save()</code></td><td>Siempre hay un resultado</td></tr>
+            <tr><td><code>Optional&lt;Estudiante&gt;</code></td><td>0 o 1 objeto</td><td><code>findById()</code></td><td>Puede que no exista</td></tr>
+            <tr><td><code>Iterable&lt;Estudiante&gt;</code></td><td>Colección recorrible</td><td><code>findAll()</code></td><td>Solo vas a recorrerla</td></tr>
+            <tr><td><code>List&lt;Estudiante&gt;</code></td><td>Lista de objetos</td><td><code>findByEdad()</code></td><td>Esperas varios resultados</td></tr>
+            <tr><td><code>boolean</code></td><td><code>true</code> / <code>false</code></td><td><code>existsById()</code></td><td>Necesitas un sí o no</td></tr>
+            <tr><td><code>long</code></td><td>Número entero</td><td><code>count()</code></td><td>Quieres contar</td></tr>
+            <tr><td><code>void</code></td><td>Nada</td><td><code>deleteById()</code></td><td>Solo ejecutas una acción</td></tr>
+          </tbody>
+        </table>
+
+        <h3 id="capas-controller">1.11 Controller: EstudianteController</h3>
 
         <div class="code-header">controller/EstudianteController.java</div>
 <pre><code>package com.example.gestionestudiantes.controller;
